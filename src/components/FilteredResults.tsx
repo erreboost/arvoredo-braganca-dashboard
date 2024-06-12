@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaTrash } from "react-icons/fa";
 
 function FilteredResults({ filteredData, onClearResults }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleBack = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   return (

@@ -1,63 +1,44 @@
 import React, { useState, useEffect } from "react";
+import { API_ENDPOINT } from "../../config/config";
 
 const DashboardCard02A: React.FC = () => {
-  const [numWithoutSymptoms, setNumWithoutSymptoms] = useState<number>(0);
   const [numWithSymptoms, setNumWithSymptoms] = useState<number>(0);
-
-  const fetchData = () => {
-    // Fetch CSV data
-    fetch("/arvores_0.csv")
-      .then((response) => response.text())
-      .then((data) => {
-        // Split CSV data into rows
-        const rows = data.split("\n");
-
-        // console.log("CSV Rows:", rows);
-
-        // Initialize counters
-        let countWithoutSymptoms = 0;
-        let countWithSymptoms = 0;
-
-        // Loop through rows starting from index 1 (skip header row)
-        for (let i = 1; i < rows.length; i++) {
-          const columns = rows[i].split(",");
-
-          // Check if it's not the header row and the value is from column X
-          if (i > 1 && columns.length > 23) {
-            const valueX = columns[24]?.trim();
-
-            // console.log("Column X:", valueX);
-
-            if (valueX === "Sem sintomas ou sinais.") {
-              countWithoutSymptoms++;
-            } else {
-              countWithSymptoms++;
-            }
-          }
-        }
-
-        // console.log(
-        //   "CountWithoutSymptoms:",
-        //   countWithoutSymptoms,
-        //   "CountWithSymptoms:",
-        //   countWithSymptoms
-        // );
-
-        // Set state based on the counts
-        setNumWithoutSymptoms(countWithoutSymptoms);
-        setNumWithSymptoms(countWithSymptoms);
-      })
-      .catch((error) => console.error("Error fetching CSV data", error));
-  };
+  const [numWithoutSymptoms, setNumWithoutSymptoms] = useState<number>(0);
 
   useEffect(() => {
-    // Fetch data when the component is mounted
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_ENDPOINT);
+        const data = await response.json();
+
+        // Initialize counters
+        let countWithSymptoms = 0;
+        let countWithoutSymptoms = 0;
+
+        // Loop through the trees
+        data.trees.forEach((tree) => {
+          if (tree.Estado_fit.includes("sintomas ou sinais")) {
+            countWithSymptoms++;
+          } else {
+            countWithoutSymptoms++;
+          }
+        });
+
+        // Update state with the counts
+        setNumWithSymptoms(countWithSymptoms);
+        setNumWithoutSymptoms(countWithoutSymptoms);
+      } catch (error) {
+        console.error("Error fetching tree data", error);
+      }
+    };
+
+    // Fetch data when the component mounts
     fetchData();
 
     // Set up interval to fetch data every 60 seconds
     const intervalId = setInterval(fetchData, 60000);
 
-    // Clean up interval when the component is unmounted
+    // Clean up interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
 

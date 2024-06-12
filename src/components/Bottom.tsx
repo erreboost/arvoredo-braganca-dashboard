@@ -8,7 +8,7 @@ import BottomNavigation from "./BottomNavigation";
 function Row({ title, icon, count }) {
   return (
     <motion.div
-      className="flex-1 pl-24 pt-4 text-center rounded-md flex flex-col items-center"
+      className="flex-1 pl-24 pt-0 mb-20 text-center rounded-md flex flex-col items-center h-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4, ease: "easeInOut" }}
@@ -23,7 +23,7 @@ function Row({ title, icon, count }) {
 }
 
 function Bottom({ treeCount }) {
-  console.log("Received Tree Count:", treeCount);
+  // console.log("Received Tree Count:", treeCount);
   const [activeButton, setActiveButton] = useState(1);
 
   const handleButtonClick = (buttonNumber) => {
@@ -31,8 +31,8 @@ function Bottom({ treeCount }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center relative flex-grow">
-      <div className="flex mb-24 space-x-4 items-center justify-center">
+    <div className="flex flex-col items-center justify-center relative flex-grow h-[48%]">
+      <div className="flex mb-2 space-x-4 items-center justify-center">
         <Row
           title="CO₂ Absorvido"
           icon={<div>Icon1</div>}

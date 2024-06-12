@@ -1,70 +1,49 @@
 import React, { useState, useEffect } from "react";
+import { API_ENDPOINT } from "../../config/config";
 
 const DashboardCard02B: React.FC = () => {
   const [caldBomEstado, setCaldBomEstado] = useState<number>(0);
   const [caldInsuf, setCaldInsuf] = useState<number>(0);
   const [caldInexistente, setCaldInexistente] = useState<number>(0);
 
-  const fetchData = () => {
-    // Fetch CSV data
-    fetch("/arvores_0.csv")
-      .then((response) => response.text())
-      .then((data) => {
-        // Split CSV data into rows
-        const rows = data.split("\n");
-
-        // console.log("CSV Rows:", rows);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_ENDPOINT);
+        const data = await response.json();
 
         // Initialize counters
         let countBomEstado = 0;
         let countInsuf = 0;
         let countInexistente = 0;
 
-        // Loop through rows starting from index 1 (skip header row)
-        for (let i = 1; i < rows.length; i++) {
-          const columns = rows[i].split(",");
-
-          // Check if it's not the header row and the value is from column K
-          if (i > 1 && columns.length > 10) {
-            const valueK = columns[11]?.trim();
-
-            // console.log("Current Row:", columns, "Value K:", valueK);
-
-            if (valueK === "Caldeira suficiente e em bom estado.") {
-              countBomEstado++;
-            } else if (valueK === "Caldeira insuficiente.") {
-              countInsuf++;
-            } else {
-              countInexistente++;
-            }
+        // Loop through the trees
+        data.trees.forEach((tree) => {
+          if (tree.Esdado_cal === "Caldeira suficiente e em bom estado.") {
+            countBomEstado++;
+          } else if (tree.Esdado_cal === "Caldeira insuficiente.") {
+            countInsuf++;
+          } else {
+            countInexistente++;
           }
-        }
+        });
 
-        // console.log(
-        //   "CaldBomEstado:",
-        //   countBomEstado,
-        //   "CaldInsuf:",
-        //   countInsuf,
-        //   "CaldInexistente:",
-        //   countInexistente
-        // );
-
-        // Set state based on the counts
+        // Update state with the counts
         setCaldBomEstado(countBomEstado);
         setCaldInsuf(countInsuf);
         setCaldInexistente(countInexistente);
-      })
-      .catch((error) => console.error("Error fetching CSV data", error));
-  };
+      } catch (error) {
+        console.error("Error fetching tree data", error);
+      }
+    };
 
-  useEffect(() => {
-    // Fetch data when the component is mounted
+    // Fetch data when the component mounts
     fetchData();
 
     // Set up interval to fetch data every 60 seconds
     const intervalId = setInterval(fetchData, 60000);
 
-    // Clean up interval when the component is unmounted
+    // Clean up interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
 

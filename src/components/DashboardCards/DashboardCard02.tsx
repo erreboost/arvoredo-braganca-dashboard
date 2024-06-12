@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DashboardCard02A from "./DashboardCard02A";
 import DashboardCard02B from "./DashboardCard02B";
+import { API_ENDPOINT } from "../../config/config";
 
 const DashboardCard02 = () => {
   const [loading, setLoading] = useState(true);
@@ -9,7 +10,7 @@ const DashboardCard02 = () => {
     const fetchData = async () => {
       try {
         // Fetch CSV data (adjust URL accordingly)
-        const response = await fetch("/arvores_0.csv");
+        const response = await fetch(API_ENDPOINT);
         const data = await response.text();
 
         // Assuming CSV data is ready (replace with your own condition)

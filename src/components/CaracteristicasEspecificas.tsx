@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { DataContext } from "../config/DataContext";
 
 function CaracteristicasEspecificas() {
   const [selectedFilters, setSelectedFilters] = useState({
-    dap: "", // Initially set to empty
+    dap: "",
     idade: "",
     altura: "",
   });
 
-  const [uniqueDap, setUniqueDap] = useState(["Tudo", "0"]); // Include "Tudo" and "0" in the initial state
-  const [uniqueIdade, setUniqueIdade] = useState([
-    "Tudo",
-    "< 5 anos",
-    "> 5 anos",
-  ]);
-  const [uniqueAltura, setUniqueAltura] = useState(["Tudo", "0"]);
+  const data = useContext(DataContext);
+
+  const [uniqueDap, setUniqueDap] = useState([]);
+  const [uniqueIdade, setUniqueIdade] = useState([]);
+  const [uniqueAltura, setUniqueAltura] = useState([]);
 
   const handleFilterChange = (filterType, value) => {
     setSelectedFilters((prevFilters) => ({
@@ -29,34 +28,29 @@ function CaracteristicasEspecificas() {
 
   const handleResetFilters = () => {
     setSelectedFilters({
-      dap: "Tudo", // Set dap back to "Tudo" on reset
+      dap: "",
       idade: "",
       altura: "",
     });
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Your existing fetch logic
+    if (data) {
+      const dapValues = [
+        ...new Set(data.trees.map((item) => item.DAP_v2)),
+      ].sort((a, b) => a - b);
+      const idadeValues = [
+        ...new Set(data.trees.map((item) => item.idade_apro_v2)),
+      ].sort();
+      const alturaValues = [
+        ...new Set(data.trees.map((item) => item.Altura_v2)),
+      ].sort((a, b) => a - b);
 
-        // Set dap to "Tudo" initially
-        setSelectedFilters((prevFilters) => ({
-          ...prevFilters,
-          dap: "Tudo",
-        }));
-      } catch (error) {
-        console.error("Error fetching CSV file:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const parseCSV = (csvData) => {
-    const lines = csvData.split("\n");
-    return lines.map((line) => line.split(","));
-  };
+      setUniqueDap(dapValues);
+      setUniqueIdade(idadeValues);
+      setUniqueAltura(alturaValues);
+    }
+  }, [data]);
 
   function generateOptions(values) {
     return values.map((value, index) => (
@@ -79,7 +73,7 @@ function CaracteristicasEspecificas() {
           onChange={(e) => handleFilterChange("dap", e.target.value)}
           className="mb-2 w-full"
         >
-          {/* <option value="">- Tudo -</option> */}
+          <option value="">- Tudo -</option>
           {generateOptions(uniqueDap)}
         </select>
       </div>
@@ -91,6 +85,7 @@ function CaracteristicasEspecificas() {
           onChange={(e) => handleFilterChange("idade", e.target.value)}
           className="mb-2 w-full"
         >
+          <option value="">- Tudo -</option>
           {generateOptions(uniqueIdade)}
         </select>
       </div>
@@ -102,6 +97,7 @@ function CaracteristicasEspecificas() {
           onChange={(e) => handleFilterChange("altura", e.target.value)}
           className="mb-2 w-full"
         >
+          <option value="">- Tudo -</option>
           {generateOptions(uniqueAltura)}
         </select>
       </div>

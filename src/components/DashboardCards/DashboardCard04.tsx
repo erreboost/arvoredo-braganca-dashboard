@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import BarChart from "../BarChart";
 import { useVisibleExtent } from "../../utils/VisibleExtentContext";
+import { API_ENDPOINT } from "../../config/config";
 
 const DashboardCard04 = () => {
   const [chartData, setChartData] = useState({ labels: [], values: [] });
   const { visibleExtent } = useVisibleExtent();
 
   useEffect(() => {
-    // Fetch CSV data
-    fetch("/arvores_0.csv")
-      .then((response) => response.text())
-      .then((data) => {
-        const rows = data.split("\n");
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_ENDPOINT);
+        const data = await response.json();
+
         const treeCounts = {
           Passeio: 0,
           "Jardim público": 0,
@@ -19,9 +20,8 @@ const DashboardCard04 = () => {
           Outro: 0,
         };
 
-        rows.slice(1).forEach((row) => {
-          const columns = row.split(",");
-          const location = columns[3]; // Assuming D column for location
+        data.trees.forEach((tree) => {
+          const location = tree.Localizacao;
 
           if (
             location === "Passeio" ||
@@ -38,8 +38,19 @@ const DashboardCard04 = () => {
         const values = Object.values(treeCounts);
 
         setChartData({ labels, values });
-      })
-      .catch((error) => console.error("Error fetching CSV data", error));
+      } catch (error) {
+        console.error("Error fetching tree data", error);
+      }
+    };
+
+    // Fetch data when the component mounts
+    fetchData();
+
+    // Set up interval to fetch data every 60 seconds
+    const intervalId = setInterval(fetchData, 60000);
+
+    // Clean up interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, [visibleExtent]);
 
   const options = {

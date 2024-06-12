@@ -87,7 +87,7 @@ function Inicio() {
       {/* Container for Bottom Div and Footer */}
 
       <motion.div
-        className="w-full h-full"
+        className="w-full h-1/3"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 2.0, delay: 0.3, ease: "easeInOut" }}

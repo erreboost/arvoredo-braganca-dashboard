@@ -12,9 +12,7 @@ const DashboardCard03: React.FC<DashboardCard03Props> = (props) => {
       {/* Make sure you wrap your component with VisibleExtentProvider */}
       <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[55vh] relative">
         <div className="px-2 pt-0">
-          <header className="flex justify-between items-start mb-2">
-            {/* ... (unchanged) */}
-          </header>
+          <header className="flex justify-between items-start mb-2"></header>
         </div>
 
         <EsriMap />

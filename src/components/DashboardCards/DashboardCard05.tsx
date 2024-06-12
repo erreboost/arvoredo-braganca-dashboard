@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { hexToRGB, tailwindConfig } from "../../utils/Utils";
+import { API_ENDPOINT } from "../../config/config";
 
 const DashboardCard05 = () => {
   const [treeCount, setTreeCount] = useState<number | null>(null);
 
   useEffect(() => {
-    // Fetch CSV data (adjust URL accordingly)
-    fetch("/arvores_0.csv")
-      .then((response) => response.text())
-      .then((data) => {
-        // Assuming CSV data is in the A column (change accordingly)
-        const rows = data.split("\n");
-        // Subtracting 1 to exclude the header row
-        const count = rows.length - 1;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_ENDPOINT);
+        const data = await response.json();
+        const count = data.trees.length;
         setTreeCount(count);
-      })
-      .catch((error) => console.error("Error fetching CSV data", error));
+      } catch (error) {
+        console.error("Error fetching tree data", error);
+      }
+    };
+
+    // Fetch data when the component mounts
+    fetchData();
+
+    // Set up interval to fetch data every 60 seconds
+    const intervalId = setInterval(fetchData, 60000);
+
+    // Clean up interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
