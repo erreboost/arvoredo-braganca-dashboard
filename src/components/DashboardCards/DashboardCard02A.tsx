@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from "react";
 
-const DashboardCard02A = ({ data }) => {
+interface Tree {
+  Estado_fit: string; // Replace with actual type
+}
+
+interface DashboardCardData {
+  trees: Tree[];
+}
+
+interface Props {
+  data: DashboardCardData;
+}
+
+const DashboardCard02A: React.FC<Props> = ({ data }) => {
   const [numWithSymptoms, setNumWithSymptoms] = useState(0);
   const [numWithoutSymptoms, setNumWithoutSymptoms] = useState(0);
 

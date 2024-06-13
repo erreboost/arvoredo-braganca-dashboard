@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from "react";
 
-const DashboardCard02B = ({ data }) => {
+interface Tree {
+  Esdado_cal: string; // Replace with actual type
+}
+
+interface DashboardCardData {
+  trees: Tree[];
+}
+
+interface Props {
+  data: DashboardCardData;
+}
+
+const DashboardCard02B: React.FC<Props> = ({ data }) => {
   const [caldBomEstado, setCaldBomEstado] = useState(0);
   const [caldInsuf, setCaldInsuf] = useState(0);
   const [caldInexistente, setCaldInexistente] = useState(0);
@@ -28,7 +40,7 @@ const DashboardCard02B = ({ data }) => {
   }, [data]);
 
   return (
-    <div className="flex-grow overflow-y-auto py-2 h-full flex items-center justify-center ">
+    <div className="flex-grow overflow-y-auto py-2 h-full flex items-center justify-center">
       <div className="text-center">
         <div className="text-sm font-bold text-slate-800 dark:text-slate-100 mb-4">
           Caldeira em Bom Estado

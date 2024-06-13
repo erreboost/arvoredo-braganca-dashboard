@@ -15,7 +15,7 @@ const DashboardCard01 = () => {
         species = [...new Set(species)];
 
         // Sort alphabetically
-        species.sort((a, b) => a.localeCompare(b));
+        species.sort((a: string, b: string) => a.localeCompare(b));
 
         setTreeSpecies(species);
       } catch (error) {
