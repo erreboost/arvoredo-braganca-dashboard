@@ -4,16 +4,24 @@ const Footer = () => {
       <div className="flex justify-between items-center px-8">
         <div>
           <a href="https://lrb.pt/">
-            <img className="w-16 h-full" src="src/assets/errelrb.png" alt="" />
+            <img
+              className="w-16 h-full"
+              src="../../public/assets/errelrb.png"
+              alt=""
+            />
           </a>
         </div>
         <div className="flex items-center gap-12">
           <img
             className="w-16 h-full mr-4"
-            src="src/assets/respira.png"
+            src="../../public/assets/respira.png"
             alt=""
           />
-          <img className="w-24 h-full" src="src/assets/compete.png" alt="" />
+          <img
+            className="w-24 h-full"
+            src="../../public/assets/compete.png"
+            alt=""
+          />
         </div>
       </div>
     </div>
