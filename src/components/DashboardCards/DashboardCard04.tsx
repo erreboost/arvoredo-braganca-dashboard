@@ -3,8 +3,19 @@ import BarChart from "../BarChart";
 import { useVisibleExtent } from "../../utils/VisibleExtentContext";
 import { API_ENDPOINT } from "../../config/config";
 
-const DashboardCard04 = () => {
-  const [chartData, setChartData] = useState({ labels: [], values: [] });
+interface Tree {
+  Localizacao: string;
+  // Add other properties as per your tree data structure
+}
+
+const DashboardCard04: React.FC = () => {
+  const [chartData, setChartData] = useState<{
+    labels: string[];
+    values: number[];
+  }>({
+    labels: [],
+    values: [],
+  });
   const { visibleExtent } = useVisibleExtent();
 
   useEffect(() => {
@@ -13,14 +24,15 @@ const DashboardCard04 = () => {
         const response = await fetch(API_ENDPOINT);
         const data = await response.json();
 
-        const treeCounts = {
+        const treeCounts: { [key: string]: number } = {
           Passeio: 0,
           "Jardim público": 0,
           Via: 0,
           Outro: 0,
         };
 
-        data.trees.forEach((tree) => {
+        // Assuming data is an array of Tree objects
+        data.trees.forEach((tree: Tree) => {
           const location = tree.Localizacao;
 
           if (
@@ -40,10 +52,11 @@ const DashboardCard04 = () => {
         setChartData({ labels, values });
       } catch (error) {
         console.error("Error fetching tree data", error);
+        // Add UI feedback or error handling logic here
       }
     };
 
-    // Fetch data when the component mounts
+    // Fetch data when the component mounts or when visibleExtent changes
     fetchData();
 
     // Set up interval to fetch data every 60 seconds
@@ -68,7 +81,7 @@ const DashboardCard04 = () => {
         },
         ticks: {
           maxTicksLimit: 3,
-          callback: (value) => {
+          callback: (value: any) => {
             if (value === 0) return value;
             if (value === 5000) return "5k";
             if (value === 10000) return "10k";
@@ -92,7 +105,7 @@ const DashboardCard04 = () => {
           <BarChart
             labels={chartData.labels}
             values={chartData.values}
-            options={options}
+            options={options} // Pass options prop to BarChart
           />
         </div>
       </div>

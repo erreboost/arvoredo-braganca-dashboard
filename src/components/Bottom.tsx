@@ -1,11 +1,20 @@
-// Bottom.tsx
 import React, { useState } from "react";
 import { LuTrees } from "react-icons/lu";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import BottomNavigation from "./BottomNavigation";
 
-function Row({ title, icon, count }) {
+interface RowProps {
+  title: string;
+  icon: JSX.Element;
+  count: string;
+}
+
+interface BottomProps {
+  treeCount: number | null;
+}
+
+function Row({ title, icon, count }: RowProps) {
   return (
     <motion.div
       className="flex-1 pl-24 pt-0 mb-20 text-center rounded-md flex flex-col items-center h-full"
@@ -22,11 +31,10 @@ function Row({ title, icon, count }) {
   );
 }
 
-function Bottom({ treeCount }) {
-  // console.log("Received Tree Count:", treeCount);
+function Bottom({ treeCount }: BottomProps) {
   const [activeButton, setActiveButton] = useState(1);
 
-  const handleButtonClick = (buttonNumber) => {
+  const handleButtonClick = (buttonNumber: number) => {
     setActiveButton(buttonNumber);
   };
 
@@ -35,11 +43,19 @@ function Bottom({ treeCount }) {
       <div className="flex mb-2 space-x-4 items-center justify-center">
         <Row
           title="CO₂ Absorvido"
-          icon={<div>Icon1</div>}
+          icon={<LuTrees size={28} />}
           count="250,000,000"
         />
-        <Row title="O₂ Produzido" icon={<div>Icon2</div>} count="250,000,000" />
-        <Row title="Árvores" icon={<LuTrees size={64} />} count="100567" />
+        <Row
+          title="O₂ Produzido"
+          icon={<LuTrees size={28} />}
+          count="250,000,000"
+        />
+        <Row
+          title="Árvores"
+          icon={<LuTrees size={64} />}
+          count={treeCount ? treeCount.toString() : "0"}
+        />
         <Row
           title="Habitante"
           icon={<FaPeopleGroup size={64} />}

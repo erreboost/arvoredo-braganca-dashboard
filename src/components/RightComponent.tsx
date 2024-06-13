@@ -1,5 +1,6 @@
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import Loading from "./Loading";
+import React from "react";
 
 // Lazy load EsriMap
 const EsriMap = lazy(() => import("./EsriMap"));
@@ -10,9 +11,12 @@ const RightComponent = () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <div className="flex-1 mx-2 md:max-h-[85vh] md:w-full overflow-hidden">
+      <div
+        className="flex-1 mx-2 md:max-h-[85vh] md:w-full overflow-hidden"
+        style={{ zIndex: 0 }}
+      >
         {/* Ensure that EsriMap or other elements have higher z-index */}
-        <EsriMap apiKey={apiKey} style={{ zIndex: 0 }} />
+        <EsriMap apiKey={apiKey} />
       </div>
     </Suspense>
   );

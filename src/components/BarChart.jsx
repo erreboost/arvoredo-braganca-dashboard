@@ -2,7 +2,7 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import "chart.js/auto";
 
-const BarChart = ({ labels, values }) => {
+const BarChart = ({ labels, values, options }) => {
   const data = {
     labels: labels,
     datasets: [
@@ -16,13 +16,17 @@ const BarChart = ({ labels, values }) => {
     ],
   };
 
-  const options = {
+  // Merge the passed options with the default options
+  const mergedOptions = {
+    ...options,
     maintainAspectRatio: false,
     aspectRatio: 0.5,
     scales: {
+      ...options.scales,
       y: {
-        beginAtZero: true,
+        ...options.scales.y,
         ticks: {
+          ...options.scales.y.ticks,
           callback: (value) => {
             const valueMapping = {
               Passeio: "Passeio",
@@ -38,7 +42,7 @@ const BarChart = ({ labels, values }) => {
     },
   };
 
-  return <Bar data={data} options={options} />;
+  return <Bar data={data} options={mergedOptions} />;
 };
 
 export default BarChart;

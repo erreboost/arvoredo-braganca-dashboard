@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Informacao from "./Informacao";
-
 import Ocorrencia2 from "./Ocorrencia2";
 import Consulta from "./Consulta";
 
@@ -9,9 +8,8 @@ interface LeftComponentProps {
 }
 
 const LeftComponent: React.FC<LeftComponentProps> = ({ onButtonClick }) => {
-  const [selectedComponent, setSelectedComponent] = useState<string | null>(
-    "component1"
-  );
+  const [selectedComponent, setSelectedComponent] =
+    useState<string>("component1");
 
   const handleButtonClick = (componentName: string) => {
     setSelectedComponent(componentName);
@@ -19,20 +17,21 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ onButtonClick }) => {
   };
 
   const renderSelectedComponent = () => {
-    if (selectedComponent === "component1") {
-      return <Informacao />;
-    } else if (selectedComponent === "component2") {
-      return <Consulta />;
-    } else if (selectedComponent === "component3") {
-      return <Ocorrencia2 />;
-    } else {
-      return null;
+    switch (selectedComponent) {
+      case "component1":
+        return <Informacao />;
+      case "component2":
+        return <Consulta />;
+      case "component3":
+        return <Ocorrencia2 />;
+      default:
+        return null;
     }
   };
 
   useEffect(() => {
-    onButtonClick("component1");
-  }, []);
+    onButtonClick(selectedComponent);
+  }, [selectedComponent]); // Include selectedComponent in the dependency array
 
   return (
     <div>

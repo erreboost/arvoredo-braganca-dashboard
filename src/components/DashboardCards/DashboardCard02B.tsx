@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { API_ENDPOINT } from "../../config/config";
 
+interface Tree {
+  Esdado_cal: string;
+}
+
 const DashboardCard02B: React.FC = () => {
   const [caldBomEstado, setCaldBomEstado] = useState<number>(0);
   const [caldInsuf, setCaldInsuf] = useState<number>(0);
@@ -18,7 +22,7 @@ const DashboardCard02B: React.FC = () => {
         let countInexistente = 0;
 
         // Loop through the trees
-        data.trees.forEach((tree) => {
+        data.trees.forEach((tree: Tree) => {
           if (tree.Esdado_cal === "Caldeira suficiente e em bom estado.") {
             countBomEstado++;
           } else if (tree.Esdado_cal === "Caldeira insuficiente.") {

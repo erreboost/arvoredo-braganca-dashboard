@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { DataContext } from "../config/DataContext";
 
 function CaracteristicasEspecificas() {
@@ -23,7 +23,6 @@ function CaracteristicasEspecificas() {
 
   const handleApplyFilters = () => {
     console.log("Selected Filters:", selectedFilters);
-    // TODO: Implement logic to display array groups with corresponding items
   };
 
   const handleResetFilters = () => {

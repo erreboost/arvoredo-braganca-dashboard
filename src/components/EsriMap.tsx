@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { loadModules } from "esri-loader";
-// import { useVisibleExtent } from "../utils/VisibleExtentContext";
 
-const EsriMap = () => {
-  const [zoomLevel, setZoomLevel] = useState(0);
-  // const { updateExtent } = useVisibleExtent();
+interface EsriMapProps {
+  apiKey: string;
+  style?: React.CSSProperties;
+}
 
+const EsriMap: React.FC<EsriMapProps> = ({ apiKey, style }) => {
   useEffect(() => {
-    let view;
+    let view: any = null; // Use 'any' type for view
 
     const handleResize = () => {
       if (view && view.resize) {
@@ -52,33 +53,39 @@ const EsriMap = () => {
 
         csvLayer.when(() => {
           const layerExtent = csvLayer.fullExtent;
-          view.goTo(layerExtent.center);
+          if (view) {
+            view.goTo(layerExtent.center);
 
-          view.on("zoom", (event) => {
-            setZoomLevel(event.zoom);
-            // updateExtent(view.extent);
-            console.log("Zoom level changed:", event.zoom);
-          });
+            view.on("zoom", (event: any) => {
+              console.log("Zoom level changed:", event.zoom);
+            });
 
-          window.addEventListener("resize", handleResize);
+            window.addEventListener("resize", handleResize);
 
-          return () => {
-            window.removeEventListener("resize", handleResize);
+            return () => {
+              window.removeEventListener("resize", handleResize);
 
-            if (view) {
-              view.container = null;
-            }
-          };
+              if (view) {
+                view.container = null;
+              }
+            };
+          }
         });
       })
       .catch((err) => console.error("Failed to load ArcGIS API", err));
-  }, []);
+
+    return () => {
+      if (view) {
+        view.destroy();
+      }
+    };
+  }, [apiKey]); // Ensure useEffect dependency on apiKey
 
   return (
     <div
       id="mapViewDiv"
       className="h-full md:h-screen w-full md:w-full relative"
-      style={{ maxHeight: "65vh" }}
+      style={{ ...style, maxHeight: "65vh" }}
     />
   );
 };

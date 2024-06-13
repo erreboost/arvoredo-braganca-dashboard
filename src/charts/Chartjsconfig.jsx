@@ -1,4 +1,3 @@
-// Import Chart.js
 import { Chart, Tooltip } from "chart.js";
 import { hexToRGB, tailwindConfig } from "../utils/Utils";
 

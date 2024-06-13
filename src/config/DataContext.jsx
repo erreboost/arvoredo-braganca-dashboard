@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect } from "react";
-import { API_ENDPOINT } from "../config/config";
+import { createContext, useState, useEffect } from "react";
+import { API_ENDPOINT } from "./config";
 
 const DataContext = createContext();
 

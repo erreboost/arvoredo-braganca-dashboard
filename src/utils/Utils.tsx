@@ -1,26 +1,26 @@
-import resolveConfig from "tailwindcss/resolveConfig";
+// import resolveConfig from "tailwindcss/resolveConfig";
 
-export const tailwindConfig = () => {
-  return resolveConfig("../../tailwind.config.js");
-};
+// export const tailwindConfig = () => {
+//   return resolveConfig(tailwindConfigFile);
+// };
 
-export const hexToRGB = (h) => {
+export const hexToRGB = (h: string): string => {
   let r = 0;
   let g = 0;
   let b = 0;
   if (h.length === 4) {
-    r = `0x${h[1]}${h[1]}`;
-    g = `0x${h[2]}${h[2]}`;
-    b = `0x${h[3]}${h[3]}`;
+    r = parseInt(`${h[1]}${h[1]}`, 16);
+    g = parseInt(`${h[2]}${h[2]}`, 16);
+    b = parseInt(`${h[3]}${h[3]}`, 16);
   } else if (h.length === 7) {
-    r = `0x${h[1]}${h[2]}`;
-    g = `0x${h[3]}${h[4]}`;
-    b = `0x${h[5]}${h[6]}`;
+    r = parseInt(`${h[1]}${h[2]}`, 16);
+    g = parseInt(`${h[3]}${h[4]}`, 16);
+    b = parseInt(`${h[5]}${h[6]}`, 16);
   }
-  return `${+r},${+g},${+b}`;
+  return `${r},${g},${b}`;
 };
 
-export const formatValue = (value) =>
+export const formatValue = (value: number): string =>
   Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",

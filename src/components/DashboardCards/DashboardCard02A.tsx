@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { API_ENDPOINT } from "../../config/config";
 
+interface Tree {
+  Estado_fit: string;
+  Esdado_cal: string;
+}
+
 const DashboardCard02A: React.FC = () => {
   const [numWithSymptoms, setNumWithSymptoms] = useState<number>(0);
   const [numWithoutSymptoms, setNumWithoutSymptoms] = useState<number>(0);
@@ -16,7 +21,7 @@ const DashboardCard02A: React.FC = () => {
         let countWithoutSymptoms = 0;
 
         // Loop through the trees
-        data.trees.forEach((tree) => {
+        data.trees.forEach((tree: Tree) => {
           if (tree.Estado_fit.includes("sintomas ou sinais")) {
             countWithSymptoms++;
           } else {

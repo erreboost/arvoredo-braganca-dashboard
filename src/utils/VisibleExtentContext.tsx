@@ -1,11 +1,20 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
-const VisibleExtentContext = createContext();
+interface VisibleExtentContextProps {
+  visibleExtent: any;
+  updateExtent: (extent: any) => void;
+}
 
-export const VisibleExtentProvider: React.FC = ({ children }) => {
-  const [visibleExtent, setVisibleExtent] = useState();
+const VisibleExtentContext = createContext<
+  VisibleExtentContextProps | undefined
+>(undefined);
 
-  const updateExtent = (extent) => {
+export const VisibleExtentProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [visibleExtent, setVisibleExtent] = useState<any>(undefined);
+
+  const updateExtent = (extent: any) => {
     setVisibleExtent(extent);
   };
 
@@ -16,7 +25,7 @@ export const VisibleExtentProvider: React.FC = ({ children }) => {
   );
 };
 
-export const useVisibleExtent = () => {
+export const useVisibleExtent = (): VisibleExtentContextProps => {
   const context = useContext(VisibleExtentContext);
   if (!context) {
     throw new Error(

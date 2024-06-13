@@ -1,9 +1,22 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
-const TreeDataContext = createContext();
+// Define the shape of the context state
+interface TreeDataContextProps {
+  treeData: any[];
+  setTreeData: (data: any[]) => void;
+}
 
-export const TreeDataProvider = ({ children }) => {
-  const [treeData, setTreeData] = useState([]);
+// Create the context with a default value
+const TreeDataContext = createContext<TreeDataContextProps | undefined>(
+  undefined
+);
+
+interface TreeDataProviderProps {
+  children: ReactNode;
+}
+
+export const TreeDataProvider = ({ children }: TreeDataProviderProps) => {
+  const [treeData, setTreeData] = useState<any[]>([]);
 
   return (
     <TreeDataContext.Provider value={{ treeData, setTreeData }}>

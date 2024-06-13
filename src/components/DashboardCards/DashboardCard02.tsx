@@ -9,22 +9,19 @@ const DashboardCard02 = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch CSV data (adjust URL accordingly)
         const response = await fetch(API_ENDPOINT);
         const data = await response.text();
 
-        // Assuming CSV data is ready (replace with your own condition)
         const isDataReady = data && data.length > 0;
 
         if (isDataReady) {
-          // Simulate additional processing (e.g., parsing CSV, etc.)
           await new Promise((resolve) => setTimeout(resolve, 1000));
-          // Mark loading as complete
+
           setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching CSV data", error);
-        // Handle error by marking loading as complete
+
         setLoading(false);
       }
     };

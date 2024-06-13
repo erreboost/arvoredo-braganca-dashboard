@@ -1,5 +1,5 @@
-import React from "react";
 import EsriMap from "./EsriMap";
+import React from "react";
 
 const App = () => {
   const apiKey =

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import FilteredResults from "./FilteredResults";
 import { API_ENDPOINT } from "../config/config";
 import { DataContext } from "../config/DataContext";

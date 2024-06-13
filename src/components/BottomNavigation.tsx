@@ -1,4 +1,3 @@
-// BottomNavigation.tsx
 import React from "react";
 
 interface BottomNavigationProps {
