@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 interface Tree {
-  Estado_fit: string; // Replace with actual type
+  Estado_fit: string;
 }
 
 interface DashboardCardData {

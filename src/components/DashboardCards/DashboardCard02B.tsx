@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 interface Tree {
-  Esdado_cal: string; // Replace with actual type
+  Esdado_cal: string;
 }
 
 interface DashboardCardData {

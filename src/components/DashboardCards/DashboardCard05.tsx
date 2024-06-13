@@ -19,10 +19,8 @@ const DashboardCard05 = () => {
     // Fetch data when the component mounts
     fetchData();
 
-    // Set up interval to fetch data every 60 seconds
     const intervalId = setInterval(fetchData, 60000);
 
-    // Clean up interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
 

@@ -5,7 +5,6 @@ import { API_ENDPOINT } from "../../config/config";
 
 interface Tree {
   Localizacao: string;
-  // Add other properties as per your tree data structure
 }
 
 const DashboardCard04: React.FC = () => {

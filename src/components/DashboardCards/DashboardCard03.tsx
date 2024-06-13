@@ -1,8 +1,6 @@
 import React from "react";
 import EsriMap from "../EsriMap";
 import { VisibleExtentProvider } from "../../utils/VisibleExtentContext";
-// import dotenv from "dotenv";
-// dotenv.config();
 
 const DashboardCard03: React.FC = () => {
   // const { chartData } = props;
