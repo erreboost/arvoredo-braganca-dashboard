@@ -105,7 +105,7 @@ const DashboardCard04: React.FC = () => {
           <BarChart
             labels={chartData.labels}
             values={chartData.values}
-            options={options} // Pass options prop to BarChart
+            options={options}
           />
         </div>
       </div>

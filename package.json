@@ -18,6 +18,7 @@
     "chart.js": "^4.4.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "deep-clone": "^4.0.0",
+    "dotenv": "^16.4.5",
     "esri-loader": "^3.7.0",
     "framer-motion": "11.2.10",
     "papaparse": "^5.4.1",

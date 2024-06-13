@@ -8,7 +8,7 @@ interface EsriMapProps {
 
 const EsriMap: React.FC<EsriMapProps> = ({ apiKey, style }) => {
   useEffect(() => {
-    let view: any = null; // Use 'any' type for view
+    let view: any = null;
 
     const handleResize = () => {
       if (view && view.resize) {
@@ -79,7 +79,7 @@ const EsriMap: React.FC<EsriMapProps> = ({ apiKey, style }) => {
         view.destroy();
       }
     };
-  }, [apiKey]); // Ensure useEffect dependency on apiKey
+  }, [apiKey]);
 
   return (
     <div

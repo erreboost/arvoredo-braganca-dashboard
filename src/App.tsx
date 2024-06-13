@@ -9,6 +9,7 @@ import Correcao from "./pages/Correcao";
 import Dashboard2 from "./pages/Dashboard2";
 import "@arcgis/core/assets/esri/themes/light/main.css";
 import { DataProvider } from "./config/DataContext";
+
 // import { TreeDataProvider } from "./utils/TreeDataContext";
 
 function App() {
