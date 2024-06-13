@@ -1,4 +1,6 @@
-import { createContext, useState, useEffect } from "react";
+// src/config/DataContext.jsx
+
+import React, { createContext, useState, useEffect } from "react";
 import { API_ENDPOINT } from "./config";
 
 const DataContext = createContext();
@@ -18,6 +20,9 @@ const DataProvider = ({ children }) => {
     };
 
     fetchData();
+    const intervalId = setInterval(fetchData, 60000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return <DataContext.Provider value={data}>{children}</DataContext.Provider>;
