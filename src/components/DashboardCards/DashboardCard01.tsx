@@ -9,7 +9,7 @@ const DashboardCard01 = () => {
       try {
         const response = await fetch(API_ENDPOINT);
         const data = await response.json();
-        const species = data.trees.map((tree: any) => tree.Especie); // Adjust 'tree' type if possible
+        const species = data.trees.map((tree: any) => tree.Especie);
         setTreeSpecies(species);
       } catch (error) {
         console.error("Error fetching tree data", error);

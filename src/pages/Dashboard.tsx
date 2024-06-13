@@ -10,27 +10,17 @@ function Dashboard() {
   return (
     <VisibleExtentProvider>
       <div className="flex flex-col h-screen overflow-hidden">
-        {/* Sidebar and Header */}
-
-        {/* Content area */}
         <div className="flex-1">
-          {/* Content area header */}
-
           <main className="p-4 space-y-4">
-            {/* Dashboard actions c */}
-
             {/* First Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2">
               <div className="flex-1 min-w-0 max-h-full">
-                {/* DashboardCard01 */}
                 <DashboardCard01 />
               </div>
               <div className="flex-1 min-w-0">
-                {/* DashboardCard02 */}
                 <DashboardCard02 />
               </div>
               <div className="flex-1 min-w-0">
-                {/* DashboardCard03 */}
                 <DashboardCard03 />
               </div>
             </div>
@@ -38,11 +28,9 @@ function Dashboard() {
             {/* Second Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className="flex-1 min-w-0">
-                {/* DashboardCard04 */}
                 <DashboardCard04 />
               </div>
               <div className="flex-1 min-w-0">
-                {/* DashboardCard05 */}
                 <DashboardCard05 />
               </div>
             </div>
