@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
   const links: Link[] = [
     { name: "Início", link: "/" },
     { name: "Dashboard", link: "/dashboard" },
-    { name: "Ocorrências", link: "/ocorrencias" },
+    // { name: "Ocorrências", link: "/ocorrencias" },
     { name: "Correção", link: "/correcao" },
   ];
 
