@@ -1,54 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { loadModules } from "esri-loader";
-import { API_ENDPOINT } from "../config/config";
-
-interface Tree {
-  _id: string;
-  Data: string;
-  Dicofre: string;
-  Localizacao: string;
-  Especie: string;
-  Nomecomum: string;
-  Estado_fit: string;
-  Esdado_cal: string;
-  Ava_Risco: string;
-  Propo_Inte: string;
-  Obser: string;
-  GlobalID: string;
-  raz_calssifica: string;
-  agen_bioticos: string;
-  Orgaos_afetados: string;
-  Grau_de_desfolha: string;
-  Sintomas_sinais_desfolhadores: string;
-  Grau_de_descoloracao_da_copa: string;
-  Deformacao_dos_tecidos: string;
-  Alteracao_da_estrutura: string;
-  Supressao_parcial_dos_orgaos: string;
-  Orificios_perfuracoes: string;
-  galerias: string;
-  necroses: string;
-  serrim: string;
-  exsudacao: string;
-  novelos_fibra: string;
-  Forma_caldeira: string;
-  Altura_v2: number;
-  capv2: string;
-  DAP_v2: number;
-  idade_apro_v2: string;
-  Especie_Val: number;
-  Outro_Nome_Comum: string;
-  Outra_Especie: string;
-  Codigo: string;
-  Outra_Tip_Int: string;
-  grupos: string;
-  POINT_X: string;
-  POINT_Y: string;
-  POINT_Z: string;
-  Fotos: string[];
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+import { API_ENDPOINT, API_BASE_URL } from "../config/config";
+import { Tree } from "../types/interfaces";
 
 interface EsriMapProps {
   apiKey: string;
@@ -66,9 +19,7 @@ const EsriMap: React.FC<EsriMapProps> = ({ apiKey, style }) => {
         // Base URL to image URLs
         const treesWithFullImageURLs = data.trees.map((tree: Tree) => ({
           ...tree,
-          Fotos: tree.Fotos.map(
-            (photo) => `https://app.grupoerre.pt:5258/${photo}`
-          ),
+          Fotos: tree.Fotos.map((photo) => `${API_BASE_URL}/${photo}`),
         }));
         setTrees(treesWithFullImageURLs);
       })
@@ -165,43 +116,44 @@ const EsriMap: React.FC<EsriMapProps> = ({ apiKey, style }) => {
                     }" class="max-w-full rounded-lg mb-2" />`;
                   }).join("");
 
-                  let content = `
-                    <div class="p-4">
-                      <table class="table-auto w-full text-sm text-left text-gray-700">
+                  return `
+                    <div class="p-2">
+                      <table class="table-auto w-full h-full text-sm text-left text-gray-700 ">
                         <tbody>
-                          <tr>
-                            <td class="font-medium">Espécie</td>
-                            <td>${attributes.Especie}</td>
+                          <tr class="border-b border-gray-600">
+                            <td class="font-medium border-b border-gray-600 py-2">Espécie</td>
+                            <td class="py-2">${attributes.Especie}</td>
                           </tr>
-                          <tr>
-                            <td class="font-medium">Nome</td>
-                            <td>${attributes.Nomecomum}</td>
+                          <tr class="border-b border-gray-600">
+                            <td class="font-medium border-b border-gray-600 py-2">Nome</td>
+                            <td class="py-2">${attributes.Nomecomum}</td>
                           </tr>
-                          <tr>
-                            <td class="font-medium">Estado</td>
-                            <td>${attributes.Estado_fit}</td>
+                          <tr class="border-b border-gray-600">
+                            <td class="font-medium border-b border-gray-600 py-2">Estado</td>
+                            <td class="py-2">${attributes.Estado_fit}</td>
                           </tr>
-                          <tr>
-                            <td class="font-medium">Altura (m)</td>
-                            <td>${attributes.Altura_v2}</td>
+                          <tr class="border-b border-gray-600">
+                            <td class="font-medium border-b border-gray-600 py-2">Altura (m)</td>
+                            <td class="py-2">${attributes.Altura_v2}</td>
                           </tr>
-                          <tr>
-                            <td class="font-medium">DAP (cm)</td>
-                            <td>${attributes.DAP_v2}</td>
+                          <tr class="border-b border-gray-600">
+                            <td class="font-medium border-b border-gray-600 py-2">DAP (cm)</td>
+                            <td class="py-2">${attributes.DAP_v2}</td>
                           </tr>
-                          <tr>
-                            <td class="font-medium">Idade (anos)</td>
-                            <td>${attributes.idade_apro_v2}</td>
+                         <tr class="border-b border-gray-600">
+                            <td class="font-medium border-b border-gray-600 py-2">Idade (anos)</td>
+                            <td class="py-2">${attributes.idade_apro_v2}</td>
                           </tr>
                         </tbody>
                       </table>
-                      <br>
-                      <h4 class="font-semibold mb-2">Fotos:</h4>
-                      ${photos}
+                      <div class="mt-4">
+                        <h4 class="font-semibold mb-2">Fotos:</h4>
+                        <div class="flex flex-wrap">
+                          ${photos}
+                        </div>
+                      </div>
                     </div>
                   `;
-
-                  return content;
                 },
               });
 

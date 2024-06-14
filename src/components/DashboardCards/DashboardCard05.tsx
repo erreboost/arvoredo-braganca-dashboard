@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { API_ENDPOINT } from "../../config/config";
 
 const DashboardCard05 = () => {
-  const [treeCount, setTreeCount] = useState<number | null>(null); // Corrected state initialization
+  const [treeCount, setTreeCount] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
