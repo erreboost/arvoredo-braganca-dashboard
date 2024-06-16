@@ -6,7 +6,6 @@ import Inicio from "./pages/Inicio";
 import Ocorrencias from "./pages/Ocorrencias";
 import Dashboard from "./pages/Dashboard";
 import Correcao from "./pages/Correcao";
-import Dashboard2 from "./pages/Dashboard2";
 import "@arcgis/core/assets/esri/themes/light/main.css";
 import { DataProvider } from "./config/DataContext";
 
@@ -26,7 +25,7 @@ function App() {
               <Route path="/" element={<Inicio />} />
               <Route path="/ocorrencias" element={<Ocorrencias />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              {/* <Route path="/dashboard2" element={<Dashboard2 />} /> */}
+
               <Route path="/correcao" element={<Correcao />} />
             </Routes>
           </div>

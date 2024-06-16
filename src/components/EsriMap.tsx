@@ -108,8 +108,9 @@ const EsriMap: React.FC<EsriMapProps> = ({ apiKey, style }) => {
 
               graphic.popupTemplate = new PopupTemplate({
                 title: "{Nomecomum}",
-                content: (feature) => {
-                  const attributes = feature.graphic.attributes as Tree;
+                content: (feature: any) => {
+                  const attributes = feature.graphic
+                    .attributes as __esri.GraphicProperties as Tree;
                   const photos = attributes.Fotos.map((photo, index) => {
                     return `<img src="${photo}" alt="Photo ${
                       index + 1
@@ -189,8 +190,8 @@ const EsriMap: React.FC<EsriMapProps> = ({ apiKey, style }) => {
             content: "<div class='custom-popup'></div>",
           });
 
-          view.on("click", (event) => {
-            view.hitTest(event).then((response) => {
+          view.on("click", (event: any) => {
+            view.hitTest(event).then((response: any) => {
               if (response.results.length > 0) {
                 const graphic = response.results[0].graphic;
                 if (graphic && graphic.popupTemplate) {

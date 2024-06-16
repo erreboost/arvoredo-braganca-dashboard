@@ -41,6 +41,8 @@ export interface Tree {
   POINT_Y: string;
   POINT_Z: string;
   Fotos: string[];
+  photo: string[];
+  photos: string[];
   createdAt: string;
   updatedAt: string;
   __v: number;
