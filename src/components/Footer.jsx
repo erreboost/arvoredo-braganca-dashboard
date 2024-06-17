@@ -8,8 +8,8 @@ const Footer = () => {
           </a>
         </div>
         <div className="flex items-center gap-12">
-          <img className="w-16 h-full mr-4" src="/assets/respira.png" alt="" />
-          <img className="w-24 h-full" src="/assets/compete.png" alt="" />
+          {/* <img className="w-16 h-full mr-4" src="/assets/respira.png" alt="" />
+          <img className="w-24 h-full" src="/assets/compete.png" alt="" /> */}
         </div>
       </div>
     </div>

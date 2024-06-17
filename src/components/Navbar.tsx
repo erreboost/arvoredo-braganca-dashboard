@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
       <div className="md:flex items-center justify-between bg-gray-200 shadow-xl py-2 md:px-10 px-4 rounded-b-xl z-9999999">
         {/* logo section */}
         <div className="cursor-pointer flex items-center">
-          <img className="w-32 h-full" src="/assets/logo.png" alt="" />
+          <img className="w-20 " src="/assets/logoarraiolos.png" alt="" />
         </div>
         {/* Menu icon */}
         <div
