@@ -11,7 +11,7 @@ function Consulta() {
 
   return (
     <div>
-      <div className="flex justify-between border p-4 mb-4">
+      <div className="flex justify-between border p-4 mb-2">
         <button
           className={`font-semibold ${
             selectedCategory === "Gerais" ? "border-b-2 border-red-700" : ""

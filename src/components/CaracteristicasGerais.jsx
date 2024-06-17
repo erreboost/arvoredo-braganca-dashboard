@@ -159,7 +159,7 @@ function CaracteristicasGerais() {
       </div>
 
       {/* Buttons */}
-      <div className="flex justify-end mt-0">
+      <div className="flex justify-end -mt-10">
         <button
           onClick={handleApplyFilters}
           className="border bg-blue-500 text-white px-4 py-2 mr-2 rounded-lg"

@@ -39,7 +39,7 @@ function Bottom({ treeCount }: BottomProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center relative flex-grow h-[48%]">
+    <div className="flex flex-col items-center justify-center relative flex-grow h-[48%] m-2">
       <div className="flex mb-2 space-x-4 items-center justify-center">
         <Row
           title="CO₂ Absorvido"

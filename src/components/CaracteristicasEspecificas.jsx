@@ -104,13 +104,13 @@ function CaracteristicasEspecificas() {
       <div className="flex justify-end mt-4">
         <button
           onClick={handleApplyFilters}
-          className="border bg-blue-500 text-white px-4 py-2 mr-2"
+          className="border bg-blue-500 text-white px-4 py-2 mr-2 rounded-lg"
         >
           Aplicar
         </button>
         <button
           onClick={handleResetFilters}
-          className="border bg-white px-4 py-2"
+          className="border bg-white px-4 py-2 rounded-lg"
         >
           Reset
         </button>

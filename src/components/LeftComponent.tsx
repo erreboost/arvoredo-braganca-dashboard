@@ -31,11 +31,11 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ onButtonClick }) => {
 
   useEffect(() => {
     onButtonClick(selectedComponent);
-  }, [selectedComponent]); // Include selectedComponent in the dependency array
+  }, [selectedComponent]);
 
   return (
     <div>
-      <div className="bg-[#A39161] p-4 rounded-md flex justify-center items-center">
+      <div className="bg-[#A39161] p-3 rounded-md flex justify-center items-center">
         <button
           onClick={() => handleButtonClick("component1")}
           className={`mx-2 font-semibold ${
