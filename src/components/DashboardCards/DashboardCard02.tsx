@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-import DashboardCard02A from "./DashboardCard02A";
-import DashboardCard02B from "./DashboardCard02B";
-import { DataContext } from "../../config/DataContext";
+import React, {useContext} from 'react';
+import DashboardCard02A from './DashboardCard02A';
+import DashboardCard02B from './DashboardCard02B';
+import {DataContext} from '../../config/DataContext';
 
 const DashboardCard02 = () => {
   const data = useContext(DataContext);

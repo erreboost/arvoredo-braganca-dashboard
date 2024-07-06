@@ -1,10 +1,11 @@
-import React from "react";
-import { VisibleExtentProvider } from "../utils/VisibleExtentContext";
-import DashboardCard01 from "../components/DashboardCards/DashboardCard01";
-import DashboardCard02 from "../components/DashboardCards/DashboardCard02";
-import DashboardCard03 from "../components/DashboardCards/DashboardCard03";
-import DashboardCard04 from "../components/DashboardCards/DashboardCard04";
-import DashboardCard05 from "../components/DashboardCards/DashboardCard05";
+import React from 'react';
+
+import DashboardCard01 from '../components/DashboardCards/DashboardCard01';
+import DashboardCard02 from '../components/DashboardCards/DashboardCard02';
+import DashboardCard03 from '../components/DashboardCards/DashboardCard03';
+import DashboardCard04 from '../components/DashboardCards/DashboardCard04';
+import DashboardCard05 from '../components/DashboardCards/DashboardCard05';
+import {VisibleExtentProvider} from '../utils/VisibleExtentContext';
 
 function Dashboard() {
   return (
