@@ -58,7 +58,7 @@ const DashboardCard01 = () => {
         )}
         {!loading && treeSpecies.length === 0 && (
           <div className="text-center text-gray-600">
-            No species to display.
+            A aguardar informação...
           </div>
         )}
       </div>
