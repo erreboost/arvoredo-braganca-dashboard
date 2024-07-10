@@ -1,36 +1,36 @@
-import React, {createContext, useContext, useState} from 'react';
-import {Tree} from '../types/interfaces';
+import React, {createContext, useContext, useState, ReactNode} from 'react';
 
-interface VisibleExtentContextType {
+interface VisibleExtentContextProps {
   visibleExtent: any;
-  setVisibleExtent: React.Dispatch<React.SetStateAction<any>>;
-  visibleTrees: Tree[];
-  setVisibleTrees: React.Dispatch<React.SetStateAction<Tree[]>>;
+  setVisibleExtent: (extent: any) => void;
+}
+
+interface VisibleExtentProviderProps {
+  children: ReactNode;
 }
 
 const VisibleExtentContext = createContext<
-  VisibleExtentContextType | undefined
+  VisibleExtentContextProps | undefined
 >(undefined);
 
-export const useVisibleExtent = () => {
-  const context = useContext(VisibleExtentContext);
-  if (!context) {
-    throw new Error(
-      'useVisibleExtent must be used within a VisibleExtentProvider'
-    );
-  }
-  return context;
-};
-
-export const VisibleExtentProvider: React.FC = ({children}) => {
+export const VisibleExtentProvider: React.FC<VisibleExtentProviderProps> = ({
+  children,
+}) => {
   const [visibleExtent, setVisibleExtent] = useState<any>(null);
-  const [visibleTrees, setVisibleTrees] = useState<Tree[]>([]);
 
   return (
-    <VisibleExtentContext.Provider
-      value={{visibleExtent, setVisibleExtent, visibleTrees, setVisibleTrees}}
-    >
+    <VisibleExtentContext.Provider value={{visibleExtent, setVisibleExtent}}>
       {children}
     </VisibleExtentContext.Provider>
   );
+};
+
+export const useVisibleExtentContext = () => {
+  const context = useContext(VisibleExtentContext);
+  if (!context) {
+    throw new Error(
+      'useVisibleExtentContext must be used within a VisibleExtentProvider'
+    );
+  }
+  return context;
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface BottomNavigationProps {
   activeButton: number | undefined;
@@ -10,11 +10,11 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   onButtonClick,
 }) => {
   return (
-    <div className="absolute bottom-0 left-0 right-0 bg-gray-300 p-4 flex space-x-4 items-center">
+    <div className="absolute bottom-0 left-0 right-0 bg-gray-300 p-0 flex space-x-4 items-center">
       <button
         onClick={() => onButtonClick(1)}
         className={`flex-1 py-2 rounded ${
-          activeButton === 1 ? "bg-blue-500 text-white" : "bg-gray-300"
+          activeButton === 1 ? 'bg-blue-500 text-white' : 'bg-gray-300'
         }`}
       >
         Valor Ecológico
@@ -22,7 +22,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
       <button
         onClick={() => onButtonClick(2)}
         className={`flex-1 py-2 rounded ${
-          activeButton === 2 ? "bg-red-500 text-white" : "bg-gray-300"
+          activeButton === 2 ? 'bg-red-500 text-white' : 'bg-gray-300'
         }`}
       >
         Outros

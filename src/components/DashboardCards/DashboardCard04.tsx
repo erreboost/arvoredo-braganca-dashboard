@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
-import BarChart from "../BarChart";
-import { useVisibleExtent } from "../../utils/VisibleExtentContext";
-import { API_ENDPOINT } from "../../config/config";
+import React, {useEffect, useState} from 'react';
+import BarChart from '../BarChart';
+import LoadingSpinner from '../LoadingSpinner';
+import {useTreeContext} from '../../utils/TreeProvider';
 
 interface Tree {
   Localizacao: string;
+  POINT_X: string;
+  POINT_Y: string;
 }
 
 const DashboardCard04: React.FC = () => {
@@ -15,87 +17,123 @@ const DashboardCard04: React.FC = () => {
     labels: [],
     values: [],
   });
-  const { visibleExtent } = useVisibleExtent();
+
+  const {visibleTrees, visibleExtent} = useTreeContext();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_ENDPOINT);
-        const data = await response.json();
+    const updateChartData = () => {
+      setLoading(true);
 
-        const treeCounts: { [key: string]: number } = {
+      try {
+        // Filter trees based on visible extent
+        const filteredTrees = filterTreesByVisibleExtent(
+          visibleTrees,
+          visibleExtent
+        );
+        const treeCounts: {[key: string]: number} = {
           Passeio: 0,
-          "Jardim público": 0,
+          'Jardim público': 0,
           Via: 0,
           Outro: 0,
         };
 
-        // Assuming data is an array of Tree objects
-        data.trees.forEach((tree: Tree) => {
+        filteredTrees.forEach((tree: Tree) => {
           const location = tree.Localizacao;
 
           if (
-            location === "Passeio" ||
-            location === "Jardim público" ||
-            location === "Via"
+            location === 'Passeio' ||
+            location === 'Jardim público' ||
+            location === 'Via'
           ) {
             treeCounts[location]++;
           } else {
-            treeCounts["Outro"]++;
+            treeCounts['Outro']++;
           }
         });
 
         const labels = Object.keys(treeCounts);
         const values = Object.values(treeCounts);
 
-        setChartData({ labels, values });
+        setChartData({labels, values});
       } catch (error) {
-        console.error("Error fetching tree data", error);
-        // Add UI feedback or error handling logic here
+        console.error('Error processing tree data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    // Fetch data when the component mounts or when visibleExtent changes
-    fetchData();
+    updateChartData();
 
-    // Set up interval to fetch data every 60 seconds
-    const intervalId = setInterval(fetchData, 60000);
+    const intervalId = setInterval(updateChartData, 120000);
 
-    // Clean up interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [visibleExtent]);
+  }, [visibleTrees, visibleExtent]);
+
+  // Filter trees based on visible extent
+  const filterTreesByVisibleExtent = (trees: Tree[], extent: any) => {
+    if (!extent) return trees; // Return all trees if extent is not defined
+
+    return trees.filter((tree) => {
+      const x = parseFloat(tree.POINT_X.replace(',', '.'));
+      const y = parseFloat(tree.POINT_Y.replace(',', '.'));
+
+      if (isNaN(x) || isNaN(y)) {
+        console.warn(
+          'Invalid POINT_X or POINT_Y values:',
+          tree.POINT_X,
+          tree.POINT_Y
+        );
+        return false;
+      }
+
+      const isWithinExtent =
+        x >= extent.xmin &&
+        x <= extent.xmax &&
+        y >= extent.ymin &&
+        y <= extent.ymax;
+
+      return isWithinExtent;
+    });
+  };
 
   const options = {
     scales: {
       x: {
         title: {
           display: true,
-          text: "Location",
+          text: 'Localização',
         },
       },
       y: {
         title: {
           display: true,
-          text: "Número de Árvores",
+          text: 'Núm. de Árvores',
         },
         ticks: {
           maxTicksLimit: 3,
           callback: (value: any) => {
             if (value === 0) return value;
-            if (value === 5000) return "5k";
-            if (value === 10000) return "10k";
-            return "";
+            if (value === 5000) return '5k';
+            if (value === 10000) return '10k';
+            return '';
           },
         },
       },
     },
   };
 
+  if (loading) {
+    return (
+      <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[20vh] items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  // Final Data
   return (
-    <div
-      className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[20vh]"
-      style={{ width: "100%", height: "100%" }}
-    >
+    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[20vh]">
       <div className="px-5 pt-5">
         <h2 className="text-lg flex justify-center items-center font-semibold text-slate-800 dark:text-slate-100 mb-2">
           Localização

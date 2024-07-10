@@ -1,11 +1,12 @@
-import { useState, useEffect, useContext } from "react";
-import { DataContext } from "../config/DataContext";
+import React, {useState, useEffect, useContext} from 'react';
+import {DataContext} from '../config/DataContext';
+import {API_ENDPOINT} from '../config/config';
 
 function CaracteristicasEspecificas() {
   const [selectedFilters, setSelectedFilters] = useState({
-    dap: "",
-    idade: "",
-    altura: "",
+    dap: '',
+    idade: '',
+    altura: '',
   });
 
   const data = useContext(DataContext);
@@ -13,6 +14,30 @@ function CaracteristicasEspecificas() {
   const [uniqueDap, setUniqueDap] = useState([]);
   const [uniqueIdade, setUniqueIdade] = useState([]);
   const [uniqueAltura, setUniqueAltura] = useState([]);
+
+  // Function to fetch data and set initial state
+  useEffect(() => {
+    fetch(API_ENDPOINT)
+      .then((response) => response.json())
+      .then((data) => {
+        const dapValues = [
+          ...new Set(data.trees.map((item) => item.DAP_v2)),
+        ].sort((a, b) => a - b);
+        const idadeValues = [
+          ...new Set(data.trees.map((item) => item.idade_apro_v2)),
+        ].sort();
+        const alturaValues = [
+          ...new Set(data.trees.map((item) => item.Altura_v2)),
+        ].sort((a, b) => a - b);
+
+        setUniqueDap(dapValues);
+        setUniqueIdade(idadeValues);
+        setUniqueAltura(alturaValues);
+      })
+      .catch((error) => {
+        console.error('Error fetching tree data:', error);
+      });
+  }, [data]); // Ensure useEffect runs when 'data' changes
 
   const handleFilterChange = (filterType, value) => {
     setSelectedFilters((prevFilters) => ({
@@ -22,34 +47,17 @@ function CaracteristicasEspecificas() {
   };
 
   const handleApplyFilters = () => {
-    console.log("Selected Filters:", selectedFilters);
+    console.log('Selected Filters:', selectedFilters);
+    // Add logic here if you need to perform actions when filters are applied
   };
 
   const handleResetFilters = () => {
     setSelectedFilters({
-      dap: "",
-      idade: "",
-      altura: "",
+      dap: '',
+      idade: '',
+      altura: '',
     });
   };
-
-  useEffect(() => {
-    if (data) {
-      const dapValues = [
-        ...new Set(data.trees.map((item) => item.DAP_v2)),
-      ].sort((a, b) => a - b);
-      const idadeValues = [
-        ...new Set(data.trees.map((item) => item.idade_apro_v2)),
-      ].sort();
-      const alturaValues = [
-        ...new Set(data.trees.map((item) => item.Altura_v2)),
-      ].sort((a, b) => a - b);
-
-      setUniqueDap(dapValues);
-      setUniqueIdade(idadeValues);
-      setUniqueAltura(alturaValues);
-    }
-  }, [data]);
 
   function generateOptions(values) {
     return values.map((value, index) => (
@@ -69,7 +77,7 @@ function CaracteristicasEspecificas() {
         <h3 className="text-lg font-semibold">DAP (cm):</h3>
         <select
           value={selectedFilters.dap}
-          onChange={(e) => handleFilterChange("dap", e.target.value)}
+          onChange={(e) => handleFilterChange('dap', e.target.value)}
           className="mb-2 w-full"
         >
           <option value="">- Tudo -</option>
@@ -81,7 +89,7 @@ function CaracteristicasEspecificas() {
         <h3 className="text-lg font-semibold">Idade:</h3>
         <select
           value={selectedFilters.idade}
-          onChange={(e) => handleFilterChange("idade", e.target.value)}
+          onChange={(e) => handleFilterChange('idade', e.target.value)}
           className="mb-2 w-full"
         >
           <option value="">- Tudo -</option>
@@ -93,7 +101,7 @@ function CaracteristicasEspecificas() {
         <h3 className="text-lg font-semibold">Altura:</h3>
         <select
           value={selectedFilters.altura}
-          onChange={(e) => handleFilterChange("altura", e.target.value)}
+          onChange={(e) => handleFilterChange('altura', e.target.value)}
           className="mb-2 w-full"
         >
           <option value="">- Tudo -</option>

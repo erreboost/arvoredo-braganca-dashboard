@@ -1,5 +1,4 @@
 import React from 'react';
-
 import DashboardCard01 from '../components/DashboardCards/DashboardCard01';
 import DashboardCard02 from '../components/DashboardCards/DashboardCard02';
 import DashboardCard03 from '../components/DashboardCards/DashboardCard03';
@@ -10,6 +9,7 @@ import {VisibleExtentProvider} from '../utils/VisibleExtentContext';
 function Dashboard() {
   return (
     <VisibleExtentProvider>
+      {/* <SetVisibleExtent /> */}
       <div className="flex flex-col h-screen overflow-hidden">
         <div className="flex-1">
           <main className="p-4 space-y-4">

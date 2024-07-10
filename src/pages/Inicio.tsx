@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, {useEffect, useState} from 'react';
+import {motion, AnimatePresence} from 'framer-motion';
 
-import LeftComponent from "../components/LeftComponent";
-import RightComponent from "../components/RightComponent";
-import Bottom from "../components/Bottom";
-import { TreeDataProvider } from "../utils/TreeDataContext";
+import LeftComponent from '../components/LeftComponent';
+import RightComponent from '../components/RightComponent';
+import Bottom from '../components/Bottom';
+import {TreeDataProvider} from '../utils/TreeDataContext';
 
 function Inicio() {
   const [loading, setLoading] = useState(true);
@@ -28,17 +28,17 @@ function Inicio() {
           {loading && (
             <motion.div
               key="loading"
-              className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50"
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+              transition={{duration: 1.5, ease: 'easeInOut'}}
             >
               <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
+                initial={{opacity: 0, y: 20}}
+                animate={{opacity: 1, y: 0}}
+                exit={{opacity: 0, y: 20}}
+                transition={{duration: 0.5, delay: 0.2, ease: 'easeInOut'}}
                 className="text-xl font-semibold text-gray-800"
               >
                 🌳 Loading Map 🌳
@@ -49,20 +49,20 @@ function Inicio() {
 
         {!loading && (
           <motion.div
-            className="flex flex-col lg:flex-row flex-grow bg-gray-100 h-screen"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.5, delay: 0.2, ease: "easeInOut" }}
+            className="flex flex-col lg:flex-row flex-1 bg-gray-100"
+            initial={{opacity: 0, y: 20}}
+            animate={{opacity: 1, y: 0}}
+            transition={{duration: 1.5, delay: 0.2, ease: 'easeInOut'}}
           >
-            <div className="w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md h-5/6">
+            <div className="w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md lg:flex-shrink-0 min-h-[50vh]">
               <LeftComponent onButtonClick={handleButtonClick} />
             </div>
 
             <motion.div
-              className="w-full lg:w-1/3 lg:flex lg:flex-grow h-5/6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.0, delay: 0.3, ease: "easeInOut" }}
+              className="w-full lg:w-2/3 lg:flex lg:flex-col min-h-[60vh]"
+              initial={{opacity: 0, y: 20}}
+              animate={{opacity: 1, y: 0}}
+              transition={{duration: 1.0, delay: 0.3, ease: 'easeInOut'}}
             >
               <RightComponent />
             </motion.div>
@@ -71,9 +71,9 @@ function Inicio() {
 
         <motion.div
           className="w-full h-full"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 2.0, delay: 0.3, ease: "easeInOut" }}
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 2.0, delay: 0.3, ease: 'easeInOut'}}
         >
           {treeCount !== null && <Bottom treeCount={treeCount} />}
         </motion.div>

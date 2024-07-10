@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Bars3BottomRightIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Link, useLocation } from "react-router-dom";
+import React, {useState, useEffect} from 'react';
+import {Bars3BottomRightIcon, XMarkIcon} from '@heroicons/react/24/solid';
+import {Link, useLocation} from 'react-router-dom';
 
 interface Link {
   name: string;
@@ -9,13 +9,13 @@ interface Link {
 
 const Navbar: React.FC = () => {
   const location = useLocation();
-  const isInicioRoute = location.pathname === "/inicio";
+  const isInicioRoute = location.pathname === '/inicio';
 
   const links: Link[] = [
-    { name: "Início", link: "/" },
-    { name: "Dashboard", link: "/dashboard" },
+    {name: 'Início', link: '/'},
+    {name: 'Dashboard', link: '/dashboard'},
     // { name: "Ocorrências", link: "/ocorrencias" },
-    { name: "Correção", link: "/correcao" },
+    // {name: 'Correção', link: '/correcao'},
   ];
 
   const [open, setOpen] = useState(false);
@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
         {/* link items */}
         <ul
           className={`${
-            open ? "block" : "hidden"
+            open ? 'block' : 'hidden'
           } md:flex md:items-center md:pb-0 pb-4 absolute md:static z-999999999999 left-0 w-full md:w-auto md:pl-0 pl-2 transition-all duration-300 ease-in md:top-auto top-16 bg-gray-200 rounded-lg`}
         >
           {links.map((link, index) => (
@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
               <Link
                 to={link.link}
                 className={`text-gray-800 hover:text-red-500 duration-300 ${
-                  location.pathname === link.link ? "text-red-700" : ""
+                  location.pathname === link.link ? 'text-red-700' : ''
                 }`}
                 onClick={() => setOpen(false)}
               >

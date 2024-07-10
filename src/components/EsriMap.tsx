@@ -2,30 +2,38 @@ import React, {useEffect, useState} from 'react';
 import {loadModules} from 'esri-loader';
 import {API_ENDPOINT, API_BASE_URL} from '../config/config';
 import {Tree} from '../types/interfaces';
-import {useVisibleExtent} from '../utils/VisibleExtentContext';
+import {useTreeContext} from '../utils/TreeProvider';
 
 interface EsriMapProps {
   apiKey: string;
   style?: React.CSSProperties;
+  onZoomChange: (zoom: number) => void;
 }
 
-const EsriMap: React.FC<EsriMapProps> = ({apiKey, style}) => {
-  const [trees, setTrees] = useState<Tree[]>([]);
-  const {setVisibleExtent, setVisibleTrees} = useVisibleExtent();
+const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
+  const {trees, setVisibleExtent, setVisibleTrees} = useTreeContext();
+  const [zoomLevel, setZoomLevel] = useState<number>(12);
 
   useEffect(() => {
-    fetch(API_ENDPOINT)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Trees retrieved from endpoint:', data.trees);
-        const treesWithFullImageURLs = data.trees.map((tree: Tree) => ({
-          ...tree,
-          Fotos: tree.Fotos.map((photo) => `${API_BASE_URL}/${photo}`),
-        }));
-        setTrees(treesWithFullImageURLs);
-      })
-      .catch((error) => console.error('Error fetching tree data:', error));
+    fetchTreeData();
   }, []);
+
+  const fetchTreeData = async () => {
+    try {
+      const response = await fetch(API_ENDPOINT);
+      if (!response.ok) {
+        throw new Error('Failed to fetch tree data');
+      }
+      const data = await response.json();
+      const treesWithFullImageURLs = data.trees.map((tree: Tree) => ({
+        ...tree,
+        Fotos: tree.Fotos.map((photo) => `${API_BASE_URL}/${photo}`),
+      }));
+      setVisibleTrees(treesWithFullImageURLs);
+    } catch (error) {
+      console.error('Error fetching tree data:', error);
+    }
+  };
 
   useEffect(() => {
     let view: any = null;
@@ -36,20 +44,17 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style}) => {
       }
     };
 
-    loadModules(
-      [
-        'esri/Map',
-        'esri/views/MapView',
-        'esri/Graphic',
-        'esri/layers/GraphicsLayer',
-        'esri/symbols/SimpleMarkerSymbol',
-        'esri/geometry/Extent',
-        'esri/geometry/Point',
-        'esri/PopupTemplate',
-        'esri/widgets/Popup',
-      ],
-      {css: true}
-    )
+    loadModules([
+      'esri/Map',
+      'esri/views/MapView',
+      'esri/Graphic',
+      'esri/layers/GraphicsLayer',
+      'esri/symbols/SimpleMarkerSymbol',
+      'esri/geometry/Extent',
+      'esri/geometry/Point',
+      'esri/PopupTemplate',
+      'esri/widgets/Popup',
+    ])
       .then(
         ([
           Map,
@@ -69,26 +74,16 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style}) => {
           view = new MapView({
             container: 'mapViewDiv',
             map,
-            zoom: 12,
+            zoom: zoomLevel,
           });
 
           const graphicsLayer = new GraphicsLayer();
           map.add(graphicsLayer);
 
-          const updateVisibleTrees = () => {
-            const extent = view.extent;
-            const visibleTrees = trees.filter((tree) => {
-              const x = parseFloat(tree.POINT_X.replace(',', '.'));
-              const y = parseFloat(tree.POINT_Y.replace(',', '.'));
-              return extent.contains(
-                new Point({x, y, spatialReference: {wkid: 102100}})
-              );
-            });
-            setVisibleExtent(extent.toJSON());
-            setVisibleTrees(visibleTrees);
-          };
-
-          view.watch('extent', updateVisibleTrees);
+          let xmin = Infinity,
+            ymin = Infinity,
+            xmax = -Infinity,
+            ymax = -Infinity;
 
           trees.forEach((tree) => {
             const x = parseFloat(tree.POINT_X.replace(',', '.'));
@@ -98,7 +93,7 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style}) => {
               const point = new Point({
                 x,
                 y,
-                spatialReference: {wkid: 102100},
+                spatialReference: {width: 102100},
               });
 
               const graphic = new Graphic({
@@ -118,6 +113,8 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style}) => {
                 title: '{Nomecomum}',
                 content: (feature: any) => {
                   const attributes = feature.graphic.attributes as Tree;
+
+                  // Map each photo URL to an <img> tag
                   const photos = attributes.Fotos.map(
                     (photo: string, index: number) => {
                       return `<img src="${photo}" alt="Photo ${
@@ -126,48 +123,161 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style}) => {
                     }
                   ).join('');
 
+                  // Construct the popup HTML
                   return `
-                    <div class="p-2">
-                      <table class="table-auto w-full h-full text-sm text-left text-gray-700">
-                        <tbody>
-                          <tr class="border-b border-gray-600">
-                            <td class="font-medium border-b border-gray-600 py-2">Espécie</td>
-                            <td class="py-2">${attributes.Especie}</td>
-                          </tr>
-                          <tr class="border-b border-gray-600">
-                            <td class="font-medium border-b border-gray-600 py-2">Nome</td>
-                            <td class="py-2">${attributes.Nomecomum}</td>
-                          </tr>
-                          <tr class="border-b border-gray-600">
-                            <td class="font-medium border-b border-gray-600 py-2">Estado</td>
-                            <td class="py-2">${attributes.Estado_fit}</td>
-                          </tr>
-                          <tr class="border-b border-gray-600">
-                            <td class="font-medium border-b border-gray-600 py-2">Altura (m)</td>
-                            <td class="py-2">${attributes.Altura_v2}</td>
-                          </tr>
-                          <tr class="border-b border-gray-600">
-                            <td class="font-medium border-b border-gray-600 py-2">DAP (cm)</td>
-                            <td class="py-2">${attributes.DAP_v2}</td>
-                          </tr>
-                          <tr class="border-b border-gray-600">
-                            <td class="font-medium border-b border-gray-600 py-2">Idade (anos)</td>
-                            <td class="py-2">${attributes.idade_apro_v2}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div class="mt-4">
-                        <h4 class="font-semibold mb-2">Fotos:</h4>
-                        <div class="flex flex-wrap">
-                          ${photos}
-                        </div>
-                      </div>
-                    </div>
+                   <div class="p-4 max-h-96 overflow-y-auto">
+      <div>
+        <h3 class="text-lg font-semibold mb-2">${attributes.Nomecomum}</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-gray-600 font-medium">Espécie:</p>
+            <p>${attributes.Especie}</p>
+          </div>
+          <div>
+            <p class="text-gray-600 font-medium">Estado:</p>
+            <p>${attributes.Estado_fit}</p>
+          </div>
+          <div>
+            <p class="text-gray-600 font-medium">Altura (m):</p>
+            <p>${attributes.Altura_v2}</p>
+          </div>
+          <div>
+            <p class="text-gray-600 font-medium">DAP (cm):</p>
+            <p>${attributes.DAP_v2}</p>
+          </div>
+          <div>
+            <p class="text-gray-600 font-medium">Idade (anos):</p>
+            <p>${attributes.idade_apro_v2}</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <h4 class="text-lg font-semibold mb-2">Fotos:</h4>
+        <div class="grid grid-cols-2 gap-4">
+          ${photos}
+        </div>
+      </div>
+    </div>
                   `;
                 },
               });
 
               graphicsLayer.add(graphic);
+
+              // Extent boundaries
+              if (point.x < xmin) xmin = point.x;
+              if (point.x > xmax) xmax = point.x;
+              if (point.y < ymin) ymin = point.y;
+              if (point.y > ymax) ymax = point.y;
+            }
+          });
+
+          window.addEventListener('resize', handleResize);
+
+          if (trees.length > 0) {
+            const extent = new Extent({
+              xmin,
+              ymin,
+              xmax,
+              ymax,
+              spatialReference: {wkid: 102100},
+            });
+            view.goTo(extent);
+          }
+
+          // Popup for the view
+          view.popup = new Popup({
+            autoOpenEnabled: false,
+            dockEnabled: true,
+            dockOptions: {
+              buttonEnabled: false,
+              breakpoint: false,
+            },
+            content: (feature: any) => {
+              // Your existing content generation logic
+              const attributes = feature.graphic.attributes as Tree;
+              const photos = attributes.Fotos.map(
+                (photo: string, index: number) => {
+                  return `<img src="${photo}" alt="Photo ${
+                    index + 1
+                  }" class="max-w-full rounded-lg mb-2" />`;
+                }
+              ).join('');
+
+              // Construct the popup HTML
+              return `
+      <div class="p-4 max-h-96 overflow-y-auto">
+        <div>
+          <h3 class="text-lg font-semibold mb-2">${attributes.Nomecomum}</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <p class="text-gray-600 font-medium">Espécie:</p>
+              <p>${attributes.Especie}</p>
+            </div>
+            <div>
+              <p class="text-gray-600 font-medium">Estado:</p>
+              <p>${attributes.Estado_fit}</p>
+            </div>
+            <div>
+              <p class="text-gray-600 font-medium">Altura (m):</p>
+              <p>${attributes.Altura_v2}</p>
+            </div>
+            <div>
+              <p class="text-gray-600 font-medium">DAP (cm):</p>
+              <p>${attributes.DAP_v2}</p>
+            </div>
+            <div>
+              <p class="text-gray-600 font-medium">Idade (anos):</p>
+              <p>${attributes.idade_apro_v2}</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h4 class="text-lg font-semibold mb-2">Fotos:</h4>
+          <div class="grid grid-cols-2 gap-4">
+            ${photos}
+          </div>
+        </div>
+      </div>
+    `;
+            },
+          });
+
+          view.on('click', (event: any) => {
+            view.hitTest(event).then((response: any) => {
+              if (response.results.length > 0) {
+                const graphic = response.results[0].graphic;
+                if (graphic && graphic.popupTemplate) {
+                  view.popup.open({
+                    features: [graphic],
+                    location: event.mapPoint,
+                  });
+                }
+              }
+            });
+          });
+
+          // extent change
+          view.watch('extent', (newExtent: any) => {
+            setVisibleExtent(newExtent);
+            const visibleTrees = trees.filter((tree) => {
+              const x = parseFloat(tree.POINT_X.replace(',', '.'));
+              const y = parseFloat(tree.POINT_Y.replace(',', '.'));
+              return (
+                x >= newExtent.xmin &&
+                x <= newExtent.xmax &&
+                y >= newExtent.ymin &&
+                y <= newExtent.ymax
+              );
+            });
+            setVisibleTrees(visibleTrees);
+          });
+
+          // Zoom level change
+          view.watch('zoom', (newZoom: number) => {
+            setZoomLevel(newZoom);
+            if (onZoomChange) {
+              onZoomChange(newZoom);
             }
           });
 
@@ -175,6 +285,7 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style}) => {
 
           return () => {
             window.removeEventListener('resize', handleResize);
+
             if (view) {
               view.container = null;
             }
@@ -182,20 +293,10 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style}) => {
         }
       )
       .catch((err) => console.error('Failed to load ArcGIS API', err));
-
-    return () => {
-      if (view) {
-        view.destroy();
-      }
-    };
-  }, [apiKey, trees, setVisibleExtent, setVisibleTrees]);
+  }, [apiKey, trees, setVisibleExtent, setVisibleTrees, onZoomChange]);
 
   return (
-    <div
-      id="mapViewDiv"
-      className="h-full md:h-screen w-full md:w-full relative"
-      style={{...style, maxHeight: '65vh'}}
-    />
+    <div id="mapViewDiv" style={style || {height: '100%', width: '100%'}}></div>
   );
 };
 

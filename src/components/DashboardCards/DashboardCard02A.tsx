@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 
 interface Tree {
   Estado_fit: string;
@@ -12,7 +12,7 @@ interface Props {
   data: DashboardCardData;
 }
 
-const DashboardCard02A: React.FC<Props> = ({ data }) => {
+const DashboardCard02A: React.FC<Props> = ({data}) => {
   const [numWithSymptoms, setNumWithSymptoms] = useState(0);
   const [numWithoutSymptoms, setNumWithoutSymptoms] = useState(0);
 
@@ -22,7 +22,7 @@ const DashboardCard02A: React.FC<Props> = ({ data }) => {
       let countWithoutSymptoms = 0;
 
       data.trees.forEach((tree) => {
-        if (tree.Estado_fit.includes("sintomas ou sinais")) {
+        if (tree.Estado_fit.includes('sintomas ou sinais')) {
           countWithSymptoms++;
         } else {
           countWithoutSymptoms++;

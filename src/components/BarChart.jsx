@@ -1,22 +1,22 @@
-import React from "react";
-import { Bar } from "react-chartjs-2";
-import "chart.js/auto";
+import React, {useEffect, useRef} from 'react';
+import {Bar} from 'react-chartjs-2';
+import 'chart.js/auto';
 
-const BarChart = ({ labels, values, options }) => {
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Número de Árvores",
-        data: values,
-        backgroundColor: "#860404",
-        borderColor: "#fff",
-        borderWidth: 1,
-      },
-    ],
-  };
+const BarChart = ({labels, values, options}) => {
+  const chartRef = useRef(null);
 
-  // Merge the passed options with the default options
+  useEffect(() => {
+    const updateChartData = () => {
+      if (chartRef.current) {
+        chartRef.current.data.labels = labels;
+        chartRef.current.data.datasets[0].data = values;
+        chartRef.current.update();
+      }
+    };
+
+    updateChartData();
+  }, [labels, values]);
+
   const mergedOptions = {
     ...options,
     maintainAspectRatio: false,
@@ -29,10 +29,10 @@ const BarChart = ({ labels, values, options }) => {
           ...options.scales.y.ticks,
           callback: (value) => {
             const valueMapping = {
-              Passeio: "Passeio",
-              "Jardim público": "Jardim público",
-              Outro: "Outro",
-              Via: "Via",
+              Passeio: 'Passeio',
+              'Jardim público': 'Jardim público',
+              Outro: 'Outro',
+              Via: 'Via',
             };
 
             return valueMapping[value] || value;
@@ -42,7 +42,24 @@ const BarChart = ({ labels, values, options }) => {
     },
   };
 
-  return <Bar data={data} options={mergedOptions} />;
+  return (
+    <Bar
+      ref={chartRef}
+      data={{
+        labels: labels,
+        datasets: [
+          {
+            label: 'Número de Árvores',
+            data: values,
+            backgroundColor: '#860404',
+            borderColor: '#fff',
+            borderWidth: 1,
+          },
+        ],
+      }}
+      options={mergedOptions}
+    />
+  );
 };
 
 export default BarChart;

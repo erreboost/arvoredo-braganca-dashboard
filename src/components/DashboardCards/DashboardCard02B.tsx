@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 
 interface Tree {
   Esdado_cal: string;
@@ -12,7 +12,7 @@ interface Props {
   data: DashboardCardData;
 }
 
-const DashboardCard02B: React.FC<Props> = ({ data }) => {
+const DashboardCard02B: React.FC<Props> = ({data}) => {
   const [caldBomEstado, setCaldBomEstado] = useState(0);
   const [caldInsuf, setCaldInsuf] = useState(0);
   const [caldInexistente, setCaldInexistente] = useState(0);
@@ -24,9 +24,9 @@ const DashboardCard02B: React.FC<Props> = ({ data }) => {
       let countInexistente = 0;
 
       data.trees.forEach((tree) => {
-        if (tree.Esdado_cal === "Caldeira suficiente e em bom estado.") {
+        if (tree.Esdado_cal === 'Caldeira suficiente e em bom estado.') {
           countBomEstado++;
-        } else if (tree.Esdado_cal === "Caldeira insuficiente.") {
+        } else if (tree.Esdado_cal === 'Caldeira insuficiente.') {
           countInsuf++;
         } else {
           countInexistente++;

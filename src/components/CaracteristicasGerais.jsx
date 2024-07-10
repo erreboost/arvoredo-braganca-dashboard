@@ -1,14 +1,14 @@
-import { useState, useEffect, useContext } from "react";
-import FilteredResults from "./FilteredResults";
-import { API_ENDPOINT } from "../config/config";
-import { DataContext } from "../config/DataContext";
+import {useState, useEffect, useContext} from 'react';
+import FilteredResults from './FilteredResults';
+import {API_ENDPOINT} from '../config/config';
+import {DataContext} from '../config/DataContext';
 
 function CaracteristicasGerais() {
   const [selectedFilters, setSelectedFilters] = useState({
-    nomeComum: "",
-    especie: "",
-    estado: "",
-    localizacao: "",
+    nomeComum: '',
+    especie: '',
+    estado: '',
+    localizacao: '',
   });
 
   const data = useContext(DataContext);
@@ -19,39 +19,13 @@ function CaracteristicasGerais() {
   const [filteredData, setFilteredData] = useState([]);
   const [uniqueLocalizacao, setUniqueLocalizacao] = useState([]);
 
-  const handleFilterChange = (filterType, value) => {
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterType]: value,
-    }));
-  };
-
+  // Function to fetch data and set initial state
   useEffect(() => {
-    if (data) {
-      const trees = data.trees;
-
-      const uniqueNomeComum = [...new Set(trees.map((tree) => tree.Nomecomum))];
-      const uniqueEspecie = [...new Set(trees.map((tree) => tree.Especie))];
-      const uniqueEstado = [...new Set(trees.map((tree) => tree.Estado_fit))];
-      const uniqueLocalizacao = [
-        ...new Set(trees.map((tree) => tree.Localizacao)),
-      ];
-
-      setUniqueNomeComum(uniqueNomeComum);
-      setUniqueEspecie(uniqueEspecie);
-      setUniqueEstado(uniqueEstado);
-      setUniqueLocalizacao(uniqueLocalizacao);
-    }
-  }, [data]);
-
-  const handleApplyFilters = () => {
-    // Fetch data from the endpoint
     fetch(API_ENDPOINT)
       .then((response) => response.json())
       .then((data) => {
         const trees = data.trees;
 
-        // Extract unique values for each filter
         const uniqueNomeComum = [
           ...new Set(trees.map((tree) => tree.Nomecomum)),
         ];
@@ -61,30 +35,54 @@ function CaracteristicasGerais() {
           ...new Set(trees.map((tree) => tree.Localizacao)),
         ];
 
-        // Set unique values for each filter
         setUniqueNomeComum(uniqueNomeComum);
         setUniqueEspecie(uniqueEspecie);
         setUniqueEstado(uniqueEstado);
         setUniqueLocalizacao(uniqueLocalizacao);
       })
       .catch((error) => {
-        console.error("Error fetching tree data:", error);
+        console.error('Error fetching tree data:', error);
       });
+  }, []);
+
+  const handleFilterChange = (filterType, value) => {
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: value,
+    }));
+
+    // Update filteredData based on selected filters
+    const filtered = data.trees.filter((tree) => {
+      return (
+        (selectedFilters.nomeComum === '' ||
+          tree.Nomecomum === selectedFilters.nomeComum) &&
+        (selectedFilters.especie === '' ||
+          tree.Especie === selectedFilters.especie) &&
+        (selectedFilters.estado === '' ||
+          tree.Estado_fit === selectedFilters.estado) &&
+        (selectedFilters.localizacao === '' ||
+          tree.Localizacao === selectedFilters.localizacao)
+      );
+    });
+
+    setFilteredData(filtered);
+  };
+
+  const handleApplyFilters = () => {
+    // You can decide if this function should do something specific upon applying filters
+    // For now, it's an empty function as it's not clear what you want to achieve here
   };
 
   const handleResetFilters = () => {
-    // Reset all filters
     setSelectedFilters({
-      nomeComum: "",
-      especie: "",
-      estado: "",
-      localizacao: "",
+      nomeComum: '',
+      especie: '',
+      estado: '',
+      localizacao: '',
     });
-  };
 
-  useEffect(() => {
-    handleApplyFilters();
-  }, []);
+    setFilteredData([]);
+  };
 
   function generateOptions(values) {
     // Sort the values alphabetically
@@ -111,7 +109,7 @@ function CaracteristicasGerais() {
         <h3 className="text-lg font-semibold">Nome comum:</h3>
         <select
           value={selectedFilters.nomeComum}
-          onChange={(e) => handleFilterChange("nomeComum", e.target.value)}
+          onChange={(e) => handleFilterChange('nomeComum', e.target.value)}
           className="mb-2 w-full max-w-xs"
         >
           <option value="">- Tudo -</option>
@@ -124,7 +122,7 @@ function CaracteristicasGerais() {
         <h3 className="text-lg font-semibold">Espécie:</h3>
         <select
           value={selectedFilters.especie}
-          onChange={(e) => handleFilterChange("especie", e.target.value)}
+          onChange={(e) => handleFilterChange('especie', e.target.value)}
           className="mb-2 w-full max-w-xs"
         >
           <option value="">- Tudo -</option>
@@ -137,7 +135,7 @@ function CaracteristicasGerais() {
         <h3 className="text-lg font-semibold">Estado:</h3>
         <select
           value={selectedFilters.estado}
-          onChange={(e) => handleFilterChange("estado", e.target.value)}
+          onChange={(e) => handleFilterChange('estado', e.target.value)}
           className="mb-2 w-full max-w-xs"
         >
           <option value="">- Tudo -</option>
@@ -150,7 +148,7 @@ function CaracteristicasGerais() {
         <h3 className="text-lg font-semibold">Localização:</h3>
         <select
           value={selectedFilters.localizacao}
-          onChange={(e) => handleFilterChange("localizacao", e.target.value)}
+          onChange={(e) => handleFilterChange('localizacao', e.target.value)}
           className="mb-4 w-full max-w-xs"
         >
           <option value="">- Tudo -</option>

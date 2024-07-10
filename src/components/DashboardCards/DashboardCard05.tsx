@@ -1,29 +1,78 @@
-import React, { useEffect, useState } from "react";
-import { API_ENDPOINT } from "../../config/config";
+import React, {useEffect, useState} from 'react';
+import {useTreeContext} from '../../utils/TreeProvider';
+import LoadingSpinner from '../LoadingSpinner';
 
 const DashboardCard05 = () => {
   const [treeCount, setTreeCount] = useState<number | null>(null);
+  const {visibleTrees, visibleExtent} = useTreeContext();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(API_ENDPOINT);
-        const data = await response.json();
-        const count = data.trees.length;
+        setLoading(true);
+
+        // Filter trees
+        const filteredTrees = filterTreesByVisibleExtent(
+          visibleTrees,
+          visibleExtent
+        );
+        const count = filteredTrees.length;
         setTreeCount(count);
+
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching tree data", error);
+        console.error('Error fetching and processing data:', error);
+        setTreeCount(null);
+        setLoading(false);
       }
     };
 
-    // Fetch data when the component mounts
     fetchData();
 
-    const intervalId = setInterval(fetchData, 60000);
+    // Fetch data every 2min
+    const intervalId = setInterval(fetchData, 120000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [visibleTrees, visibleExtent]);
 
+  // Function to filter trees based on visible extent
+  const filterTreesByVisibleExtent = (trees: any[], extent: any) => {
+    if (!extent) return trees;
+
+    return trees.filter((tree) => {
+      const x = parseFloat(tree.POINT_X.replace(',', '.'));
+      const y = parseFloat(tree.POINT_Y.replace(',', '.'));
+
+      if (isNaN(x) || isNaN(y)) {
+        console.warn(
+          'Invalid POINT_X or POINT_Y values:',
+          tree.POINT_X,
+          tree.POINT_Y
+        );
+        return false;
+      }
+
+      const isWithinExtent =
+        x >= extent.xmin &&
+        x <= extent.xmax &&
+        y >= extent.ymin &&
+        y <= extent.ymax;
+
+      return isWithinExtent;
+    });
+  };
+
+  // Render loading spinner until data is fetched
+  if (loading || treeCount === null) {
+    return (
+      <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[20vh] items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  // Final data
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[20vh] items-center justify-center">
       <div className="px-5 pt-5 text-center">
@@ -31,7 +80,7 @@ const DashboardCard05 = () => {
           Árvores Públicas
         </h2>
         <div className="text-7xl font-bold text-red-800 dark:text-slate-100 mb-2">
-          {treeCount != null ? treeCount : "Loading..."}
+          {treeCount !== null ? treeCount : 'Loading...'}
         </div>
       </div>
     </div>

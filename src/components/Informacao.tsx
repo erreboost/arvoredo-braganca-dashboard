@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 function Informacao() {
   return (
-    <div className="flex items-center justify-center mt-8">
+    <div className="flex items-center justify-center mt-8 font-black">
       <p>
         O Município de Arraiolos apresenta, neste portal, o Serviço de dados do
         arvoredo urbano integrante do domínio público municipal e do domínio

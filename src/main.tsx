@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import {VisibleExtentProvider} from './utils/VisibleExtentContext';
-// import dotenv from "dotenv";
-
-// dotenv.config();
+import {TreeProvider} from './utils/TreeProvider';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <VisibleExtentProvider>
-      <App />
-    </VisibleExtentProvider>
+    <TreeProvider>
+      <VisibleExtentProvider>
+        <App />
+      </VisibleExtentProvider>
+    </TreeProvider>
   </React.StrictMode>
 );
