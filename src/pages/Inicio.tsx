@@ -41,7 +41,7 @@ function Inicio() {
                 transition={{duration: 0.5, delay: 0.2, ease: 'easeInOut'}}
                 className="text-xl font-semibold text-gray-800"
               >
-                🌳 Loading Map 🌳
+                🌳 A carregar informação 🌳
               </motion.h2>
             </motion.div>
           )}
