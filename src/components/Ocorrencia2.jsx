@@ -1,5 +1,5 @@
 function Ocorrencia2() {
-  return <div>Ocorrencia2</div>;
+  return <div>Dados de Ocorrencias</div>;
 }
 
 export default Ocorrencia2;

@@ -17,26 +17,43 @@ function CaracteristicasEspecificas() {
 
   // Function to fetch data and set initial state
   useEffect(() => {
-    fetch(API_ENDPOINT)
-      .then((response) => response.json())
-      .then((data) => {
-        const dapValues = [
-          ...new Set(data.trees.map((item) => item.DAP_v2)),
-        ].sort((a, b) => a - b);
-        const idadeValues = [
-          ...new Set(data.trees.map((item) => item.idade_apro_v2)),
-        ].sort();
-        const alturaValues = [
-          ...new Set(data.trees.map((item) => item.Altura_v2)),
-        ].sort((a, b) => a - b);
+    if (data && data.trees) {
+      const dapValues = [
+        ...new Set(data.trees.map((item) => item.DAP_v2)),
+      ].sort((a, b) => a - b);
+      const idadeValues = [
+        ...new Set(data.trees.map((item) => item.idade_apro_v2)),
+      ].sort();
+      const alturaValues = [
+        ...new Set(data.trees.map((item) => item.Altura_v2)),
+      ].sort((a, b) => a - b);
 
-        setUniqueDap(dapValues);
-        setUniqueIdade(idadeValues);
-        setUniqueAltura(alturaValues);
-      })
-      .catch((error) => {
-        console.error('Error fetching tree data:', error);
-      });
+      setUniqueDap(dapValues);
+      setUniqueIdade(idadeValues);
+      setUniqueAltura(alturaValues);
+    } else {
+      // Fetch data if not available in context
+      fetch(API_ENDPOINT)
+        .then((response) => response.json())
+        .then((data) => {
+          const dapValues = [
+            ...new Set(data.trees.map((item) => item.DAP_v2)),
+          ].sort((a, b) => a - b);
+          const idadeValues = [
+            ...new Set(data.trees.map((item) => item.idade_apro_v2)),
+          ].sort();
+          const alturaValues = [
+            ...new Set(data.trees.map((item) => item.Altura_v2)),
+          ].sort((a, b) => a - b);
+
+          setUniqueDap(dapValues);
+          setUniqueIdade(idadeValues);
+          setUniqueAltura(alturaValues);
+        })
+        .catch((error) => {
+          console.error('Error fetching tree data:', error);
+        });
+    }
   }, [data]); // Ensure useEffect runs when 'data' changes
 
   const handleFilterChange = (filterType, value) => {
