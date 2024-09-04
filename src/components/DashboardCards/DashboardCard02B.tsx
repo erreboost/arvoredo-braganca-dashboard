@@ -45,19 +45,19 @@ const DashboardCard02B: React.FC<Props> = ({data}) => {
         <div className="text-sm font-bold text-slate-800 dark:text-slate-100 mb-4">
           Caldeira em Bom Estado
         </div>
-        <div className="text-7xl font-bold text-red-800 dark:text-slate-100 mb-12 mt-2">
+        <div className="text-4xl xl:text-7xl font-bold text-red-800 dark:text-slate-100 mb-12 mt-2">
           {caldBomEstado}
         </div>
         <div className="text-sm font-semibold text-slate-800 dark:text-slate-100 mb-4">
           Caldeira Insuficiente
         </div>
-        <div className="text-7xl font-bold text-red-800 dark:text-slate-100 mb-2 mt-2">
+        <div className="text-4xl xl:text-7xl font-bold text-red-800 dark:text-slate-100 mb-2 mt-2">
           {caldInsuf}
         </div>
         <div className="text-sm font-semibold text-slate-800 dark:text-slate-100 mt-12 mb-2">
           Caldeira Inexistente
         </div>
-        <div className="text-7xl font-bold text-red-800 dark:text-slate-100 mb-2 mt-4">
+        <div className="text-4xl xl:text-7xl font-bold text-red-800 dark:text-slate-100 mb-2 mt-4">
           {caldInexistente}
         </div>
       </div>

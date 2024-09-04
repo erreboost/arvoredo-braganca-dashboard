@@ -3,7 +3,6 @@
 // export const tailwindConfig = () => {
 //   return resolveConfig(tailwindConfigFile);
 // };
-
 export const hexToRGB = (h: string): string => {
   let r = 0;
   let g = 0;
@@ -27,3 +26,17 @@ export const formatValue = (value: number): string =>
     maximumSignificantDigits: 3,
     notation: "compact",
   }).format(value);
+
+
+export const addDataIntoCache = (cacheName: string, url: RequestInfo | URL, response: any) => {
+  // Converting our respons into Actual Response form
+  const data = new Response(JSON.stringify(response));
+
+  if ('caches' in window) {
+    // Opening given cache and putting our data into it
+    caches.open(cacheName).then((cache) => {
+      cache.put(url, data);
+      // alert('Data Added into cache!')
+    });
+  }
+}

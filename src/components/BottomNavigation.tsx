@@ -10,7 +10,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   onButtonClick,
 }) => {
   return (
-    <div className="absolute bottom-0 left-0 right-0 bg-gray-300 p-0 flex space-x-4 items-center">
+    <div className="flex bg-gray-300 items-center w-full">
       <button
         onClick={() => onButtonClick(1)}
         className={`flex-1 py-2 rounded ${

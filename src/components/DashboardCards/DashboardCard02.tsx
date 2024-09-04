@@ -42,11 +42,11 @@ const DashboardCard02 = () => {
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[55vh] relative overflow-hidden">
       <div className="flex h-full">
-        <div className="flex-1 px-5 pt-5 overflow-auto">
+        <div className="flex-1 overflow-auto">
           <DashboardCard02A data={{trees: visibleTrees}} />
         </div>
         <div className="border-l border-slate-300 mx-2" />
-        <div className="flex-1 px-5 pt-5 overflow-auto">
+        <div className="flex-1 overflow-auto">
           <DashboardCard02B data={{trees: visibleTrees}} />
         </div>
       </div>

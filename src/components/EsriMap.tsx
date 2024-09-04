@@ -11,7 +11,7 @@ interface EsriMapProps {
 }
 
 const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
-  const {trees, setVisibleExtent, setVisibleTrees} = useTreeContext();
+  const {trees, setVisibleExtent, setVisibleTrees, treesCached} = useTreeContext();
   const [zoomLevel, setZoomLevel] = useState<number>(12);
 
   useEffect(() => {
@@ -77,6 +77,10 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
             zoom: zoomLevel,
           });
 
+          console.log('Maaaaaaap', map)
+          console.log('VIEEEEEEW', view.popup)
+          
+
           const graphicsLayer = new GraphicsLayer();
           map.add(graphicsLayer);
 
@@ -125,39 +129,53 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
 
                   // Construct the popup HTML
                   return `
-                   <div class="p-4 max-h-96 overflow-y-auto">
-      <div>
-        <h3 class="text-lg font-semibold mb-2">${attributes.Nomecomum}</h3>
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <p class="text-gray-600 font-medium">Espécie:</p>
-            <p>${attributes.Especie}</p>
-          </div>
-          <div>
-            <p class="text-gray-600 font-medium">Estado:</p>
-            <p>${attributes.Estado_fit}</p>
-          </div>
-          <div>
-            <p class="text-gray-600 font-medium">Altura (m):</p>
-            <p>${attributes.Altura_v2}</p>
-          </div>
-          <div>
-            <p class="text-gray-600 font-medium">DAP (cm):</p>
-            <p>${attributes.DAP_v2}</p>
-          </div>
-          <div>
-            <p class="text-gray-600 font-medium">Idade (anos):</p>
-            <p>${attributes.idade_apro_v2}</p>
-          </div>
-        </div>
-      </div>
-      <div class="mt-4">
-        <h4 class="text-lg font-semibold mb-2">Fotos:</h4>
-        <div class="grid grid-cols-2 gap-4">
-          ${photos}
-        </div>
-      </div>
-    </div>
+                   <div class="p-4 max-h-96 overflow-y-auto py-4">
+                    <div>
+                      <h3 class="text-lg font-semibold mb-2">${attributes.Nomecomum}</h3>
+                      <div class="grid grid-cols-2 gap-4">
+                        <div>
+                          <p class="text-gray-600 font-medium">Espécie:</p>
+                          <p>${attributes.Especie}</p>
+                        </div>
+                        <div>
+                          <p class="text-gray-600 font-medium">Estado:</p>
+                          <p>${attributes.Estado_fit}</p>
+                        </div>
+                        <div>
+                          <p class="text-gray-600 font-medium">Altura (m):</p>
+                          <p>${attributes.Altura_v2}</p>
+                        </div>
+                        <div>
+                          <p class="text-gray-600 font-medium">DAP (cm):</p>
+                          <p>${attributes.DAP_v2}</p>
+                        </div>
+                        <div>
+                          <p class="text-gray-600 font-medium">Idade (anos):</p>
+                          <p>${attributes.idade_apro_v2}</p>
+                        </div>
+                        <div class="flex flex-col gap-[10px]">
+                          <div class="flex flex-col">
+                            <p class="text-gray-600 font-semibold mb-0">Coordenada X:</p>
+                            <p>${attributes.POINT_X}</p>
+                          </div>
+                          <div class="flex flex-col">
+                            <p class="text-gray-600 font-semibold">Coordenada Y:</p>
+                            <p>${attributes.POINT_Y}</p>
+                          </div> 
+                          <div>
+                            <p class="text-gray-600 font-semibold">Arvore ID:</p>
+                            <p>${attributes._id}</p>
+                          </div>   
+                        </div>                                            
+                      </div>
+                    </div>
+                    <div class="mt-4 py-3 pb-10">
+                      <h4 class="text-lg font-semibold mb-2">Fotos:</h4>
+                      <div class="grid grid-cols-2 gap-4">
+                        ${photos}
+                      </div>
+                    </div>
+                </div>
                   `;
                 },
               });
@@ -183,7 +201,9 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
               spatialReference: {wkid: 102100},
             });
             view.goTo(extent);
+            
           }
+
 
           // Popup for the view
           view.popup = new Popup({
@@ -193,8 +213,10 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
               buttonEnabled: false,
               breakpoint: false,
             },
+
             content: (feature: any) => {
               // Your existing content generation logic
+              
               const attributes = feature.graphic.attributes as Tree;
               const photos = attributes.Fotos.map(
                 (photo: string, index: number) => {
@@ -206,7 +228,7 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
 
               // Construct the popup HTML
               return `
-      <div class="p-4 max-h-96 overflow-y-auto">
+      <div class="p-4 max-h-96 overflow-y-auto flex flex-col">
         <div>
           <h3 class="text-lg font-semibold mb-2">${attributes.Nomecomum}</h3>
           <div class="grid grid-cols-2 gap-4">
@@ -230,6 +252,20 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
               <p class="text-gray-600 font-medium">Idade (anos):</p>
               <p>${attributes.idade_apro_v2}</p>
             </div>
+            <div class="flex flex-col gap-[10px]">
+              <div class="flex flex-col">
+                <p class="text-gray-600 font-semibold mb-0">Coordenada X:</p>
+                <p>${attributes.POINT_X}</p>
+              </div>
+              <div class="flex flex-col">
+                <p class="text-gray-600 font-semibold">Coordenada Y:</p>
+                <p>${attributes.POINT_Y}</p>
+              </div> 
+              <div>
+                <p class="text-gray-600 font-semibold">Arvore ID:</p>
+                <p>${attributes._id}</p>
+              </div>   
+            </div>    
           </div>
         </div>
         <div class="mt-4">
@@ -251,7 +287,8 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
                   view.popup.open({
                     features: [graphic],
                     location: event.mapPoint,
-                  });
+                  }
+                );
                 }
               }
             });
@@ -260,17 +297,20 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
           // extent change
           view.watch('extent', (newExtent: any) => {
             setVisibleExtent(newExtent);
-            const visibleTrees = trees.filter((tree) => {
-              const x = parseFloat(tree.POINT_X.replace(',', '.'));
-              const y = parseFloat(tree.POINT_Y.replace(',', '.'));
-              return (
-                x >= newExtent.xmin &&
-                x <= newExtent.xmax &&
-                y >= newExtent.ymin &&
-                y <= newExtent.ymax
-              );
-            });
-            setVisibleTrees(visibleTrees);
+            if(treesCached !== null) {
+              const visibleTrees = treesCached.filter((tree: { POINT_X: string; POINT_Y: string; }) => {
+                const x = parseFloat(tree.POINT_X.replace(',', '.'));
+                const y = parseFloat(tree.POINT_Y.replace(',', '.'));
+                return (
+                  x >= newExtent.xmin &&
+                  x <= newExtent.xmax &&
+                  y >= newExtent.ymin &&
+                  y <= newExtent.ymax
+                );
+              });
+              setVisibleTrees(visibleTrees);
+            }
+           
           });
 
           // Zoom level change
@@ -280,6 +320,7 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
               onZoomChange(newZoom);
             }
           });
+
 
           window.addEventListener('resize', handleResize);
 
@@ -293,7 +334,7 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
         }
       )
       .catch((err) => console.error('Failed to load ArcGIS API', err));
-  }, [apiKey, trees, setVisibleExtent, setVisibleTrees, onZoomChange]);
+  }, [apiKey, trees, setVisibleExtent, setVisibleTrees, onZoomChange, treesCached]);
 
   return (
     <div id="mapViewDiv" style={style || {height: '100%', width: '100%'}}></div>

@@ -5,14 +5,16 @@ import LeftComponent from '../components/LeftComponent';
 import RightComponent from '../components/RightComponent';
 import Bottom from '../components/Bottom';
 import {TreeDataProvider} from '../utils/TreeDataContext';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 function Inicio() {
   const [loading, setLoading] = useState(true);
-  const [treeCount, setTreeCount] = useState<number | null>(null);
-
+  
   useEffect(() => {
-    setTimeout(() => {
-      setTreeCount(100567);
+
+    // console.log('TREE DATA')
+    setTimeout(() => {    
       setLoading(false);
     }, 1000);
   }, []);
@@ -54,7 +56,7 @@ function Inicio() {
             animate={{opacity: 1, y: 0}}
             transition={{duration: 1.5, delay: 0.2, ease: 'easeInOut'}}
           >
-            <div className="w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md lg:flex-shrink-0 min-h-[50vh]">
+            <div className="w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md lg:flex-shrink-0 min-h-[50vh] z-50">
               <LeftComponent onButtonClick={handleButtonClick} />
             </div>
 
@@ -75,8 +77,9 @@ function Inicio() {
           animate={{opacity: 1, y: 0}}
           transition={{duration: 2.0, delay: 0.3, ease: 'easeInOut'}}
         >
-          {treeCount !== null && <Bottom treeCount={treeCount} />}
+          {<Bottom/>}
         </motion.div>
+        <ToastContainer />
       </div>
     </TreeDataProvider>
   );

@@ -7,6 +7,11 @@ const DataProvider = ({children}) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedFilters, setSelectedFilters] = useState({
+    dap: '',
+    idade: '',
+    altura: '',
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +37,7 @@ const DataProvider = ({children}) => {
   }, []);
 
   return (
-    <DataContext.Provider value={{data, loading, error}}>
+    <DataContext.Provider value={{data, loading, error, selectedFilters, setSelectedFilters}}>
       {children}
     </DataContext.Provider>
   );

@@ -102,7 +102,7 @@ const DashboardCard04: React.FC = () => {
       x: {
         title: {
           display: true,
-          text: 'Localização',
+          // text: 'Localização',
         },
       },
       y: {

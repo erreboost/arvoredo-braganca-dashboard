@@ -9,7 +9,7 @@ function FilteredResults({ filteredData, onClearResults }) {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 overflow-y-auto h-[300px]">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center">
@@ -26,8 +26,9 @@ function FilteredResults({ filteredData, onClearResults }) {
       <div className="grid grid-cols-2 gap-4">
         {filteredData.map((row, index) => (
           <div key={index} className="flex mb-2">
-            <div className="font-semibold pr-2">{row[0]}</div>
-            <div>{row[1]}</div>
+            <div className="font-semibold pr-2">{row.Nomecomum}</div>
+            {/* <div className="font-semibold pr-2">{row[0]}</div> */}
+            {/* <div>{row[1]}</div> */}
           </div>
         ))}
       </div>

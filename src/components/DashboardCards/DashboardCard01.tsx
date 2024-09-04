@@ -37,7 +37,7 @@ const DashboardCard01 = () => {
   }
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[55vh] relative">
+    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[55vh] relative max-w-[300px]">
       <div className="px-5 pt-5 flex flex-col h-full">
         {treeSpecies.length > 0 && (
           <>

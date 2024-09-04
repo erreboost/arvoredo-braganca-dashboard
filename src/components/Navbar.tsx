@@ -33,7 +33,9 @@ const Navbar: React.FC = () => {
       <div className="md:flex items-center justify-between bg-gray-200 shadow-xl py-2 md:px-10 px-4 rounded-b-xl z-9999999">
         {/* logo section */}
         <div className="cursor-pointer flex items-center">
-          <img className="w-20 " src="/assets/logoarraiolos.png" alt="" />
+          <a href={'https://www.cm-arraiolos.pt/'}>
+            <img className="w-20 " src="/assets/logoarraiolos.png" alt="" />
+          </a>
         </div>
         {/* Menu icon */}
         <div
@@ -51,7 +53,7 @@ const Navbar: React.FC = () => {
           {links.map((link, index) => (
             <li
               key={index}
-              className="md:ml-4 md:my-0 my-3 font-semibold relative "
+              className="md:ml-4 md:my-0 my-3 font-semibold relative"
             >
               <Link
                 to={link.link}
@@ -68,6 +70,11 @@ const Navbar: React.FC = () => {
               )}
             </li>
           ))}
+          <a className='ml-[10px]' href='https://arvoredo-backoffice.vercel.app/sign-in'>
+            <li className='font-semibold text-gray-800 hover:text-red-500 duration-300 hover:cursor-pointer'>
+              Backoffice
+            </li>
+          </a>          
         </ul>
       </div>
     </div>
