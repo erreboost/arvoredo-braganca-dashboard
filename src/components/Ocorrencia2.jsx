@@ -88,7 +88,7 @@ function Ocorrencia2() {
                   formData.append('file', files[0]);
                   formData.append('fileName', files[0]?.name);
                   console.log('Form Data', formData);
-                  uploadFile('https://app.grupoerre.pt:5258/files/upload', formData, setImagePath);
+                  uploadFile('https://lrb-app.grupoerre.pt:3010/files/upload', formData, setImagePath);
                 }}
               />
             </label>
