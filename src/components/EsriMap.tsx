@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, {useEffect, useState} from 'react';
 import {loadModules} from 'esri-loader';
 import {API_ENDPOINT, API_BASE_URL} from '../config/config';
@@ -69,18 +70,20 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
         ]) => {
           const map = new Map({
             basemap: 'satellite',
+            // spatialReference: { wkid: 4326 },
           });
 
           view = new MapView({
             container: 'mapViewDiv',
             map,
             zoom: zoomLevel,
+            // spatialReference: { wkid: 4326 },    
           });
 
-          console.log('Maaaaaaap', map)
-          console.log('VIEEEEEEW', view.popup)
+          // console.log('Maaaaaaap', map)
+          // console.log('VIEEEEEEW', view)
           
-
+         
           const graphicsLayer = new GraphicsLayer();
           map.add(graphicsLayer);
 
@@ -90,14 +93,16 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
             ymax = -Infinity;
 
           trees.forEach((tree) => {
-            const x = parseFloat(tree.POINT_X.replace(',', '.'));
-            const y = parseFloat(tree.POINT_Y.replace(',', '.'));
+            const x = parseFloat(tree.POINT_X_G);
+            const y = parseFloat(tree.POINT_Y_G);
+            // console.log('Point X',tree.POINT_X_G )
+            // console.log('Point Y', tree.POINT_Y_G )
 
             if (!isNaN(x) && !isNaN(y)) {
               const point = new Point({
                 x,
                 y,
-                spatialReference: {width: 102100},
+                // spatialReference: {width: 102100},
               });
 
               const graphic = new Graphic({
@@ -156,11 +161,11 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
                         <div class="flex flex-col gap-[10px]">
                           <div class="flex flex-col">
                             <p class="text-gray-600 font-semibold mb-0">Coordenada X:</p>
-                            <p>${attributes.POINT_X}</p>
+                            <p>${attributes.POINT_X_G}</p>
                           </div>
                           <div class="flex flex-col">
                             <p class="text-gray-600 font-semibold">Coordenada Y:</p>
-                            <p>${attributes.POINT_Y}</p>
+                            <p>${attributes.POINT_Y_G}</p>
                           </div> 
                           <div>
                             <p class="text-gray-600 font-semibold">Arvore ID:</p>
@@ -192,13 +197,13 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
 
           window.addEventListener('resize', handleResize);
 
-          if (trees.length > 0) {
+          if (trees && trees.length > 0) {
             const extent = new Extent({
               xmin,
               ymin,
               xmax,
               ymax,
-              spatialReference: {wkid: 102100},
+              // spatialReference: {wkid: 4326},
             });
             view.goTo(extent);
             
@@ -255,11 +260,11 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
             <div class="flex flex-col gap-[10px]">
               <div class="flex flex-col">
                 <p class="text-gray-600 font-semibold mb-0">Coordenada X:</p>
-                <p>${attributes.POINT_X}</p>
+                <p>${attributes.POINT_X_G}</p>
               </div>
               <div class="flex flex-col">
                 <p class="text-gray-600 font-semibold">Coordenada Y:</p>
-                <p>${attributes.POINT_Y}</p>
+                <p>${attributes.POINT_Y_G}</p>
               </div> 
               <div>
                 <p class="text-gray-600 font-semibold">Arvore ID:</p>
@@ -281,7 +286,7 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
 
           view.on('click', (event: any) => {
             view.hitTest(event).then((response: any) => {
-              if (response.results.length > 0) {
+              if (response && response.results.length > 0) {
                 const graphic = response.results[0].graphic;
                 if (graphic && graphic.popupTemplate) {
                   view.popup.open({
@@ -297,10 +302,13 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
           // extent change
           view.watch('extent', (newExtent: any) => {
             setVisibleExtent(newExtent);
-            if(treesCached !== null) {
-              const visibleTrees = treesCached.filter((tree: { POINT_X: string; POINT_Y: string; }) => {
-                const x = parseFloat(tree.POINT_X.replace(',', '.'));
-                const y = parseFloat(tree.POINT_Y.replace(',', '.'));
+            if(treesCached && treesCached.length > 0) {
+              // if (newExtent.spatialReference.wkid !== 4326) {
+              //   newExtent = newExtent.project({ wkid: 4326 });
+              // }
+              const visibleTrees = treesCached.filter((tree: { POINT_X_G: string; POINT_Y_G: string; }) => {
+                const x = parseFloat(tree.POINT_X_G);
+                const y = parseFloat(tree.POINT_Y_G);
                 return (
                   x >= newExtent.xmin &&
                   x <= newExtent.xmax &&
