@@ -12,7 +12,7 @@ interface OcurrenceFormData {
   export const sendServiceEmail = async ({ fullName, email, comment, coordinateX, coordinateY, treeID  }: OcurrenceFormData) => {
     console.log('Sending Email Data:', { fullName, email, comment, coordinateX, coordinateY, treeID});
   
-    const apiUrl = 'https://arvoredo-backoffice.vercel.app/api/send-email';
+    const apiUrl = 'https://arvoredo-backoffice-braganca.vercel.app/api/send-email';
   
     try {
       const response = await fetch(apiUrl, {
