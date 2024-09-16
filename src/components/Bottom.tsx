@@ -51,22 +51,22 @@ function Bottom() {
         <Row
           title="CO₂ Absorvido"
           icon={<LuTrees size={28} />}
-          count={new Intl.NumberFormat('en-US').format(Number(treeCount) * 21).toString()}
+          count={`${new Intl.NumberFormat('en-US').format(Number(treeCount) * 21).toString()}(ton/CO₂)`}
         />
         <Row
           title="O₂ Produzido"
           icon={<LuTrees size={28} />}
-          count={new Intl.NumberFormat('en-US').format(Number(treeCount) * 117).toString()}
+          count={`${new Intl.NumberFormat('en-US').format(Number(treeCount) * 117).toString()}(ton/O₂)`}
         />
         <Row
           title="Árvores"
           icon={<LuTrees size={64} />}
-          count={new Intl.NumberFormat('en-US').format(Number(treeCount))}
+          count={Number(treeCount).toString()}
         />
         <Row
           title="Habitantes"
           icon={<FaPeopleGroup size={64} />}
-          count="10,074"
+          count="34582"
         />
       </div>      
       <>
