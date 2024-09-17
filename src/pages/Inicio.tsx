@@ -51,17 +51,17 @@ function Inicio() {
 
         {!loading && (
           <motion.div
-            className="flex flex-col lg:flex-row flex-1 bg-gray-100"
+            className="flex flex-col lg:flex-row bg-gray-100"
             initial={{opacity: 0, y: 20}}
             animate={{opacity: 1, y: 0}}
             transition={{duration: 1.5, delay: 0.2, ease: 'easeInOut'}}
           >
-            <div className="w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md lg:flex-shrink-0 min-h-[50vh] z-50">
+            <div className="max-h-[635px] w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md lg:flex-shrink-0 min-h-[50vh] z-50">
               <LeftComponent onButtonClick={handleButtonClick} />
             </div>
 
             <motion.div
-              className="w-full lg:w-2/3 lg:flex lg:flex-col min-h-[60vh]"
+              className="w-screen lg:w-2/3 lg:flex lg:flex-col  max-h-[680px]"
               initial={{opacity: 0, y: 20}}
               animate={{opacity: 1, y: 0}}
               transition={{duration: 1.0, delay: 0.3, ease: 'easeInOut'}}
@@ -72,7 +72,7 @@ function Inicio() {
         )}
 
         <motion.div
-          className="w-full h-full"
+          className="w-full h-auto items-center justify-center flex"
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 2.0, delay: 0.3, ease: 'easeInOut'}}

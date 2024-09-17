@@ -15,6 +15,15 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
   const {trees, setVisibleExtent, setVisibleTrees, treesCached} = useTreeContext();
   const [zoomLevel, setZoomLevel] = useState<number>(12);
 
+  function lonToWebMercatorX(lon) {
+    return lon * 20037508.34 / 180;
+  }
+  
+  function latToWebMercatorY(lat) {
+    const rad = lat * Math.PI / 180; 
+    return Math.log(Math.tan((Math.PI / 4) + (rad / 2))) * 20037508.34 / Math.PI;
+  }
+
   useEffect(() => {
     fetchTreeData();
   }, []);
@@ -299,16 +308,13 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
             });
           });
 
-          // extent change
           view.watch('extent', (newExtent: any) => {
+           
             setVisibleExtent(newExtent);
-            if(treesCached && treesCached.length > 0) {
-              // if (newExtent.spatialReference.wkid !== 4326) {
-              //   newExtent = newExtent.project({ wkid: 4326 });
-              // }
-              const visibleTrees = treesCached.filter((tree: { POINT_X_G: string; POINT_Y_G: string; }) => {
-                const x = parseFloat(tree.POINT_X_G);
-                const y = parseFloat(tree.POINT_Y_G);
+            if(treesCached) {        
+              const visibleTreesFiltered = treesCached.filter((tree: { POINT_X_G: string; POINT_Y_G: string; }) => {
+                const x = lonToWebMercatorX(parseFloat(tree.POINT_X_G.replace(',', '.')));
+                const y = latToWebMercatorY(parseFloat(tree.POINT_Y_G.replace(',', '.')));
                 return (
                   x >= newExtent.xmin &&
                   x <= newExtent.xmax &&
@@ -316,7 +322,8 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
                   y <= newExtent.ymax
                 );
               });
-              setVisibleTrees(visibleTrees);
+              console.log('Visible Trees Filtered', visibleTreesFiltered)
+              setVisibleTrees(visibleTreesFiltered);
             }
            
           });

@@ -18,7 +18,7 @@ interface RowProps {
 function Row({title, icon, count}: RowProps) {
   return (
     <motion.div
-      className="flex-1 pl-24 pt-0 mb-5 text-center rounded-md flex flex-col items-center"
+      className="flex-1 pt-0 mb-5 text-center rounded-md flex flex-col items-center"
       initial={{opacity: 0, y: 20}}
       animate={{opacity: 1, y: 0}}
       transition={{duration: 0.5, delay: 0.4, ease: 'easeInOut'}}
@@ -37,17 +37,22 @@ function Bottom() {
   const [activeButton, setActiveButton] = useState(1);
   const [treeCount, setTreeCount] = useState<number | null>(null);
 
-  const {trees} = useTreeContext()
+  const { visibleTrees, trees} = useTreeContext();
 
-  useEffect(()=> {setTreeCount(trees.length)}, [trees])
+  useEffect(() => {
+    setTreeCount(visibleTrees?.length); 
+
+    // console.log('Trees', trees)
+    // console.log('Visible extent',visibleExtent )
+  }, [visibleTrees, trees]);
   //@ts-ignore
   const handleButtonClick = (buttonNumber: number) => {
     setActiveButton(buttonNumber);
   };
 
   return (
-    <div className="flex flex-col justify-center relative flex-grow h-[48%] m-2 z-0">
-      <div className="flex mb-2 space-x-4 items-center justify-center pt-[100px] lg:pt-0">
+    <div className="flex flex-col justify-center relative flex-grow  m-2 z-0">
+      <div className="flex  mb-2 space-x-4 items-center justify-center pt-2 overflow-x-auto">
         <Row
           title="CO₂ Absorvido"
           icon={<LuTrees size={28} />}
