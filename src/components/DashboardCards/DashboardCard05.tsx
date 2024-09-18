@@ -7,6 +7,16 @@ const DashboardCard05 = () => {
   const {visibleTrees, visibleExtent} = useTreeContext();
   const [loading, setLoading] = useState(true);
 
+
+  function lonToWebMercatorX(lon: number) {
+    return lon * 20037508.34 / 180;
+  }
+  
+  function latToWebMercatorY(lat: number) {
+    const rad = lat * Math.PI / 180; 
+    return Math.log(Math.tan((Math.PI / 4) + (rad / 2))) * 20037508.34 / Math.PI;
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,8 +51,8 @@ const DashboardCard05 = () => {
     if (!extent) return trees;
 
     return trees.filter((tree) => {
-      const x = parseFloat(tree.POINT_X.replace(',', '.'));
-      const y = parseFloat(tree.POINT_Y.replace(',', '.'));
+      const x = lonToWebMercatorX(parseFloat(tree.POINT_X_G.replace(',', '.')));
+      const y = latToWebMercatorY(parseFloat(tree.POINT_Y_G.replace(',', '.')));
 
       if (isNaN(x) || isNaN(y)) {
         console.warn(

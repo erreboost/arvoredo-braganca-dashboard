@@ -5,8 +5,8 @@ import {useTreeContext} from '../../utils/TreeProvider';
 
 interface Tree {
   Localizacao: string;
-  POINT_X: string;
-  POINT_Y: string;
+  POINT_X_G: string;
+  POINT_Y_G: string;
 }
 
 const DashboardCard04: React.FC = () => {
@@ -20,6 +20,15 @@ const DashboardCard04: React.FC = () => {
 
   const {visibleTrees, visibleExtent} = useTreeContext();
   const [loading, setLoading] = useState(true);
+  function lonToWebMercatorX(lon: number) {
+    return lon * 20037508.34 / 180;
+  }
+  
+  function latToWebMercatorY(lat: number) {
+    const rad = lat * Math.PI / 180; 
+    return Math.log(Math.tan((Math.PI / 4) + (rad / 2))) * 20037508.34 / Math.PI;
+  }
+
 
   useEffect(() => {
     const updateChartData = () => {
@@ -75,14 +84,14 @@ const DashboardCard04: React.FC = () => {
     if (!extent) return trees; // Return all trees if extent is not defined
 
     return trees.filter((tree) => {
-      const x = parseFloat(tree.POINT_X.replace(',', '.'));
-      const y = parseFloat(tree.POINT_Y.replace(',', '.'));
+      const x = lonToWebMercatorX(parseFloat(tree.POINT_X_G.replace(',', '.')));
+      const y = latToWebMercatorY(parseFloat(tree.POINT_Y_G.replace(',', '.')));
 
       if (isNaN(x) || isNaN(y)) {
         console.warn(
           'Invalid POINT_X or POINT_Y values:',
-          tree.POINT_X,
-          tree.POINT_Y
+          tree.POINT_X_G,
+          tree.POINT_Y_G
         );
         return false;
       }

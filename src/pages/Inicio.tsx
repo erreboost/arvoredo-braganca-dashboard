@@ -25,22 +25,22 @@ function Inicio() {
 
   return (
     <TreeDataProvider>
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col min-h-screen overflow-y-scroll">
         <AnimatePresence exitBeforeEnter={false}>
           {loading && (
             <motion.div
               key="loading"
               className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50"
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-              transition={{duration: 1.5, ease: 'easeInOut'}}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5, ease: 'easeInOut' }}
             >
               <motion.h2
-                initial={{opacity: 0, y: 20}}
-                animate={{opacity: 1, y: 0}}
-                exit={{opacity: 0, y: 20}}
-                transition={{duration: 0.5, delay: 0.2, ease: 'easeInOut'}}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.2, ease: 'easeInOut' }}
                 className="text-xl font-semibold text-gray-800"
               >
                 🌳 A carregar informação 🌳
@@ -48,37 +48,38 @@ function Inicio() {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {!loading && (
-          <motion.div
-            className="flex flex-col lg:flex-row bg-gray-100"
-            initial={{opacity: 0, y: 20}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 1.5, delay: 0.2, ease: 'easeInOut'}}
-          >
-            <div className="max-h-[635px] w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md lg:flex-shrink-0 min-h-[55vh] z-50">
-              <LeftComponent onButtonClick={handleButtonClick} />
-            </div>
-
+        <div className='w-screen h-screen flex flex-col'>
+          {!loading && (
             <motion.div
-              className="w-screen lg:w-2/3 lg:flex lg:flex-col  max-h-[680px]"
-              initial={{opacity: 0, y: 20}}
-              animate={{opacity: 1, y: 0}}
-              transition={{duration: 1.0, delay: 0.3, ease: 'easeInOut'}}
+              className="flex flex-col lg:flex-row flex-grow bg-gray-100"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5, delay: 0.2, ease: 'easeInOut' }}
             >
-              <RightComponent />
+              <div className="max-h-[635px] w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md lg:flex-shrink-0 min-h-[55vh] z-50">
+                <LeftComponent onButtonClick={handleButtonClick} />
+              </div>
+    
+              <motion.div
+                className="w-screen lg:w-2/3 lg:flex lg:flex-col max-h-[680px]"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.0, delay: 0.3, ease: 'easeInOut' }}
+              >
+                <RightComponent />
+              </motion.div>
             </motion.div>
+          )}
+    
+          <motion.div
+            className="w-full min-h-[40vh] items-center justify-center flex mt-4 min-h-[50px]" 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 2.0, delay: 0.3, ease: 'easeInOut' }}
+          >  
+            <Bottom />        
           </motion.div>
-        )}
-
-        <motion.div
-          className="w-full h-auto items-center justify-center flex"
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{duration: 2.0, delay: 0.3, ease: 'easeInOut'}}
-        >
-          {<Bottom/>}
-        </motion.div>
+        </div>       
         <ToastContainer />
       </div>
     </TreeDataProvider>
