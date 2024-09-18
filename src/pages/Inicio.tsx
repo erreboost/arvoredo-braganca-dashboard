@@ -20,7 +20,7 @@ function Inicio() {
   }, []);
 
   const handleButtonClick = (componentName: string) => {
-    console.log(`Button clicked: ${componentName}`);
+    // console.log(`Button clicked: ${componentName}`);
   };
 
   return (
@@ -56,7 +56,7 @@ function Inicio() {
             animate={{opacity: 1, y: 0}}
             transition={{duration: 1.5, delay: 0.2, ease: 'easeInOut'}}
           >
-            <div className="max-h-[635px] w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md lg:flex-shrink-0 min-h-[50vh] z-50">
+            <div className="max-h-[635px] w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md lg:flex-shrink-0 min-h-[55vh] z-50">
               <LeftComponent onButtonClick={handleButtonClick} />
             </div>
 

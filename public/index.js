@@ -4,7 +4,7 @@ import binance from "./binance.png";
 import card from "./card.png";
 import coinbase from "./coinbase.png";
 import dropbox from "./dropbox.png";
-import logo from "./assets/braganca.gif";
+import logo from "./logo_cm.png";
 import quotes from "./quotes.svg";
 import robot from "./robot.png";
 import send from "./Send.svg";
@@ -23,6 +23,8 @@ import twitter from "./twitter.svg";
 import people01 from "./people01.png";
 import people02 from "./people02.png";
 import people03 from "./people03.png";
+import dots from "./dots-loading.webp"
+
 
 export {
   airbnb,
@@ -50,4 +52,5 @@ export {
   people01,
   people02,
   people03,
+  dots
 };

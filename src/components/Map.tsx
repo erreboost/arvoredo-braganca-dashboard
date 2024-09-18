@@ -10,11 +10,11 @@ const Map = () => {
   };
 
   const updateDashboardsWithZoom = (zoom: number) => {
-    console.log('Zoom level changed:', zoom);
+    // console.log('Zoom level changed:', zoom);
   };
 
   return (
-    <div className="max-h-[668px] h-[668px]">
+    <div className="min-h-[668px] h-[668px]">
       <EsriMap apiKey={apiKey} onZoomChange={handleZoomChange} />
     </div>
   );

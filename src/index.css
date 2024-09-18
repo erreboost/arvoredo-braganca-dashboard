@@ -14,13 +14,26 @@
 .esri-popup__main-container.esri-widget.esri-popup--shadow.esri-popup--is-collapsible {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
 }
 
-.esri-popup__main-container .esri-widget .esri-popup--shadow .esri-popup--is-collapsible {
-    padding-bottom: 10px;
-}
-
+.dots-loader {
+    display: inline-block;
+    animation: blink-animation 1.5s infinite;
+  }
+  
+  @keyframes blink-animation {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
 
 body {
     overflow: hidden;
 }
+

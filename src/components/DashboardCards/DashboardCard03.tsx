@@ -6,7 +6,7 @@ const DashboardCard03: React.FC = () => {
   const apiKey = import.meta.env.VITE_REACT_APP_ESRI_API_KEY as string;
 
   const handleZoomChange = (zoom: number) => {
-    console.log('Zoom level changed:', zoom);
+    // console.log('Zoom level changed:', zoom);
   };
 
   return (

@@ -143,53 +143,52 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
 
                   // Construct the popup HTML
                   return `
-                   <div class="p-4 max-h-96 overflow-y-auto py-4">
-                    <div>
-                      <h3 class="text-lg font-semibold mb-2">${attributes.Nomecomum}</h3>
-                      <div class="grid grid-cols-2 gap-4">
-                        <div>
-                          <p class="text-gray-600 font-medium">Espécie:</p>
-                          <p>${attributes.Especie}</p>
-                        </div>
-                        <div>
-                          <p class="text-gray-600 font-medium">Estado:</p>
-                          <p>${attributes.Estado_fit}</p>
-                        </div>
-                        <div>
-                          <p class="text-gray-600 font-medium">Altura (m):</p>
-                          <p>${attributes.Altura_v2}</p>
-                        </div>
-                        <div>
-                          <p class="text-gray-600 font-medium">DAP (cm):</p>
-                          <p>${attributes.DAP_v2}</p>
-                        </div>
-                        <div>
-                          <p class="text-gray-600 font-medium">Idade (anos):</p>
-                          <p>${attributes.idade_apro_v2}</p>
-                        </div>
-                        <div class="flex flex-col gap-[10px]">
-                          <div class="flex flex-col">
+                   <div class="p-4 max-h-96 flex flex-col overflow-visible">
+                      <div>
+                        <h3 class="text-lg font-semibold mb-2">${attributes.Nomecomum}</h3>
+                        <div class="grid grid-cols-2 gap-2">
+                          <div>
+                            <p class="text-gray-600 font-medium">Espécie:</p>
+                            <p>${attributes.Especie}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-medium">Estado:</p>
+                            <p>${attributes.Estado_fit}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-medium">Altura (m):</p>
+                            <p>${attributes.Altura_v2}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-medium">DAP (cm):</p>
+                            <p>${attributes.DAP_v2}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-medium">Idade (anos):</p>
+                            <p>${attributes.idade_apro_v2}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-semibold">Código da Árvore:</p>
+                            <p>${attributes.Codigo}</p>
+                          </div>
+                          <div>
                             <p class="text-gray-600 font-semibold mb-0">Coordenada X:</p>
                             <p>${attributes.POINT_X_G}</p>
                           </div>
-                          <div class="flex flex-col">
+                          <div>
                             <p class="text-gray-600 font-semibold">Coordenada Y:</p>
                             <p>${attributes.POINT_Y_G}</p>
-                          </div> 
-                          <div>
-                            <p class="text-gray-600 font-semibold">Arvore ID:</p>
-                            <p>${attributes._id}</p>
-                          </div>   
-                        </div>                                            
+                          </div>                                        
+                        </div>
+                      </div>
+
+                      <div class="py-3 flex-grow pb-4">
+                        <h4 class="text-lg font-semibold mb-2">Fotos:</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                          ${photos}
+                        </div>
                       </div>
                     </div>
-                    <div class="mt-4 py-3 pb-10">
-                      <h4 class="text-lg font-semibold mb-2">Fotos:</h4>
-                      <div class="grid grid-cols-2 gap-4">
-                        ${photos}
-                      </div>
-                    </div>
-                </div>
                   `;
                 },
               });
@@ -242,54 +241,53 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
 
               // Construct the popup HTML
               return `
-      <div class="p-4 max-h-96 overflow-y-auto flex flex-col">
-        <div>
-          <h3 class="text-lg font-semibold mb-2">${attributes.Nomecomum}</h3>
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <p class="text-gray-600 font-medium">Espécie:</p>
-              <p>${attributes.Especie}</p>
-            </div>
-            <div>
-              <p class="text-gray-600 font-medium">Estado:</p>
-              <p>${attributes.Estado_fit}</p>
-            </div>
-            <div>
-              <p class="text-gray-600 font-medium">Altura (m):</p>
-              <p>${attributes.Altura_v2}</p>
-            </div>
-            <div>
-              <p class="text-gray-600 font-medium">DAP (cm):</p>
-              <p>${attributes.DAP_v2}</p>
-            </div>
-            <div>
-              <p class="text-gray-600 font-medium">Idade (anos):</p>
-              <p>${attributes.idade_apro_v2}</p>
-            </div>
-            <div class="flex flex-col gap-[10px]">
-              <div class="flex flex-col">
-                <p class="text-gray-600 font-semibold mb-0">Coordenada X:</p>
-                <p>${attributes.POINT_X_G}</p>
-              </div>
-              <div class="flex flex-col">
-                <p class="text-gray-600 font-semibold">Coordenada Y:</p>
-                <p>${attributes.POINT_Y_G}</p>
-              </div> 
-              <div>
-                <p class="text-gray-600 font-semibold">Arvore ID:</p>
-                <p>${attributes._id}</p>
-              </div>   
-            </div>    
-          </div>
-        </div>
-        <div class="mt-4">
-          <h4 class="text-lg font-semibold mb-2">Fotos:</h4>
-          <div class="grid grid-cols-2 gap-4">
-            ${photos}
-          </div>
-        </div>
-      </div>
-    `;
+                   <div class="p-4 max-h-96 flex flex-col overflow-visible">
+                      <div>
+                        <h3 class="text-lg font-semibold mb-2">${attributes.Nomecomum}</h3>
+                        <div class="grid grid-cols-2 gap-2">
+                          <div>
+                            <p class="text-gray-600 font-medium">Espécie:</p>
+                            <p>${attributes.Especie}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-medium">Estado:</p>
+                            <p>${attributes.Estado_fit}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-medium">Altura (m):</p>
+                            <p>${attributes.Altura_v2}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-medium">DAP (cm):</p>
+                            <p>${attributes.DAP_v2}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-medium">Idade (anos):</p>
+                            <p>${attributes.idade_apro_v2}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-semibold">Código da Árvore:</p>
+                            <p>${attributes.Codigo}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-semibold mb-0">Coordenada X:</p>
+                            <p>${attributes.POINT_X_G}</p>
+                          </div>
+                          <div>
+                            <p class="text-gray-600 font-semibold">Coordenada Y:</p>
+                            <p>${attributes.POINT_Y_G}</p>
+                          </div>                                        
+                        </div>
+                      </div>
+
+                      <div class="py-3 flex-grow pb-4">
+                        <h4 class="text-lg font-semibold mb-2">Fotos:</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                          ${photos}
+                        </div>
+                      </div>
+                    </div>
+                  `;
             },
           });
 
@@ -322,7 +320,7 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
                   y <= newExtent.ymax
                 );
               });
-              console.log('Visible Trees Filtered', visibleTreesFiltered)
+              // console.log('Visible Trees Filtered', visibleTreesFiltered)
               setVisibleTrees(visibleTreesFiltered);
             }
            

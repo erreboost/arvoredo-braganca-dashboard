@@ -24,7 +24,7 @@ function Row({title, icon, count}: RowProps) {
       transition={{duration: 0.5, delay: 0.4, ease: 'easeInOut'}}
     >
       <h1 className="text-green-700 text-xl font-semibold">{title}</h1>
-      <div className="flex items-center justify-center mt-0 text-green-700">
+      <div className="flex items-center justify-center mt-0 text-green-700 max-h-[45px]">
         {icon}
       </div>
       <h1 className="mt-2 text-green-700">{count}</h1>

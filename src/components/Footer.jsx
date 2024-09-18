@@ -10,8 +10,8 @@ const Footer = () => {
           </a>
         </div>
         <div className="flex items-center gap-12">
-        <img src='/assets/respira.png' className='w-[150px] h-[80px]' />
-        <img src='/assets/compete.png' className='w-[300px] h-[80px]' />
+        <img src='/assets/respira.png' className='w-[100px] h-[50px]' />
+        <img src='/assets/compete.png' className='w-[170px] h-[50px]' />
         
         </div>
       </div>
