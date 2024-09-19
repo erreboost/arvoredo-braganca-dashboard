@@ -10,11 +10,11 @@ function Dashboard() {
   return (
     <VisibleExtentProvider>
       {/* <SetVisibleExtent /> */}
-      <div className="flex flex-col h-screen overflow-hidden">
+      <div className="flex flex-col h-screen overflow-y-auto md:overflow-hidden">
         <div className="flex-1">
           <main className="p-4 space-y-4">
             {/* First Row */}
-            <div className="flex">
+            <div className="flex-col flex md:flex-row">
               <div className="flex-1 min-w-0 max-h-full max-w-[300px]">
                 <DashboardCard01 />
               </div>

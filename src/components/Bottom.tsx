@@ -51,8 +51,8 @@ function Bottom() {
   };
 
   return (
-    <div className="flex flex-col justify-center relative flex-grow m-2 z-0">
-      <div className="flex mb-2 space-x-4 items-center justify-center  overflow-x-auto">
+    <div className="flex flex-col justify-center relative flex-grow z-0 mb-20">
+      <div className="flex mb-2 space-x-4 items-center justify-center overflow-x-auto flex-wrap">
         <Row
           title="CO₂ Absorvido"
           icon={<LuTrees size={28} />}

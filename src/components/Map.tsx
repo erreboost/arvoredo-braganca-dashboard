@@ -14,7 +14,7 @@ const Map = () => {
   };
 
   return (
-    <div className="min-h-[668px] h-[668px]">
+    <div className="min-h-[668px]">
       <EsriMap apiKey={apiKey} onZoomChange={handleZoomChange} />
     </div>
   );
