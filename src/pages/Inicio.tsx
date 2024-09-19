@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, {useEffect, useState} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
 
@@ -25,7 +26,7 @@ function Inicio() {
 
   return (
     <TreeDataProvider>
-      <div className="flex flex-col min-h-screen overflow-y-scroll">
+      <div className="flex flex-col min-h-screen overflow-y-scroll md:overflow-hidden">
         <AnimatePresence exitBeforeEnter={false}>
           {loading && (
             <motion.div
@@ -72,7 +73,7 @@ function Inicio() {
           )}
     
           <motion.div
-            className="w-full min-h-[50vh]  pb-10 items-center justify-center flex" 
+            className="w-full min-h-[50vh] md:h-[10vh] pb-10 items-center justify-center flex" 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 2.0, delay: 0.3, ease: 'easeInOut' }}

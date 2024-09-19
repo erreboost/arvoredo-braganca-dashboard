@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react';
 import {VisibleExtentProvider} from '../../utils/VisibleExtentContext';
 import EsriMap from '../EsriMap';

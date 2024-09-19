@@ -29,8 +29,8 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="relative shadow-lg w-full top-0 left-0  z-999999999999">
-      <div className="md:flex items-center justify-between bg-gray-200 h-[100px]  z-999999999999 shadow-xl py-3 md:px-10 px-4 rounded-b-xl z-9999999">
+    <div className="relative shadow-lg w-full top-0 left-0">
+      <div className="md:flex items-center justify-between bg-gray-200 h-[100px] shadow-xl py-3 md:px-10 px-4 rounded-b-xl z-9999999">
         {/* logo section */}
         <div className="cursor-pointer flex items-center">
           <a href={'https://www.cm-braganca.pt/pages/87'}>
@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
         <ul
           className={`${
             open ? 'block' : 'hidden'
-          } md:flex md:items-center md:pb-0 pb-4 absolute md:static z-999999999999 left-0 w-full md:w-auto md:pl-0 pl-2 transition-all duration-300 ease-in md:top-auto top-16 bg-gray-200 rounded-lg`}
+          } md:flex md:items-center md:pb-0 pb-4 absolute md:static  left-0 w-full md:w-auto md:pl-0 pl-2 transition-all duration-300 ease-in md:top-auto top-16 bg-gray-200 rounded-lg`}
         >
           {links.map((link, index) => (
             <li
