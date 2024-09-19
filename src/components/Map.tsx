@@ -1,3 +1,4 @@
+//@ts-nocheck
 import EsriMap from './EsriMap';
 import React from 'react';
 

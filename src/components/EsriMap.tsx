@@ -350,7 +350,7 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
   }, [apiKey, trees, setVisibleExtent, setVisibleTrees, onZoomChange, treesCached]);
 
   return (
-    <div id="mapViewDiv" style={style || {height: '60vh', width: '100%'}}></div>
+    <div id="mapViewDiv" style={style || {height: '60vh', width: '100%', zIndex: 99999}}></div>
   );
 };
 

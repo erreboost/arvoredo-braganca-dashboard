@@ -52,7 +52,7 @@ function Inicio() {
         <div className='w-screen h-screen flex flex-col'>
           {!loading && (
             <motion.div
-              className="flex flex-col lg:flex-row flex-grow bg-gray-100 -z-10"
+              className="flex flex-col lg:flex-row flex-grow bg-gray-100"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.5, delay: 0.2, ease: 'easeInOut' }}
@@ -73,7 +73,7 @@ function Inicio() {
           )}
     
           <motion.div
-            className="w-full min-h-[50vh] md:h-[10vh] pb-10 items-center justify-center flex" 
+            className="w-full min-h-[50vh] md:h-[10vh] pb-[100px] items-center justify-center flex" 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 2.0, delay: 0.3, ease: 'easeInOut' }}
