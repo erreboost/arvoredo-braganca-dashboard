@@ -5,11 +5,10 @@ import React, {
   useEffect,
   Dispatch,
   SetStateAction,
-  ReactNode, // Import ReactNode
+  ReactNode, 
 } from 'react';
-import {API_ENDPOINT, API_BASE_URL} from '../config/config';
-import {Tree} from '../types/interfaces';
-import { addDataIntoCache } from './Utils';
+import { API_ENDPOINT, API_BASE_URL } from '../config/config';
+import { Tree } from '../types/interfaces';
 
 interface TreeContextProps {
   trees: Tree[];
@@ -18,73 +17,84 @@ interface TreeContextProps {
   setVisibleTrees: (trees: Tree[]) => void;
   visibleExtent: any;
   setVisibleExtent: (extent: any) => void;
-  treesCached: any
-  setTreesCached: any
+  treesCached: Tree[] | null;
+  setTreesCached: Dispatch<SetStateAction<Tree[] | null>>;
 }
 
 interface TreeProviderProps {
-  children: ReactNode; // Define children prop
+  children: ReactNode; 
 }
 
 const TreeContext = createContext<TreeContextProps | undefined>(undefined);
 
-export const TreeProvider: React.FC<TreeProviderProps> = ({children}) => {
+export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
   const [trees, setTrees] = useState<Tree[]>([]);
   const [visibleTrees, setVisibleTrees] = useState<Tree[]>([]);
   const [visibleExtent, setVisibleExtent] = useState<any>(null);
-  const [treesCached, setTreesCached] = useState<any>(null)
+  const [treesCached, setTreesCached] = useState<Tree[] | null>(null);
 
-  async function getCachedData(cacheName: string, url: URL | RequestInfo) {
+  const addDataIntoCache = async (cacheName: string, url: string, data: Tree[]) => {
     const cacheStorage = await caches.open(cacheName);
-    const cachedResponse = await cacheStorage.match(url); // Returns a promise w/ matched cache
-    if(!cachedResponse || !cachedResponse.ok) {return false}
-    // console.log("cachedResponse", await cachedResponse.json());
-    const response = await cachedResponse.json()
-    setTreesCached(response)
-    //console.log(await cachedResponse.json()); // prints json object with value of key matched
-    // return await cachedResponse;
-};
+    const response = new Response(JSON.stringify(data)); // Create a response object with the data
+    await cacheStorage.put(url, response); // Add response object to cache with URL as key
+  };
 
+  const getCachedData = async (cacheName: string, url: string) => {
+    try {
+      const cacheStorage = await caches.open(cacheName);
+      const cachedResponse = await cacheStorage.match(url);
+      if (cachedResponse && cachedResponse.ok) {
+        const data = await cachedResponse.json();
+        setTreesCached(data); // Set the cached data
+        console.log("Cached data retrieved:", data);
+        return data;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error retrieving cached data:', error);
+      return null;
+    }
+  };
 
   useEffect(() => {
-    fetch(API_ENDPOINT)
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        // Check if data is cached
+        const cachedData = await getCachedData("trees", API_ENDPOINT);
+        if (cachedData) {
+          setTrees(cachedData);
+          setVisibleTrees(cachedData);
+          return;
+        }
+
+        // If not cached, fetch from API
+        const response = await fetch(API_ENDPOINT);
+        const data = await response.json();
+
         const treesWithFullImageURLs = data.trees.map((tree: Tree) => ({
           ...tree,
           Fotos: tree.Fotos.map((photo: string) => `${API_BASE_URL}/${photo}`),
         }));
-        setTrees(treesWithFullImageURLs);
-        addDataIntoCache("trees", "https://localhost:5173", treesWithFullImageURLs)
-      }).then(() => getCachedData("trees", "https://localhost:5173"))
-      .catch((error) => console.error('Error fetching tree data:', error));
-  }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      fetch(API_ENDPOINT)
-      .then((response) => response.json())
-      .then((data) => {
-        const treesWithFullImageURLs = data.trees.map((tree: Tree) => ({
-          ...tree,
-          Fotos: tree.Fotos.map((photo: string) => `${API_BASE_URL}/${photo}`),
-        }));
         setTrees(treesWithFullImageURLs);
-        addDataIntoCache("trees", "https://localhost:5173", treesWithFullImageURLs)
-      }).then(() => getCachedData("trees", "https://localhost:5173"))
-      .catch((error) => console.error('Error fetching tree data:', error));
-      
-    }, 900000)
-    
-  }, []);
-  
-  // useEffect(() => {
-  //   // getCachedData("trees", "https://localhost:5173");
-  //   console.log("treeeeeeeees", treesCached)
-  // }, [trees])
+        setVisibleTrees(treesWithFullImageURLs);
 
- 
-  
+        // Cache the fetched data
+        await addDataIntoCache("trees", API_ENDPOINT, treesWithFullImageURLs);
+      } catch (error) {
+        console.error('Error fetching tree data:', error);
+      }
+    };
+
+    fetchData();
+
+    // Set up a 15-minute interval to refresh data
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 900000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <TreeContext.Provider
@@ -95,8 +105,8 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({children}) => {
         setVisibleTrees,
         visibleExtent,
         setVisibleExtent,
-        treesCached, 
-        setTreesCached
+        treesCached,
+        setTreesCached,
       }}
     >
       {children}

@@ -25,9 +25,9 @@ function CaracteristicasGerais() {
   useEffect(() => {
     if(treesCached) {
       setLoadingOptions(true); // Start loading the options
-      setVisibleTrees(treesCached);
+      // setVisibleTrees(treesCached);
       setTrees(treesCached);
-      initialTreeDataRef.current = treesCached;
+      initialTreeDataRef.current = visibleTrees;
 
       const uniqueNomeComum = [
         ...new Set(treesCached.map((tree) => tree.Nomecomum)),
@@ -55,7 +55,7 @@ function CaracteristicasGerais() {
   };
 
   const handleApplyFilters = async () => {
-    const filtered = treesCached?.filter((tree) => {
+    const filtered = visibleTrees?.filter((tree) => {
       return (
         (selectedFilters.nomeComum === '' || tree.Nomecomum === selectedFilters.nomeComum) &&
         (selectedFilters.especie === '' || tree.Especie === selectedFilters.especie) &&

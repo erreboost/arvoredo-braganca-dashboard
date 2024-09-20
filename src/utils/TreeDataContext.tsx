@@ -39,8 +39,8 @@ interface Tree {
   Codigo: string;
   Outra_Tip_Int: string;
   grupos: string;
-  POINT_X: string;
-  POINT_Y: string;
+  POINT_X_G: string;
+  POINT_Y_G: string;
   POINT_Z: string;
   Fotos: string[];
   photo: string[];

@@ -42,8 +42,8 @@ const DashboardCard04: React.FC = () => {
         );
         const treeCounts: {[key: string]: number} = {
           Passeio: 0,
-          'Jardim público': 0,
-          Via: 0,
+          'Jardim Público': 0,
+          'Separador Central Viário': 0,
           Outro: 0,
         };
 
@@ -52,8 +52,9 @@ const DashboardCard04: React.FC = () => {
 
           if (
             location === 'Passeio' ||
-            location === 'Jardim público' ||
-            location === 'Via'
+            location === 'Jardim Público' ||
+            location === 'Separador Central Viário' ||
+            location === 'Outro'
           ) {
             treeCounts[location]++;
           } else {

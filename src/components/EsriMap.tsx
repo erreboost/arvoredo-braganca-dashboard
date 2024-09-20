@@ -12,7 +12,7 @@ interface EsriMapProps {
 }
 
 const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
-  const {trees, setVisibleExtent, setVisibleTrees, treesCached} = useTreeContext();
+  const {trees, setVisibleExtent, setVisibleTrees, treesCached, visibleTrees} = useTreeContext();
   const [zoomLevel, setZoomLevel] = useState<number>(12);
 
   function lonToWebMercatorX(lon) {
@@ -310,7 +310,7 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
            
             setVisibleExtent(newExtent);
             if(treesCached) {        
-              const visibleTreesFiltered = treesCached.filter((tree: { POINT_X_G: string; POINT_Y_G: string; }) => {
+              const visibleTreesFiltered = visibleTrees.filter((tree: { POINT_X_G: string; POINT_Y_G: string; }) => {
                 const x = lonToWebMercatorX(parseFloat(tree.POINT_X_G.replace(',', '.')));
                 const y = latToWebMercatorY(parseFloat(tree.POINT_Y_G.replace(',', '.')));
                 return (

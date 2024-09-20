@@ -10,10 +10,11 @@ interface RowProps {
   count: string;
   totalTrees: [], 
   multipleCount?: number
+  environmentMeasures?: boolean
 }
 
 
-function Row({title, icon, count, totalTrees, multipleCount}: RowProps) {
+function Row({title, icon, count, totalTrees, multipleCount, environmentMeasures}: RowProps) {
   return (
     <motion.div
       className="flex-1 pt-0 mb-5 text-center rounded-md flex flex-col items-center"
@@ -27,10 +28,15 @@ function Row({title, icon, count, totalTrees, multipleCount}: RowProps) {
       </div>
       <div className='flex items-center justify-center gap-[5px] mt-[5px]'>
       <span className="text-green-700">{count}</span>
-      {multipleCount ? (
+      {multipleCount  && environmentMeasures? (
         <div className="flex items-center gap-[5px]">
           <span className="text-green-900 font-semibold">de</span>
-          <span className="text-green-700">{totalTrees?.length * multipleCount}</span>
+          {totalTrees ? (<span className="text-green-700">{new Intl.NumberFormat('en-US').format(Number(totalTrees?.length) * multipleCount).toString()}</span>) : (<span className="text-red-500">Carregando...</span>)}
+        </div>
+      ) : multipleCount ? (
+        <div className="flex items-center gap-[5px]">
+          <span className="text-green-900 font-semibold">de</span>
+          {totalTrees? (<span className="text-green-700">{totalTrees?.length * multipleCount}</span>) : (<span className="text-red-500">Carregando...</span>)}          
         </div>
       ) : null}
       </div>
@@ -62,21 +68,21 @@ function Bottom() {
         <Row
           title="CO₂ Absorvido"
           icon={<LuTrees size={28} />}
-          count={`${new Intl.NumberFormat('en-US').format(Number(treeCount) * 21).toString()}(ton/CO₂)`}
+          count={`${new Intl.NumberFormat('en-US').format(Number(visibleTrees.length) * 21).toString()}(ton/CO₂)`}
           totalTrees={treesCached}
           multipleCount={21}
         />
         <Row
           title="O₂ Produzido"
           icon={<LuTrees size={28} />}
-          count={`${new Intl.NumberFormat('en-US').format(Number(treeCount) * 117).toString()}(ton/O₂)`}
+          count={`${new Intl.NumberFormat('en-US').format(Number(visibleTrees.length) * 117).toString()}(ton/O₂)`}
           totalTrees={treesCached}
           multipleCount={117}
         />
         <Row
           title="Árvores"
           icon={<LuTrees size={64} />}
-          count={Number(treeCount).toString()}
+          count={Number(visibleTrees.length).toString()}
           totalTrees={treesCached}
           multipleCount={1}
         />

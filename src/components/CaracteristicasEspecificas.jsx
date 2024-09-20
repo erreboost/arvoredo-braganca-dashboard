@@ -51,7 +51,7 @@ function CaracteristicasEspecificas() {
   };
 
   const handleApplyFilters = () => {
-    const filtered = treesCached.filter((tree) => {
+    const filtered = visibleTrees.filter((tree) => {
       return (
         (selectedFilters.dap === '' || tree.DAP_v2 === Number(selectedFilters.dap)) &&
         (selectedFilters.idade === '' || tree.idade_apro_v2 === selectedFilters.idade) &&
