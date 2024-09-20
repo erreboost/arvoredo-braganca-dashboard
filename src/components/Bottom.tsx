@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+//@ts-nocheck
+import React, {useState} from 'react';
 import {LuTrees} from 'react-icons/lu';
 import {FaPeopleGroup} from 'react-icons/fa6';
 import {motion} from 'framer-motion';
@@ -47,16 +48,10 @@ function Row({title, icon, count, totalTrees, multipleCount, environmentMeasures
 function Bottom() {
   //@ts-ignore
   const [activeButton, setActiveButton] = useState(1);
-  const [treeCount, setTreeCount] = useState<number | null>(null);
 
   const { visibleTrees, treesCached} = useTreeContext();
 
-  useEffect(() => {
-    setTreeCount(visibleTrees?.length); 
-
-    // console.log('Trees', trees)
-    // console.log('Visible extent',visibleExtent )
-  }, [visibleTrees]);
+ 
   //@ts-ignore
   const handleButtonClick = (buttonNumber: number) => {
     setActiveButton(buttonNumber);
@@ -71,6 +66,7 @@ function Bottom() {
           count={`${new Intl.NumberFormat('en-US').format(Number(visibleTrees.length) * 21).toString()}(ton/CO₂)`}
           totalTrees={treesCached}
           multipleCount={21}
+          environmentMeasures
         />
         <Row
           title="O₂ Produzido"
@@ -78,11 +74,12 @@ function Bottom() {
           count={`${new Intl.NumberFormat('en-US').format(Number(visibleTrees.length) * 117).toString()}(ton/O₂)`}
           totalTrees={treesCached}
           multipleCount={117}
+          environmentMeasures
         />
         <Row
           title="Árvores"
           icon={<LuTrees size={64} />}
-          count={Number(visibleTrees.length).toString()}
+          count={Number(visibleTrees?.length).toString()}
           totalTrees={treesCached}
           multipleCount={1}
         />
