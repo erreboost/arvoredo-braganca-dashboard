@@ -10,10 +10,17 @@ function Ocorrencia2() {
   const [imagePath, setImagePath] = useState()
 
   const onSubmit = (data) => {    
-    // sendServiceEmail(data)    
     createOccurrence(data, imagePath)
-    // console.log('Data to create occurrence', data)
-    // reset()
+      .then(() => {
+   
+        reset();
+      
+        setFile(null);
+        setImagePath(null);
+      })
+      .catch((error) => {
+        console.error('Error creating occurrence:', error);
+      });
   }
 
   useEffect(() => console.log('Img', file))
@@ -35,32 +42,16 @@ function Ocorrencia2() {
               <input className='rounded-md' name={'email'}  {...register('email')}/>
             </label> 
           </div> 
-          {/* <div className='flex justify-between'>
-            <label className='flex flex-col'>
-              <span className='text-white'>Coordenada X*</span>
-              <input className='rounded-md w-full' name={'coordinateX'}  {...register('coordinateX')}/>
-            </label>             
-            <label className='flex flex-col'>
-              <span className='text-white'>Coordenada Y*</span>
-              <input className='rounded-md w-full' name={'coordinateY'}  {...register('coordinateY')}/>
-            </label>  
-          </div> 
-          <div>
-            <label className='flex flex-col'>
-              <span className='text-white'>Arvore ID*</span>
-              <input className='rounded-md' name={'treeId'}  {...register('treeId')}/>
-            </label> 
-          </div>  */}
           <div>
             <label className='flex flex-col'>
               <span className='text-white inline-block bg-gray-700 p-2 mb-[10px]'>Por favor, no campo abaixo indique a morada aproximada do local da ocorrência</span>
               <span className='text-white'>Observações</span>
               <textarea className='rounded-md' name={'comments'}  {...register('comments')}/>
             </label> 
-              </div> 
-              <div className='flex gap-[20px] w-full flex-col justify-center items-center'>
-              <label 
-              for="uploadFile1"
+          </div> 
+          <div className='flex gap-[20px] w-full flex-col justify-center items-center'>
+            <label 
+              htmlFor="uploadFile1"
               className="relative flex bg-gray-600 hover:bg-gray-700 text-white text-base px-5 py-3 outline-none rounded w-[200px] h-[50px] cursor-pointer mx-auto font-[sans-serif] justify-center items-center">
               <div className="flex items-center justify-center w-full h-full">
                 <p className="inline-block">Enviar imagem</p>
@@ -88,17 +79,16 @@ function Ocorrencia2() {
                   formData.append('file', files[0]);
                   formData.append('fileName', files[0]?.name);
                   console.log('Form Data', formData);
-                  uploadFile('https://lrb-app.grupoerre.pt:3010/files/upload', formData, setImagePath);
+                  uploadFile('https://lrb-app.grupoerre.pt:3011/files/upload', formData, setImagePath);
                 }}
               />
             </label>
             {imagePath && (
-                  <p className="inline-block max-w-[90%] text-white">
-                    {imagePath.split("/")[2]}
-                  </p>
-                )}
-              </div>
-             
+              <p className="inline-block max-w-[90%] text-white">
+                {imagePath.split("/")[2]}
+              </p>
+            )}
+          </div>            
           <div className='flex w-full items-center justify-center'>
             <button type={'submit'} className='bg-green-800 text-white h-[30px] w-[100px] rounded-sm font-semibold hover:brightness-50'>Enviar</button>
           </div>                 

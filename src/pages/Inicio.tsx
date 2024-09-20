@@ -49,7 +49,7 @@ function Inicio() {
             </motion.div>
           )}
         </AnimatePresence>
-        <div className='w-screen h-screen flex flex-col'>
+        <div className='w-screen h-screen flex flex-col mt-[100px] md:mt-0'>
           {!loading && (
             <motion.div
               className="flex flex-col lg:flex-row flex-grow bg-gray-100"
