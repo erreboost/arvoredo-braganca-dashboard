@@ -35,8 +35,8 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
 
   const addDataIntoCache = async (cacheName: string, url: string, data: Tree[]) => {
     const cacheStorage = await caches.open(cacheName);
-    const response = new Response(JSON.stringify(data)); // Create a response object with the data
-    await cacheStorage.put(url, response); // Add response object to cache with URL as key
+    const response = new Response(JSON.stringify(data)); 
+    await cacheStorage.put(url, response); 
   };
 
   const getCachedData = async (cacheName: string, url: string) => {
@@ -59,15 +59,14 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Check if data is cached
+     
         const cachedData = await getCachedData("trees", API_ENDPOINT);
         if (cachedData) {
           setTrees(cachedData);
           setVisibleTrees(cachedData);
           return;
         }
-
-        // If not cached, fetch from API
+      
         const response = await fetch(API_ENDPOINT);
         const data = await response.json();
 
@@ -79,7 +78,6 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
         setTrees(treesWithFullImageURLs);
         setVisibleTrees(treesWithFullImageURLs);
 
-        // Cache the fetched data
         await addDataIntoCache("trees", API_ENDPOINT, treesWithFullImageURLs);
       } catch (error) {
         console.error('Error fetching tree data:', error);
@@ -88,7 +86,6 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
 
     fetchData();
 
-    // Set up a 15-minute interval to refresh data
     const intervalId = setInterval(() => {
       fetchData();
     }, 900000);
