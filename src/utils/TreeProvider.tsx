@@ -45,13 +45,13 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
       const cachedResponse = await cacheStorage.match(url);
       if (cachedResponse && cachedResponse.ok) {
         const data = await cachedResponse.json();
-        setTreesCached(data); // Set the cached data
-        console.log("Cached data retrieved:", data);
+        setTreesCached(data); 
+        // console.log("Cached data retrieved:", data);
         return data;
       }
       return null;
     } catch (error) {
-      console.error('Error retrieving cached data:', error);
+      // console.error('Error retrieving cached data:', error);
       return null;
     }
   };
@@ -59,37 +59,37 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-     
-        const cachedData = await getCachedData("trees", API_ENDPOINT);
-        if (cachedData) {
-          setTrees(cachedData);
-          setVisibleTrees(cachedData);
-          return;
-        }
-      
         const response = await fetch(API_ENDPOINT);
-        const data = await response.json();
-
-        const treesWithFullImageURLs = data.trees.map((tree: Tree) => ({
+        const apiData = await response.json();
+  
+        const treesWithFullImageURLs = apiData.trees.map((tree: Tree) => ({
           ...tree,
           Fotos: tree.Fotos.map((photo: string) => `${API_BASE_URL}/${photo}`),
         }));
-
-        setTrees(treesWithFullImageURLs);
-        setVisibleTrees(treesWithFullImageURLs);
-
-        await addDataIntoCache("trees", API_ENDPOINT, treesWithFullImageURLs);
+  
+        const cachedData = await getCachedData("trees", API_ENDPOINT);
+  
+        if (!cachedData || JSON.stringify(cachedData) !== JSON.stringify(treesWithFullImageURLs)) {
+          // console.log('New data found. Updating cache...');
+          await addDataIntoCache("trees", API_ENDPOINT, treesWithFullImageURLs);
+          setTrees(treesWithFullImageURLs);
+          setVisibleTrees(treesWithFullImageURLs);
+        } else {
+          // console.log('Data is the same as cache. Using cached data.');
+          setTrees(cachedData);
+          setVisibleTrees(cachedData);
+        }
       } catch (error) {
         console.error('Error fetching tree data:', error);
       }
     };
-
+  
     fetchData();
-
+  
     const intervalId = setInterval(() => {
       fetchData();
-    }, 900000);
-
+    }, 900000); 
+  
     return () => clearInterval(intervalId);
   }, []);
 
