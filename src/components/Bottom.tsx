@@ -18,7 +18,7 @@ interface RowProps {
 function Row({title, icon, count, totalTrees, multipleCount, environmentMeasures}: RowProps) {
   return (
     <motion.div
-      className="flex-1 pt-0 mb-5 text-center rounded-md flex flex-col items-center"
+      className="flex-1 pt-0 mb-5 text-center rounded-md flex flex-col items-center min-w-1/2"
       initial={{opacity: 0, y: 20}}
       animate={{opacity: 1, y: 0}}
       transition={{duration: 0.5, delay: 0.4, ease: 'easeInOut'}}
@@ -27,7 +27,7 @@ function Row({title, icon, count, totalTrees, multipleCount, environmentMeasures
       <div className="flex items-center justify-center mt-0 text-green-700 max-h-[45px]">
         {icon}
       </div>
-      <div className='flex items-center justify-center gap-[5px] mt-[5px]'>
+      <div className='flex items-center justify-center gap-[5px] mt-[5px] flex-col'>
       <span className="text-green-700">{count}</span>
       {multipleCount  && environmentMeasures? (
         <div className="flex items-center gap-[5px]">
@@ -86,7 +86,7 @@ function Bottom() {
         <Row
           title="Habitantes"
           icon={<FaPeopleGroup size={64} />}
-          count="34582"
+          count="10074"
           totalTrees={treesCached}
      
         />

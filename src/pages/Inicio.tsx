@@ -73,7 +73,7 @@ function Inicio() {
           )}
     
           <motion.div
-            className="w-full min-h-[50vh] md:h-[10vh] pb-[100px] items-center justify-center flex" 
+            className="w-full min-h-[800px] pb-[120px] md:min-h-[500px] md:pb-[150px] items-center justify-center flex px-[10%]" 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 2.0, delay: 0.3, ease: 'easeInOut' }}
