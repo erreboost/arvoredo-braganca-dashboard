@@ -43,7 +43,7 @@ function CaracteristicasGerais() {
       setUniqueEstado(uniqueEstado);
       setUniqueLocalizacao(uniqueLocalizacao);
 
-      setLoadingOptions(false); // Finish loading the options
+      setLoadingOptions(false); 
     }
   }, [treesCached]);
 
@@ -100,7 +100,8 @@ function CaracteristicasGerais() {
 
       <div className='flex flex-col'>
         
-      <div className="mb-0">
+      <div className='flex gap-[5px]'>
+      <div className="mb-0 w-1/2">
         <h3 className="text-lg font-semibold">Nome comum:</h3>
         {loadingOptions? (<span className='dots-loader'>Carregando...</span>) : (<select
           value={selectedFilters.nomeComum}
@@ -112,7 +113,7 @@ function CaracteristicasGerais() {
               {generateOptions(uniqueNomeComum)}
         </select>)}        
       </div>      
-        <div className="mb-0">          
+        <div className="mb-0 w-1/2">          
           <h3 className="text-lg font-semibold">Espécie:</h3>
           {loadingOptions? (<span className='dots-loader'>Carregando...</span>) : (<select
             value={selectedFilters.especie}
@@ -125,8 +126,10 @@ function CaracteristicasGerais() {
               {generateOptions(uniqueEspecie)}
             </>          
           </select>)}            
-        </div>        
-        <div className="mb-0">
+        </div>     
+      </div> 
+      <div className='flex gap-[5px]'>
+      <div className="mb-0 w-1/2">
           <h3 className="text-lg font-semibold">Estado:</h3>
           {loadingOptions? (<span className='dots-loader'>Carregando...</span>) : (<select
             value={selectedFilters.estado}
@@ -140,7 +143,7 @@ function CaracteristicasGerais() {
               </>
           </select>)}      
         </div>      
-        <div className="mb-0">
+        <div className="mb-0 w-1/2">
           <h3 className="text-lg font-semibold">Localização:</h3>
           {loadingOptions? (<span className='dots-loader'>Carregando...</span>) : (<select
             value={selectedFilters.localizacao}
@@ -153,7 +156,9 @@ function CaracteristicasGerais() {
                 {generateOptions(uniqueLocalizacao)}
               </> 
           </select>)}          
-        </div>
+        </div>      
+      </div>  
+        
         <div className="flex justify-center items-center">
           <button
             onClick={() => handleApplyFilters()}

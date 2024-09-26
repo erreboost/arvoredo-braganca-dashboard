@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
         <ul
           className={`${
             open ? 'flex' : 'hidden'
-          } items-center justify-evenly gap-[5px] md:flex md:items-center md:pb-0 pb-4 absolute md:static z-100 left-0 w-full md:w-auto md:pl-0 pl-2 transition-all duration-300 ease-in md:top-auto top-16 bg-gray-200 rounded-lg`}
+          } md:flex md:items-center md:pb-0 gap-[10px] mt-[30px] flex items-center pb-4 absolute md:static z-100 left-0 w-full md:w-auto md:pl-0 pl-2 transition-all duration-300 ease-in md:top-auto top-16 bg-gray-200 rounded-lg`}
         >
           {links.map((link, index) => (
             <li

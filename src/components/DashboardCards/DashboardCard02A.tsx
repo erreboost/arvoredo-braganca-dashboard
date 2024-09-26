@@ -40,13 +40,13 @@ const DashboardCard02A: React.FC<Props> = ({data}) => {
         <div className="text-sm font-semibold text-slate-800 dark:text-slate-100 mb-2">
           <p>Árvores com sintomas ou sinais</p>
         </div>
-        <div className="text-4xl xl:text-7xl font-bold text-red-800 dark:text-slate-100 mb-24 mt-12">
+        <div className="text-4xl xl:text-7xl font-bold text-red-800 dark:text-slate-100 mb-2">
           {numWithSymptoms}
         </div>
         <div className="text-sm font-semibold text-slate-800 dark:text-slate-100 mb-2">
          <p>Árvores sem sintomas ou sinais</p> 
         </div>
-        <div className="text-4xl xl:text-7xl font-bold text-red-800 dark:text-slate-100 mb-12 mt-12">
+        <div className="text-4xl xl:text-7xl font-bold text-red-800 dark:text-slate-100 mb-2">
           {numWithoutSymptoms}
         </div>
       </div>

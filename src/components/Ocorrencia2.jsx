@@ -2,6 +2,7 @@
 import { set, useForm } from 'react-hook-form'
 import { createOccurrence, uploadFile } from '../pages/api/occurrences'
 import { useEffect, useState } from 'react'
+import { ArrowRightIcon } from '@heroicons/react/24/solid';
 
 function Ocorrencia2() {
 
@@ -30,18 +31,21 @@ function Ocorrencia2() {
       <h3 className="text-white text-md py-1 px-4 rounded-lg mt-[20px] font-semibold">Dados de Ocorrências</h3>
       <div className='w-full'>
         <form className='flex flex-col gap-[20px]' onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label className='flex flex-col'>
-              <span className='text-white'>Nome</span>
-              <input className='rounded-md' name={'fullName'}  {...register('fullName')}/>
-            </label> 
-          </div>    
-          <div>
-            <label className='flex flex-col'>
-              <span className='text-white'>Email</span>
-              <input className='rounded-md' name={'email'}  {...register('email')}/>
-            </label> 
-          </div> 
+          <div className='flex'>
+            <div className='w-1/2'>
+              <label className='flex flex-col'>
+                <span className='text-white'>Nome</span>
+                <input className='rounded-md' name={'fullName'}  {...register('fullName')}/>
+              </label> 
+            </div>    
+            <div className='w-1/2'>
+              <label className='flex flex-col'>
+                <span className='text-white'>Email</span>
+                <input className='rounded-md' name={'email'}  {...register('email')}/>
+              </label> 
+            </div> 
+          </div>
+          
           <div>
             <label className='flex flex-col'>
               <span className='text-white inline-block bg-gray-700 p-2 mb-[10px]'>Por favor, no campo abaixo indique a morada aproximada do local da ocorrência</span>
@@ -49,6 +53,7 @@ function Ocorrencia2() {
               <textarea className='rounded-md' name={'comments'}  {...register('comments')}/>
             </label> 
           </div> 
+          <div className='flex'>
           <div className='flex gap-[20px] w-full flex-col justify-center items-center'>
             <label 
               htmlFor="uploadFile1"
@@ -90,8 +95,10 @@ function Ocorrencia2() {
             )}
           </div>            
           <div className='flex w-full items-center justify-center'>
-            <button type={'submit'} className='bg-green-800 text-white h-[30px] w-[100px] rounded-sm font-semibold hover:brightness-50'>Enviar</button>
-          </div>                 
+            <button type={'submit'} className='bg-green-800 text-white h-auto w-auto p-5 rounded-sm font-semibold hover:brightness-50 flex items-center gap-[2px]'>Enviar Ocorrência <ArrowRightIcon height={20} /> </button>
+          </div>           
+          </div>
+            
         </form>
       </div>
     </div>

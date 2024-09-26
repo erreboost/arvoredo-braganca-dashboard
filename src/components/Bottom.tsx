@@ -78,14 +78,14 @@ function Bottom() {
         />
         <Row
           title="Árvores"
-          icon={<LuTrees size={64} />}
+          icon={<LuTrees size={28} />}
           count={Number(visibleTrees?.length).toString()}
           totalTrees={treesCached}
           multipleCount={1}
         />
         <Row
           title="Habitantes"
-          icon={<FaPeopleGroup size={64} />}
+          icon={<FaPeopleGroup size={50} />}
           count="10074"
           totalTrees={treesCached}
      

@@ -70,7 +70,7 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
         const cachedData = await getCachedData("trees", API_ENDPOINT);
   
         if (!cachedData || JSON.stringify(cachedData) !== JSON.stringify(treesWithFullImageURLs)) {
-          // console.log('New data found. Updating cache...');
+          console.log('New data found. Updating cache...');
           await addDataIntoCache("trees", API_ENDPOINT, treesWithFullImageURLs);
           setTrees(treesWithFullImageURLs);
           setVisibleTrees(treesWithFullImageURLs);
@@ -80,7 +80,7 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
           setVisibleTrees(cachedData);
         }
       } catch (error) {
-        console.error('Error fetching tree data:', error);
+        // console.error('Error fetching tree data:', error);
       }
     };
   

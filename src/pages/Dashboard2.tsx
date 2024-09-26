@@ -7,7 +7,6 @@ import DashboardCard04 from "../components/DashboardCards/DashboardCard04";
 import DashboardCard05 from "../components/DashboardCards/DashboardCard05";
 
 function Dashboard() {
-  // const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden">

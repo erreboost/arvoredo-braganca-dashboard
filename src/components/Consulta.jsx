@@ -31,8 +31,6 @@ function Consulta() {
           Características Específicas
         </button>
       </div>
-
-      {/* Render the appropriate component based on the selected category */}
       {selectedCategory === "Gerais" && <CaracteristicasGerais />}
       {selectedCategory === "Específicas" && <CaracteristicasEspecificas />}
     </div>

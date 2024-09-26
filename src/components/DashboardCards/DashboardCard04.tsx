@@ -42,8 +42,8 @@ const DashboardCard04: React.FC = () => {
         );
         const treeCounts: {[key: string]: number} = {
           Passeio: 0,
-          'Jardim Público': 0,
-          'Separador Central Viário': 0,
+          'Jardim público': 0,
+          Via: 0,
           Outro: 0,
         };
 
@@ -52,9 +52,8 @@ const DashboardCard04: React.FC = () => {
 
           if (
             location === 'Passeio' ||
-            location === 'Jardim Público' ||
-            location === 'Separador Central Viário' ||
-            location === 'Outro'
+            location === 'Jardim público' ||
+            location === 'Via'
           ) {
             treeCounts[location]++;
           } else {
@@ -144,8 +143,8 @@ const DashboardCard04: React.FC = () => {
   // Final Data
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[20vh]">
-      <div className="px-5 pt-5">
-        <h2 className="text-lg flex justify-center items-center font-semibold text-slate-800 dark:text-slate-100 mb-2">
+      <div className="px-5 pt-2">
+        <h2 className="text-lg flex justify-center items-center font-semibold text-slate-800 dark:text-slate-100">
           Localização
         </h2>
         <div className="h-[80%]">

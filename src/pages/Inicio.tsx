@@ -26,7 +26,7 @@ function Inicio() {
 
   return (
     <TreeDataProvider>
-      <div className="flex flex-col min-h-screen overflow-y-scroll md:overflow-hidden">
+      <div className="flex flex-col min-h-screen overflow-y-scroll lg:overflow-y-hidden md:overflow-hidden">
         <AnimatePresence exitBeforeEnter={false}>
           {loading && (
             <motion.div
@@ -49,20 +49,20 @@ function Inicio() {
             </motion.div>
           )}
         </AnimatePresence>
-        <div className='w-screen h-screen flex flex-col mt-[100px] md:mt-0'>
+        <div className='w-screen h-screen flex flex-col mt-[100px] md:mt-0 lg:flex'>
           {!loading && (
             <motion.div
-              className="flex flex-col lg:flex-row flex-grow bg-gray-100"
+              className="flex flex-col lg:flex-row bg-gray-100"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.5, delay: 0.2, ease: 'easeInOut' }}
             >
-              <div className="max-h-[635px] w-full lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md lg:flex-shrink-0 min-h-[55vh] z-50">
+              <div className="max-h-[635px] w-auto lg:w-1/3 p-2 bg-gray-500 overflow-hidden rounded-md  z-50">
                 <LeftComponent onButtonClick={handleButtonClick} />
               </div>
     
               <motion.div
-                className="w-screen lg:w-2/3 lg:flex lg:flex-col max-h-[680px]"
+                className="w-screen lg:w-2/3 lg:flex lg:flex-col max-h-[635px]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.0, delay: 0.3, ease: 'easeInOut' }}
@@ -73,7 +73,7 @@ function Inicio() {
           )}
     
           <motion.div
-            className="w-full min-h-[800px] pb-[120px] md:min-h-[500px] md:pb-[150px] items-center justify-center flex px-[10%]" 
+            className="w-full min-h-[800px] pb-[120px] md:min-h-[500px] md:pb-[250px] items-center justify-center flex px-[10%]" 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 2.0, delay: 0.3, ease: 'easeInOut' }}
