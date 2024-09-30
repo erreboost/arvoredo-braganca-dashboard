@@ -14,7 +14,7 @@ function CaracteristicasEspecificas() {
   });
 
   const data = useContext(DataContext);
-  const { trees, setVisibleExtent, setVisibleTrees, visibleTrees, setTrees, treesCached } = useTreeContext();
+  const { trees, setVisibleExtent, setVisibleTrees, visibleTrees, setTrees, trees } = useTreeContext();
 
   const [uniqueDap, setUniqueDap] = useState([]);
   const [uniqueIdade, setUniqueIdade] = useState([]);
@@ -24,16 +24,16 @@ function CaracteristicasEspecificas() {
   const initialTreeDataRef = useRef([]);
 
   useEffect(() => {
-    if (treesCached) {
+    if (trees) {
       setLoadingOptions(true); 
       const dapValues = [
-        ...new Set(treesCached.map((item) => item.DAP_v2)),
+        ...new Set(trees.map((item) => item.DAP_v2)),
       ].sort((a, b) => a - b);
       const idadeValues = [
-        ...new Set(treesCached.map((item) => item.idade_apro_v2)),
+        ...new Set(trees.map((item) => item.idade_apro_v2)),
       ].sort();
       const alturaValues = [
-        ...new Set(treesCached.map((item) => item.Altura_v2)),
+        ...new Set(trees.map((item) => item.Altura_v2)),
       ].sort((a, b) => a - b);
 
       setUniqueDap(dapValues);
@@ -41,7 +41,7 @@ function CaracteristicasEspecificas() {
       setUniqueAltura(alturaValues);
       setLoadingOptions(false); 
     }
-  }, [treesCached]);
+  }, [trees]);
 
   const handleFilterChange = (filterType, value) => {
     setSelectedFilters((prevFilters) => ({

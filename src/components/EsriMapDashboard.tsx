@@ -11,7 +11,7 @@ interface EsriMapProps {
   onZoomChange: (zoom: number) => void;
 }
 const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
-    const {trees, setVisibleExtent, setVisibleTrees, treesCached} = useTreeContext();
+    const {trees, setVisibleExtent, setVisibleTrees, trees} = useTreeContext();
     const [zoomLevel, setZoomLevel] = useState<number>(12);
   
     function lonToWebMercatorX(lon: number) {
@@ -308,8 +308,8 @@ const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange})
             view.watch('extent', (newExtent: any) => {
              
               setVisibleExtent(newExtent);
-              if(treesCached) {        
-                const visibleTreesFiltered = treesCached.filter((tree: { POINT_X_G: string; POINT_Y_G: string; }) => {
+              if(trees) {        
+                const visibleTreesFiltered = trees.filter((tree: { POINT_X_G: string; POINT_Y_G: string; }) => {
                   const x = lonToWebMercatorX(parseFloat(tree.POINT_X_G.replace(',', '.')));
                   const y = latToWebMercatorY(parseFloat(tree.POINT_Y_G.replace(',', '.')));
                   return (
@@ -346,7 +346,7 @@ const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange})
           }
         )
         .catch((err) => console.error('Failed to load ArcGIS API', err));
-    }, [apiKey, trees, setVisibleExtent, setVisibleTrees, onZoomChange, treesCached]);
+    }, [apiKey, trees, setVisibleExtent, setVisibleTrees, onZoomChange, trees]);
   
     return (
       <div id="mapViewDiv" style={style || {height: '60vh', width: '100%', zIndex: 99999}}></div>

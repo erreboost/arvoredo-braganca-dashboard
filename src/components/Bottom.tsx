@@ -49,7 +49,7 @@ function Bottom() {
   //@ts-ignore
   const [activeButton, setActiveButton] = useState(1);
 
-  const { visibleTrees, treesCached} = useTreeContext();
+  const { visibleTrees, trees} = useTreeContext();
 
  
   //@ts-ignore
@@ -64,7 +64,7 @@ function Bottom() {
           title="CO₂ Absorvido"
           icon={<LuTrees size={28} />}
           count={`${new Intl.NumberFormat('en-US').format(Number(visibleTrees.length) * 21).toString()}(ton/CO₂)`}
-          totalTrees={treesCached}
+          totalTrees={trees}
           multipleCount={21}
           environmentMeasures
         />
@@ -72,7 +72,7 @@ function Bottom() {
           title="O₂ Produzido"
           icon={<LuTrees size={28} />}
           count={`${new Intl.NumberFormat('en-US').format(Number(visibleTrees.length) * 117).toString()}(ton/O₂)`}
-          totalTrees={treesCached}
+          totalTrees={trees}
           multipleCount={117}
           environmentMeasures
         />
@@ -80,14 +80,14 @@ function Bottom() {
           title="Árvores"
           icon={<LuTrees size={28} />}
           count={Number(visibleTrees?.length).toString()}
-          totalTrees={treesCached}
+          totalTrees={trees}
           multipleCount={1}
         />
         <Row
           title="Habitantes"
           icon={<FaPeopleGroup size={50} />}
           count="10074"
-          totalTrees={treesCached}
+          totalTrees={trees}
      
         />
       </div>      

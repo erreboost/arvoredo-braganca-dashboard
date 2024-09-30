@@ -17,8 +17,6 @@ interface TreeContextProps {
   setVisibleTrees: (trees: Tree[]) => void;
   visibleExtent: any;
   setVisibleExtent: (extent: any) => void;
-  treesCached: Tree[] | null;
-  setTreesCached: Dispatch<SetStateAction<Tree[] | null>>;
 }
 
 interface TreeProviderProps {
@@ -31,7 +29,6 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
   const [trees, setTrees] = useState<Tree[]>([]);
   const [visibleTrees, setVisibleTrees] = useState<Tree[]>([]);
   const [visibleExtent, setVisibleExtent] = useState<any>(null);
-  const [treesCached, setTreesCached] = useState<Tree[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,8 +67,6 @@ export const TreeProvider: React.FC<TreeProviderProps> = ({ children }) => {
         setVisibleTrees,
         visibleExtent,
         setVisibleExtent,
-        treesCached,
-        setTreesCached,
       }}
     >
       {children}

@@ -12,7 +12,7 @@ function CaracteristicasGerais() {
   });
 
   const data = useContext(DataContext);
-  const {trees, setVisibleExtent, setVisibleTrees, visibleTrees, setTrees, treesCached} = useTreeContext();
+  const {trees, setVisibleExtent, setVisibleTrees, visibleTrees, setTrees, trees} = useTreeContext();
 
   const [uniqueNomeComum, setUniqueNomeComum] = useState([]);
   const [uniqueEspecie, setUniqueEspecie] = useState([]);
@@ -23,19 +23,19 @@ function CaracteristicasGerais() {
   const initialTreeDataRef = useRef([]);
 
   useEffect(() => {
-    if(treesCached) {
+    if(trees) {
       setLoadingOptions(true); // Start loading the options
-      // setVisibleTrees(treesCached);
-      setTrees(treesCached);
+      // setVisibleTrees(trees);
+      setTrees(trees);
       initialTreeDataRef.current = visibleTrees;
 
       const uniqueNomeComum = [
-        ...new Set(treesCached.map((tree) => tree.Nomecomum)),
+        ...new Set(trees.map((tree) => tree.Nomecomum)),
       ];
-      const uniqueEspecie = [...new Set(treesCached.map((tree) => tree.Especie))];
-      const uniqueEstado = [...new Set(treesCached.map((tree) => tree.Estado_fit))];
+      const uniqueEspecie = [...new Set(trees.map((tree) => tree.Especie))];
+      const uniqueEstado = [...new Set(trees.map((tree) => tree.Estado_fit))];
       const uniqueLocalizacao = [
-        ...new Set(treesCached.map((tree) => tree.Localizacao)),
+        ...new Set(trees.map((tree) => tree.Localizacao)),
       ];
 
       setUniqueNomeComum(uniqueNomeComum);
@@ -45,7 +45,7 @@ function CaracteristicasGerais() {
 
       setLoadingOptions(false); 
     }
-  }, [treesCached]);
+  }, [trees]);
 
   const handleFilterChange = (filterType, value) => {
     setSelectedFilters((prevFilters) => ({
