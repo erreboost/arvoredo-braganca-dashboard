@@ -28,16 +28,16 @@ function Row({title, icon, count, totalTrees, multipleCount, environmentMeasures
         {icon}
       </div>
       <div className='flex items-center justify-center gap-[5px] mt-[5px] flex-col'>
-      <span className="text-green-700">{count}</span>
+      {totalTrees && totalTrees.length > 0? (<span className="text-green-700">{count}</span>) : (<span className="text-red-500">Carregando...</span>)}
       {multipleCount  && environmentMeasures? (
         <div className="flex items-center gap-[5px]">
           <span className="text-green-900 font-semibold">de</span>
-          {totalTrees ? (<span className="text-green-700">{new Intl.NumberFormat('en-US').format(Number(totalTrees?.length) * multipleCount).toString()}</span>) : (<span className="text-red-500">Carregando...</span>)}
+          {totalTrees && totalTrees.length > 0 ? (<span className="text-green-700">{new Intl.NumberFormat('en-US').format(Number(totalTrees?.length) * multipleCount).toString()}</span>) : (<span className="text-red-500">Carregando...</span>)}
         </div>
       ) : multipleCount ? (
         <div className="flex items-center gap-[5px]">
           <span className="text-green-900 font-semibold">de</span>
-          {totalTrees? (<span className="text-green-700">{totalTrees?.length * multipleCount}</span>) : (<span className="text-red-500">Carregando...</span>)}          
+          {totalTrees && totalTrees.length > 0 ? (<span className="text-green-700">{totalTrees?.length * multipleCount}</span>) : (<span className="text-red-500">Carregando...</span>)}          
         </div>
       ) : null}
       </div>

@@ -1,5 +1,5 @@
-import {useState, useEffect, useContext, useRef} from 'react';
-import {DataContext} from '../config/DataContext';
+import { useState, useEffect, useContext, useRef } from 'react';
+import { DataContext } from '../config/DataContext';
 import { useTreeContext } from '../utils/TreeProvider';
 import { toast } from 'react-toastify';
 
@@ -12,39 +12,33 @@ function CaracteristicasGerais() {
   });
 
   const data = useContext(DataContext);
-  const {trees, setVisibleExtent, setVisibleTrees, visibleTrees, setTrees} = useTreeContext();
+  const { trees, setVisibleExtent, setVisibleTrees, visibleTrees, setTrees } = useTreeContext();
 
   const [uniqueNomeComum, setUniqueNomeComum] = useState([]);
   const [uniqueEspecie, setUniqueEspecie] = useState([]);
   const [uniqueEstado, setUniqueEstado] = useState([]);
   const [uniqueLocalizacao, setUniqueLocalizacao] = useState([]);
-  const [loadingOptions, setLoadingOptions] = useState(true); // New loading state for options
+  const [loadingOptions, setLoadingOptions] = useState(true);
 
   const initialTreeDataRef = useRef([]);
 
   useEffect(() => {
-    if(trees) {
-      setLoadingOptions(true); // Start loading the options
-      // setVisibleTrees(trees);
-      setTrees(trees);
-      initialTreeDataRef.current = visibleTrees;
-
-      const uniqueNomeComum = [
-        ...new Set(trees.map((tree) => tree.Nomecomum)),
-      ];
-      const uniqueEspecie = [...new Set(trees.map((tree) => tree.Especie))];
-      const uniqueEstado = [...new Set(trees.map((tree) => tree.Estado_fit))];
-      const uniqueLocalizacao = [
-        ...new Set(trees.map((tree) => tree.Localizacao)),
-      ];
-
-      setUniqueNomeComum(uniqueNomeComum);
-      setUniqueEspecie(uniqueEspecie);
-      setUniqueEstado(uniqueEstado);
-      setUniqueLocalizacao(uniqueLocalizacao);
-
-      setLoadingOptions(false); 
+    if (trees.length > 0 && initialTreeDataRef.current.length === 0) {
+      initialTreeDataRef.current = [...trees];
     }
+
+    setLoadingOptions(true);
+    const uniqueNomeComum = [...new Set(trees.map((tree) => tree.Nomecomum))];
+    const uniqueEspecie = [...new Set(trees.map((tree) => tree.Especie))];
+    const uniqueEstado = [...new Set(trees.map((tree) => tree.Estado_fit))];
+    const uniqueLocalizacao = [...new Set(trees.map((tree) => tree.Localizacao))];
+
+    setUniqueNomeComum(uniqueNomeComum);
+    setUniqueEspecie(uniqueEspecie);
+    setUniqueEstado(uniqueEstado);
+    setUniqueLocalizacao(uniqueLocalizacao);
+
+    setLoadingOptions(false);
   }, [trees]);
 
   const handleFilterChange = (filterType, value) => {
@@ -66,10 +60,10 @@ function CaracteristicasGerais() {
 
     if (filtered.length === 0) {
       toast.error('Essa pesquisa não existe. Por favor, clique em Reset');
+    } else {
+      setTrees(filtered);
+      setVisibleTrees(filtered);
     }
-
-    setTrees(filtered);
-    setVisibleTrees(filtered);
   };
 
   const handleResetFilters = () => {
@@ -80,8 +74,10 @@ function CaracteristicasGerais() {
       localizacao: '',
     });
 
-    setVisibleTrees(initialTreeDataRef.current);
-    setTrees(initialTreeDataRef.current);
+    if (initialTreeDataRef.current.length > 0) {
+      setTrees(initialTreeDataRef.current);
+      setVisibleTrees(initialTreeDataRef.current);
+    }
   };
 
   function generateOptions(values) {
@@ -93,6 +89,7 @@ function CaracteristicasGerais() {
       </option>
     ));
   }
+
 
   return (
     <div className='flex flex-col items-center justify-center'>

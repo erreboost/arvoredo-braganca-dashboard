@@ -1,4 +1,4 @@
-export interface Tree {
+export type Tree = {
   _id: string;
   Data: string;
   Dicofre: string;

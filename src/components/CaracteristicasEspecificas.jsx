@@ -1,10 +1,7 @@
-import React, {useState, useEffect, useContext, useRef} from 'react';
-import {DataContext} from '../config/DataContext';
+import React, { useState, useEffect, useContext, useRef } from 'react';
+import { DataContext } from '../config/DataContext';
 import { useTreeContext } from '../utils/TreeProvider';
-import {API_ENDPOINT, API_BASE_URL} from '../config/config';
-import { useFilters } from '../context/filters';
 import { toast } from 'react-toastify';
-
 
 function CaracteristicasEspecificas() {
   const [selectedFilters, setSelectedFilters] = useState({
@@ -13,18 +10,18 @@ function CaracteristicasEspecificas() {
     altura: '',
   });
 
-  const data = useContext(DataContext);
   const { setVisibleExtent, setVisibleTrees, visibleTrees, setTrees, trees } = useTreeContext();
 
   const [uniqueDap, setUniqueDap] = useState([]);
   const [uniqueIdade, setUniqueIdade] = useState([]);
   const [uniqueAltura, setUniqueAltura] = useState([]);
-  const [loadingOptions, setLoadingOptions] = useState(true); // New loading state
+  const [loadingOptions, setLoadingOptions] = useState(true);
 
   const initialTreeDataRef = useRef([]);
 
   useEffect(() => {
-    if (trees) {
+    if (trees.length > 0) {
+      initialTreeDataRef.current = trees;
       setLoadingOptions(true); 
       const dapValues = [
         ...new Set(trees.map((item) => item.DAP_v2)),
@@ -61,9 +58,10 @@ function CaracteristicasEspecificas() {
 
     if (filtered.length === 0) {
       toast.error('Essa pesquisa não existe. Por favor, clique em Reset');
+    } else {
+      setTrees(filtered);
+      setVisibleTrees(filtered);
     }
-    setTrees(filtered);
-    setVisibleTrees(filtered);
   };
 
   const handleResetFilters = () => {
@@ -73,9 +71,8 @@ function CaracteristicasEspecificas() {
       altura: '',
     });
 
-    setFilteredData(initialTreeDataRef.current);
-    setVisibleTrees(initialTreeDataRef.current);
-    setTrees(initialTreeDataRef.current);
+    setTrees(initialTreeDataRef.current); 
+    setVisibleTrees(initialTreeDataRef.current); 
   };
 
   function generateOptions(values) {
@@ -127,7 +124,7 @@ function CaracteristicasEspecificas() {
       <div className="mb-0">
         <h3 className="text-lg font-semibold">Altura:</h3>
         {loadingOptions ? (
-         <span className='dots-loader'>Carregando...</span>
+          <span className='dots-loader'>Carregando...</span>
         ) : (
           <select
             value={selectedFilters.altura}
