@@ -11,7 +11,7 @@ interface EsriMapProps {
   onZoomChange: (zoom: number) => void;
 }
 const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
-    const {trees, setVisibleExtent, setVisibleTrees, trees} = useTreeContext();
+    const {trees, setVisibleExtent, setVisibleTrees} = useTreeContext();
     const [zoomLevel, setZoomLevel] = useState<number>(12);
   
     function lonToWebMercatorX(lon: number) {

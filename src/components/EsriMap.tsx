@@ -12,7 +12,7 @@ interface EsriMapProps {
 }
 
 const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
-  const {trees, setVisibleExtent, setVisibleTrees, trees, visibleTrees} = useTreeContext();
+  const { setVisibleExtent, setVisibleTrees, trees, visibleTrees} = useTreeContext();
   const [zoomLevel, setZoomLevel] = useState<number>(12);
 
   function lonToWebMercatorX(lon) {

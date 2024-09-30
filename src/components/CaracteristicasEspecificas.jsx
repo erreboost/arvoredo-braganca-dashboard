@@ -14,7 +14,7 @@ function CaracteristicasEspecificas() {
   });
 
   const data = useContext(DataContext);
-  const { trees, setVisibleExtent, setVisibleTrees, visibleTrees, setTrees, trees } = useTreeContext();
+  const { setVisibleExtent, setVisibleTrees, visibleTrees, setTrees, trees } = useTreeContext();
 
   const [uniqueDap, setUniqueDap] = useState([]);
   const [uniqueIdade, setUniqueIdade] = useState([]);

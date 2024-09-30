@@ -12,7 +12,7 @@ function CaracteristicasGerais() {
   });
 
   const data = useContext(DataContext);
-  const {trees, setVisibleExtent, setVisibleTrees, visibleTrees, setTrees, trees} = useTreeContext();
+  const {trees, setVisibleExtent, setVisibleTrees, visibleTrees, setTrees} = useTreeContext();
 
   const [uniqueNomeComum, setUniqueNomeComum] = useState([]);
   const [uniqueEspecie, setUniqueEspecie] = useState([]);
