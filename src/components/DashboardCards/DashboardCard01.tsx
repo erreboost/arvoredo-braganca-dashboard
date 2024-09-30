@@ -3,18 +3,18 @@ import {useTreeContext} from '../../utils/TreeProvider';
 
 const DashboardCard01 = () => {
   const [treeSpecies, setTreeSpecies] = useState<string[]>([]);
-  const {visibleTrees} = useTreeContext();
+  const {visibleTreesDashboard} = useTreeContext();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (visibleTrees.length > 0) {
-      let species = visibleTrees.map((tree) => tree.Especie);
+    if (visibleTreesDashboard.length > 0) {
+      let species = visibleTreesDashboard.map((tree: { Especie: any; }) => tree.Especie);
 
       // Remove duplicates
       species = [...new Set(species)];
 
       // Sort alphabetically
-      species.sort((a, b) => a.localeCompare(b));
+      species.sort((a: string, b: any) => a.localeCompare(b));
 
       setTreeSpecies(species);
       setLoading(false);
@@ -22,7 +22,7 @@ const DashboardCard01 = () => {
       setTreeSpecies([]);
       setLoading(false);
     }
-  }, [visibleTrees]);
+  }, [visibleTreesDashboard]);
 
   if (loading) {
     return (
@@ -37,7 +37,7 @@ const DashboardCard01 = () => {
   }
 
   return (
-    <div className="flex flex-col -z-50 w-screen col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[55vh] relative md:max-w-[300px]">
+    <div className="flex flex-col z-50 w-screen col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[55vh] relative md:max-w-[300px]">
       <div className="px-5 pt-5 flex flex-col h-full">
         {treeSpecies.length > 0 && (
           <>

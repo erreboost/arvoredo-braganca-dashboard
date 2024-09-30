@@ -2,9 +2,12 @@
 import React, {Suspense} from 'react';
 import EsriMap from './EsriMap';
 import Loading from './Loading';
+import { useLocation } from 'react-router-dom';
 
 const RightComponent = () => {
   const apiKey = import.meta.env.VITE_REACT_APP_ESRI_API_KEY as string;
+
+  // console.log('Location', useLocation())
 
   const handleZoomChange = (zoom: number) => {
     // console.log('Zoom level changed:', zoom);

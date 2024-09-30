@@ -4,7 +4,7 @@ import LoadingSpinner from '../LoadingSpinner';
 
 const DashboardCard05 = () => {
   const [treeCount, setTreeCount] = useState<number | null>(null);
-  const {visibleTrees, visibleExtent} = useTreeContext();
+  const {visibleTreesDashboard, visibleExtentDashboard} = useTreeContext();
   const [loading, setLoading] = useState(true);
 
 
@@ -24,8 +24,8 @@ const DashboardCard05 = () => {
 
         // Filter trees
         const filteredTrees = filterTreesByVisibleExtent(
-          visibleTrees,
-          visibleExtent
+          visibleTreesDashboard,
+          visibleExtentDashboard
         );
         const count = filteredTrees.length;
         setTreeCount(count);
@@ -44,7 +44,7 @@ const DashboardCard05 = () => {
     const intervalId = setInterval(fetchData, 120000);
 
     return () => clearInterval(intervalId);
-  }, [visibleTrees, visibleExtent]);
+  }, [visibleTreesDashboard, visibleExtentDashboard]);
 
   // Function to filter trees based on visible extent
   const filterTreesByVisibleExtent = (trees: any[], extent: any) => {

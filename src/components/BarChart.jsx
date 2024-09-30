@@ -30,7 +30,7 @@ const BarChart = ({labels, values, options}) => {
           callback: (value) => {
             const valueMapping = {
               Passeio: 'Passeio',
-              'Jardim Público': 'Jardim público',
+              'Jardim Público': 'Jardim Público',
               Outro: 'Outro',
               'Separador Central Viário': 'Separador Central Viário',
             };

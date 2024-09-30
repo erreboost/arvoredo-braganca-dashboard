@@ -18,7 +18,7 @@ const DashboardCard04: React.FC = () => {
     values: [],
   });
 
-  const {visibleTrees, visibleExtent} = useTreeContext();
+  const {visibleExtentDashboard, visibleTreesDashboard} = useTreeContext();
   const [loading, setLoading] = useState(true);
   function lonToWebMercatorX(lon: number) {
     return lon * 20037508.34 / 180;
@@ -37,12 +37,12 @@ const DashboardCard04: React.FC = () => {
       try {
         // Filter trees based on visible extent
         const filteredTrees = filterTreesByVisibleExtent(
-          visibleTrees,
-          visibleExtent
+          visibleTreesDashboard,
+          visibleExtentDashboard
         );
         const treeCounts: {[key: string]: number} = {
           Passeio: 0,
-          'Jardim público': 0,
+          'Jardim Público': 0,
           'Separador Central Viário': 0,
           Outro: 0,
         };
@@ -52,7 +52,7 @@ const DashboardCard04: React.FC = () => {
 
           if (
             location === 'Passeio' ||
-            location === 'Jardim público' ||
+            location === 'Jardim Público' ||
             location === 'Separador Central Viário'
           ) {
             treeCounts[location]++;
@@ -77,7 +77,7 @@ const DashboardCard04: React.FC = () => {
     const intervalId = setInterval(updateChartData, 120000);
 
     return () => clearInterval(intervalId);
-  }, [visibleTrees, visibleExtent]);
+  }, [visibleTreesDashboard, visibleExtentDashboard]);
 
   // Filter trees based on visible extent
   const filterTreesByVisibleExtent = (trees: Tree[], extent: any) => {

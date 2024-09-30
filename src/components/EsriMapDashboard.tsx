@@ -11,7 +11,7 @@ interface EsriMapProps {
   onZoomChange: (zoom: number) => void;
 }
 const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
-    const {trees, setVisibleExtent, setVisibleTrees} = useTreeContext();
+    const {treesDashboard, setVisibleTreesDashboard, setVisibleExtentDashboard} = useTreeContext();
     const [zoomLevel, setZoomLevel] = useState<number>(12);
   
     function lonToWebMercatorX(lon: number) {
@@ -24,25 +24,25 @@ const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange})
     }
   
     useEffect(() => {
-      fetchTreeData();
+      setVisibleTreesDashboard(treesDashboard);
     }, []);
   
-    const fetchTreeData = async () => {
-      try {
-        const response = await fetch(API_ENDPOINT);
-        if (!response.ok) {
-          throw new Error('Failed to fetch tree data');
-        }
-        const data = await response.json();
-        const treesWithFullImageURLs = data.trees.map((tree: Tree) => ({
-          ...tree,
-          Fotos: tree.Fotos.map((photo) => `${API_BASE_URL}/${photo}`),
-        }));
-        setVisibleTrees(treesWithFullImageURLs);
-      } catch (error) {
-        console.error('Error fetching tree data:', error);
-      }
-    };
+    // const fetchTreeData = async () => {
+    //   try {
+    //     const response = await fetch(API_ENDPOINT);
+    //     if (!response.ok) {
+    //       throw new Error('Failed to fetch tree data');
+    //     }
+    //     const data = await response.json();
+    //     const treesWithFullImageURLs = data.trees.map((tree: Tree) => ({
+    //       ...tree,
+    //       Fotos: tree.Fotos.map((photo) => `${API_BASE_URL}/${photo}`),
+    //     }));
+        
+    //   } catch (error) {
+    //     console.error('Error fetching tree data:', error);
+    //   }
+    // };
   
     useEffect(() => {
       let view: any = null;
@@ -100,7 +100,7 @@ const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange})
               xmax = -Infinity,
               ymax = -Infinity;
   
-            trees.forEach((tree) => {
+            treesDashboard.forEach((tree) => {
               const x = parseFloat(tree.POINT_X_G);
               const y = parseFloat(tree.POINT_Y_G);
               // console.log('Point X',tree.POINT_X_G )
@@ -204,7 +204,7 @@ const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange})
   
             window.addEventListener('resize', handleResize);
   
-            if (trees && trees.length > 0) {
+            if (treesDashboard && treesDashboard.length > 0) {
               const extent = new Extent({
                 xmin,
                 ymin,
@@ -307,9 +307,9 @@ const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange})
   
             view.watch('extent', (newExtent: any) => {
              
-              setVisibleExtent(newExtent);
-              if(trees) {        
-                const visibleTreesFiltered = trees.filter((tree: { POINT_X_G: string; POINT_Y_G: string; }) => {
+              setVisibleExtentDashboard(newExtent);
+              if(treesDashboard) {        
+                const visibleTreesFiltered = treesDashboard.filter((tree: { POINT_X_G: string; POINT_Y_G: string; }) => {
                   const x = lonToWebMercatorX(parseFloat(tree.POINT_X_G.replace(',', '.')));
                   const y = latToWebMercatorY(parseFloat(tree.POINT_Y_G.replace(',', '.')));
                   return (
@@ -320,7 +320,7 @@ const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange})
                   );
                 });
                 // console.log('Visible Trees Filtered', visibleTreesFiltered)
-                setVisibleTrees(visibleTreesFiltered);
+                setVisibleTreesDashboard(visibleTreesFiltered);
               }
              
             });
@@ -346,7 +346,7 @@ const EsriMapDashboard: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange})
           }
         )
         .catch((err) => console.error('Failed to load ArcGIS API', err));
-    }, [apiKey, trees, setVisibleExtent, setVisibleTrees, onZoomChange, trees]);
+    }, [apiKey, treesDashboard, setVisibleTreesDashboard, setVisibleExtentDashboard, onZoomChange]);
   
     return (
       <div id="mapViewDiv" style={style || {height: '60vh', width: '100%', zIndex: 99999}}></div>

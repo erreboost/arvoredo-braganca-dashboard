@@ -4,16 +4,16 @@ import DashboardCard02A from './DashboardCard02A';
 import DashboardCard02B from './DashboardCard02B';
 
 const DashboardCard02 = () => {
-  const {visibleTrees, visibleExtent} = useTreeContext();
+  const {visibleTreesDashboard, visibleExtentDashboard} = useTreeContext();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (visibleExtent && visibleTrees.length > 0) {
+    if (visibleExtentDashboard && visibleTreesDashboard.length > 0) {
       setLoading(false);
     } else {
       setLoading(true);
     }
-  }, [visibleTrees, visibleExtent]);
+  }, [visibleTreesDashboard, visibleExtentDashboard]);
 
   if (loading) {
     return (
@@ -23,7 +23,7 @@ const DashboardCard02 = () => {
     );
   }
 
-  if (!visibleExtent) {
+  if (!visibleExtentDashboard) {
     return (
       <div className="flex items-center justify-center h-full">
         <p>Visible extent is null.</p>
@@ -31,7 +31,7 @@ const DashboardCard02 = () => {
     );
   }
 
-  if (visibleTrees.length === 0) {
+  if (visibleTreesDashboard.length === 0) {
     return (
       <div className="flex items-center justify-center h-full">
         <p>No trees within the visible extent.</p>
@@ -43,11 +43,11 @@ const DashboardCard02 = () => {
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-[55vh] relative overflow-hidden">
       <div className="flex h-full">
         <div className="flex-1 overflow-auto">
-          <DashboardCard02A data={{trees: visibleTrees}} />
+          <DashboardCard02A data={{trees: visibleTreesDashboard}} />
         </div>
         <div className="border-l border-slate-300 mx-2" />
         <div className="flex-1 overflow-auto">
-          <DashboardCard02B data={{trees: visibleTrees}} />
+          <DashboardCard02B data={{trees: visibleTreesDashboard}} />
         </div>
       </div>
     </div>
