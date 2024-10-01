@@ -1,32 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import {Bars3BottomRightIcon, XMarkIcon} from '@heroicons/react/24/solid';
-import {Link, useLocation} from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Bars3BottomRightIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { Link, useLocation } from 'react-router-dom'
 
 interface Link {
-  name: string;
-  link: string;
+  name: string
+  link: string
 }
 
 const Navbar: React.FC = () => {
-  const location = useLocation();
-  const isInicioRoute = location.pathname === '/inicio';
+  const location = useLocation()
+  const isInicioRoute = location.pathname === '/inicio'
 
   const links: Link[] = [
-    {name: 'Início', link: '/'},
-    {name: 'Dashboard', link: '/dashboard'},
+    { name: 'Início', link: '/' },
+    { name: 'Dashboard', link: '/dashboard' },
     // { name: "Ocorrências", link: "/ocorrencias" },
     // {name: 'Correção', link: '/correcao'},
-  ];
+  ]
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    setOpen(!isInicioRoute);
-  }, [isInicioRoute]);
+    setOpen(!isInicioRoute)
+  }, [isInicioRoute])
 
   const handleToggle = () => {
-    setOpen(!open);
-  };
+    setOpen(!open)
+  }
 
   return (
     <div className="relative shadow-lg w-full top-0 left-0 z-999999">
@@ -70,15 +70,18 @@ const Navbar: React.FC = () => {
               )}
             </li>
           ))}
-          <a className='ml-[10px]' href='https://arvoredo-backoffice-braganca.vercel.app/sign-in'>
-            <li className='font-semibold text-gray-800 hover:text-red-500 duration-300 hover:cursor-pointer'>
+          <a
+            className="ml-[10px]"
+            href="https://arvoredo-backoffice-braganca.vercel.app/sign-in"
+          >
+            <li className="font-semibold text-gray-800 hover:text-red-500 duration-300 hover:cursor-pointer">
               Backoffice
             </li>
-          </a>          
+          </a>
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
