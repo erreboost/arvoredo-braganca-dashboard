@@ -199,7 +199,7 @@ function Ocorrencia2() {
                     formData.append('fileName', files[0]?.name)
                     console.log('Form Data', formData)
                     uploadFile(
-                      'https://lrb-app.grupoerre.pt:3011/files/upload',
+                      'https://lrb-app.grupoerre.pt:3010/files/upload',
                       formData,
                       setImagePath
                     )
