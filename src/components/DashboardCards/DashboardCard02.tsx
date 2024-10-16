@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useTreeContext} from '../../utils/TreeProvider';
 import DashboardCard02A from './DashboardCard02A';
-import DashboardCard02B from './DashboardCard02B';
 
 const DashboardCard02 = () => {
   const {visibleTreesDashboard, visibleExtentDashboard} = useTreeContext();
