@@ -18,7 +18,7 @@ function Dashboard() {
               <div className="flex-1 min-w-0 max-h-full max-w-[300px]">
                 <DashboardCard01 />
               </div>
-              <div className="flex-1 min-w-0 max-w-[500px]">
+              <div className="flex-1 min-w-0 max-w-[250px]">
                 <DashboardCard02 />
               </div>
               <div className="flex-1 min-w-0">

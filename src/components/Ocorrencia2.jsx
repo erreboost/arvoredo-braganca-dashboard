@@ -98,7 +98,7 @@ function Ocorrencia2() {
   ) 
 
   return (
-    <div className="flex flex-col items-center justify-center p-2">
+    <div className="flex flex-col items-center justify-center">
       <h3 className="text-white text-md py-1 px-4 rounded-lg font-semibold">
         Dados de Ocorrência
       </h3>
@@ -107,12 +107,12 @@ function Ocorrencia2() {
           className="flex flex-col"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex">
+          <div className="flex gap-[5px]">
             <div className="w-1/2">
               <label className="flex flex-col">
                 <span className="text-white">Nome</span>
                 <input
-                  className="rounded-md"
+                  className="rounded-md h-[30px]"
                   name={'fullName'}
                   {...register('fullName')}
                 />
@@ -122,7 +122,7 @@ function Ocorrencia2() {
               <label className="flex flex-col">
                 <span className="text-white">Email</span>
                 <input
-                  className="rounded-md"
+                  className="rounded-md h-[30px]"
                   name={'email'}
                   {...register('email')}
                 />
@@ -135,7 +135,7 @@ function Ocorrencia2() {
               <input
                 id="nif"
                 type="text"
-                className="rounded-md"
+                className="rounded-md h-[30px]"
                 {...register('nif', {
                   onChange: (e) => handleInputChange(e.target.value),
                 })}
@@ -145,6 +145,16 @@ function Ocorrencia2() {
                 <p style={{ color: 'red' }}>{errors.nif.message}</p>
               )}
             </label>
+          </div>
+          <div className="w-full">
+          <label className="flex flex-col">
+                <span className="text-white">Telefone</span>
+                <input
+                  className="rounded-md h-[30px]"
+                  name={'phone'}
+                  {...register('phone')}
+                />
+              </label>
           </div>
           <div>
             <label className="flex flex-col">

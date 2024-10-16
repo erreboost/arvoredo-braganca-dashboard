@@ -53,6 +53,7 @@ const response = await fetch(`${BASE_URL}/api/occurrences/create-new`, {
     comments: occurrence.comments,
     status:occurrence.status,
     nif:occurrence.nif,
+    phone:occurrence.phone,
     imgUrl: `https://lrb-app.grupoerre.pt:3010/${imagePath}`
     }),    
 })

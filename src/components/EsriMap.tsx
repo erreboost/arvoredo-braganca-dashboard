@@ -152,10 +152,6 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
                             <p>${attributes.Especie}</p>
                           </div>
                           <div>
-                            <p class="text-gray-600 font-medium">Estado:</p>
-                            <p>${attributes.Estado_fit}</p>
-                          </div>
-                          <div>
                             <p class="text-gray-600 font-medium">Altura (m):</p>
                             <p>${attributes.Altura_v2}</p>
                           </div>
@@ -248,10 +244,6 @@ const EsriMap: React.FC<EsriMapProps> = ({apiKey, style, onZoomChange}) => {
                           <div>
                             <p class="text-gray-600 font-medium">Espécie:</p>
                             <p>${attributes.Especie}</p>
-                          </div>
-                          <div>
-                            <p class="text-gray-600 font-medium">Estado:</p>
-                            <p>${attributes.Estado_fit}</p>
                           </div>
                           <div>
                             <p class="text-gray-600 font-medium">Altura (m):</p>

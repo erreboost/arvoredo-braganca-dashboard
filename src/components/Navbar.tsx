@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="relative shadow-lg w-full top-0 left-0 z-999999">
-      <div className="md:flex items-center justify-between bg-gray-200 h-[100px] shadow-xl py-3 md:px-10 px-4 rounded-b-xl">
+      <div className="md:flex items-center justify-between bg-gray-200 h-[100px] shadow-xl  md:px-10 px-4 rounded-b-xl">
         {/* logo section */}
         <div className="cursor-pointer flex items-center">
           <a href={'https://www.cm-braganca.pt/pages/87'}>
