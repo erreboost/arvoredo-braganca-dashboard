@@ -236,5 +236,4 @@ function Ocorrencia2() {
     </div>
   )
 }
-
 export default Ocorrencia2
