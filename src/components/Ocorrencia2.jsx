@@ -6,7 +6,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { useCallback } from 'react'
 import { API_BASE_URL } from '../config/config'
 
-const BASE_URL='https://lrb-app.grupoerre.pt:3010'
+const BASE_URL=API_BASE_URL
 
 function Ocorrencia2() {
   const {
@@ -209,7 +209,7 @@ function Ocorrencia2() {
                     formData.append('fileName', files[0]?.name)
                     console.log('Form Data', formData)
                     uploadFile(
-                      'https://lrb-app.grupoerre.pt:3010/files/upload',
+                      `${API_BASE_URL}/files/upload`,
                       formData,
                       setImagePath
                     )
@@ -236,5 +236,4 @@ function Ocorrencia2() {
     </div>
   )
 }
-
 export default Ocorrencia2
