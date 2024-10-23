@@ -1,7 +1,7 @@
 import { toast } from "react-toastify"
 import axios from 'axios'
 
-const BASE_URL='https://lrb-app.grupoerre.pt:3010'
+const BASE_URL='https://lrb-app.grupoerre.pt'
 
 export const editOccurrence = async (occurrence: any, occurrenceId: string) => {
     const token = localStorage.getItem('token')
