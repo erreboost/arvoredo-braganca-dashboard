@@ -1,12 +1,14 @@
-import { toast } from "react-toastify"
+import { toast } from 'react-toastify'
 import axios from 'axios'
 
-const BASE_URL='https://lrb-app.grupoerre.pt'
+const BASE_URL = 'https://lrb-app.grupoerre.pt'
 
 export const editOccurrence = async (occurrence: any, occurrenceId: string) => {
-    const token = localStorage.getItem('token')
-  
-    const response = await fetch(`${BASE_URL}/api/occurrences/edit/${occurrenceId}`, {
+  const token = localStorage.getItem('token')
+
+  const response = await fetch(
+    `${BASE_URL}/api/occurrences/edit/${occurrenceId}`,
+    {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -14,55 +16,54 @@ export const editOccurrence = async (occurrence: any, occurrenceId: string) => {
       },
       body: JSON.stringify({
         name: occurrence.name,
-        email:occurrence.email,
-        xCoordinate: occurrence.xCoordinate, 
+        email: occurrence.email,
+        xCoordinate: occurrence.xCoordinate,
         yCoordinate: occurrence.yCoordinate,
-        treeId: occurrence.treeId, 
+        treeId: occurrence.treeId,
         comments: occurrence.comments,
-        status:occurrence.status
+        status: occurrence.status,
       }),
-      
-    })
-  
-    const responseData = await response.json()
-    // if(responseData){
-    //   toast.success('Arvore editada com sucesso')
-    // }
-    
-    console.log('Editar ocurrence', responseData)
-  }
-  
+    }
+  )
+
+  const responseData = await response.json()
+  // if(responseData){
+  //   toast.success('Arvore editada com sucesso')
+  // }
+
+  console.log('Editar ocurrence', responseData)
+}
+
 export const createOccurrence = async (occurrence: any, imagePath: string) => {
-const token = localStorage.getItem('token')
-console.log('Ocurrence', occurrence)
-console.log('imagePath', imagePath)
+  const token = localStorage.getItem('token')
+  console.log('Ocurrence', occurrence)
+  console.log('imagePath', imagePath)
 
-
-const response = await fetch(`${BASE_URL}/api/occurrences/create-new`, {
+  const response = await fetch(`${BASE_URL}/api/occurrences/create-new`, {
     method: 'POST',
     headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-    name: occurrence.fullName,
-    email: occurrence.email,
-    // xCoordinate: occurrence.coordinateX, 
-    // yCoordinate: occurrence.coordinateY,
-    // treeId: occurrence.treeId, 
-    comments: occurrence.comments,
-    status:occurrence.status,
-    nif:occurrence.nif.trim(),
-    phone:occurrence.phone,
-    imgUrl: `https://lrb-app.grupoerre.pt:3010/${imagePath}`
-    }),    
-})
+      name: occurrence.fullName,
+      email: occurrence.email,
+      // xCoordinate: occurrence.coordinateX,
+      // yCoordinate: occurrence.coordinateY,
+      // treeId: occurrence.treeId,
+      comments: occurrence.comments,
+      status: occurrence.status,
+      nif: occurrence.nif,
+      phone: occurrence.phone,
+      imgUrl: `${BASE_URL}/${imagePath}`,
+    }),
+  })
 
-const responseData = await response.json()
-if(responseData.message === "New occurence created"){
-  toast.success('Ocorrência criada com sucesso!')
-}
- console.log('Occurrence created', responseData)
+  const responseData = await response.json()
+  if (responseData.message === 'New occurence created') {
+    toast.success('Ocorrência criada com sucesso!')
+  }
+  console.log('Occurrence created', responseData)
 }
 
 export const uploadFile = async (
@@ -84,6 +85,3 @@ export const uploadFile = async (
     console.error('Error uploading the file:', error)
   }
 }
-
-
-    
