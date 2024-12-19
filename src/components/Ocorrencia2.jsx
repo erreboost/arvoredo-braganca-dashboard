@@ -30,6 +30,31 @@ function Ocorrencia2() {
   useEffect(() => console.log('Nif', nif), [nif])
 
   const onSubmit = (data) => {
+    let hasError = false
+
+    if (!data.fullName || data.fullName.trim() === '') {
+      setError('fullName', { type: 'manual', message: 'O nome é obrigatório' })
+      hasError = true
+    }
+
+    if (!data.email || !/\S+@\S+\.\S+/.test(data.email)) {
+      setError('email', { type: 'manual', message: 'Email inválido' })
+      hasError = true
+    }
+
+    if (!data.phone || data.phone.trim() === '') {
+      setError('phone', { type: 'manual', message: 'Telefone é obrigatório' })
+      hasError = true
+    }
+
+    if (!data.nif || data.nif.trim() === '') {
+      setError('nif', { type: 'manual', message: 'Nif é obrigatório' })
+      hasError = true
+    }
+
+    if (hasError) {
+      return
+    }
     createOccurrence(data, imagePath)
       .then(() => {
         reset()
@@ -122,28 +147,38 @@ function Ocorrencia2() {
           <div className="flex gap-[5px]">
             <div className="w-1/2">
               <label className="flex flex-col">
-                <span className="text-white">Nome</span>
+                <span className="text-white">Nome*</span>
                 <input
                   className="rounded-md h-[30px]"
                   name={'fullName'}
                   {...register('fullName')}
                 />
+                {errors.fullName && (
+                  <p className="text-red-800 text-shadow-x-md">
+                    {errors.fullName.message}
+                  </p>
+                )}
               </label>
             </div>
             <div className="w-1/2">
               <label className="flex flex-col">
-                <span className="text-white">Email</span>
+                <span className="text-white">Email*</span>
                 <input
                   className="rounded-md h-[30px]"
                   name={'email'}
                   {...register('email')}
                 />
+                {errors.email && (
+                  <p className="text-red-800 text-shadow-x-md">
+                    {errors.email.message}
+                  </p>
+                )}
               </label>
             </div>
           </div>
           <div className="w-full">
             <label className="flex flex-col">
-              <span className="text-white">NIF</span>
+              <span className="text-white">NIF*</span>
               <input
                 id="nif"
                 type="text"
@@ -154,9 +189,7 @@ function Ocorrencia2() {
               />
               {loading && <span>Validando...</span>}
               {errors.nif && (
-                <p style={{ color: 'red', backgroundColor: 'white' }}>
-                  {errors.nif.message}
-                </p>
+                <p className="text-red-600">{errors.nif.message}</p>
               )}
             </label>
           </div>
@@ -168,6 +201,9 @@ function Ocorrencia2() {
                 name={'phone'}
                 {...register('phone')}
               />
+              {errors.phone && (
+                <p className="text-red-600">{errors.phone.message}</p>
+              )}
             </label>
           </div>
           <div>
