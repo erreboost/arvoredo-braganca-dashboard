@@ -6,7 +6,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { useCallback } from 'react'
 import { API_BASE_URL } from '../config/config'
 
-const BASE_URL=API_BASE_URL
+const BASE_URL = API_BASE_URL
 
 function Ocorrencia2() {
   const {
@@ -18,15 +18,15 @@ function Ocorrencia2() {
     watch,
     register,
     reset,
-    formState: { errors }, 
+    formState: { errors },
     clearErrors,
   } = useForm()
-  
+
   const [file, setFile] = useState()
   const [imagePath, setImagePath] = useState()
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
-  const nif = watch("nif")
+  const nif = watch('nif')
   useEffect(() => console.log('Nif', nif), [nif])
 
   const onSubmit = (data) => {
@@ -58,44 +58,59 @@ function Ocorrencia2() {
   const validateString = async (input) => {
     setLoading(true)
     try {
-      const response = await fetch(`${BASE_URL}/api-services/validate-nif/${nif}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-      })
-  
+      const trimmedInput = input.trim()
+
+      if (!trimmedInput) {
+        setLoading(false)
+        setError('nif', {
+          type: 'manual',
+          message: 'O campo do NIF não pode ser vazio',
+        })
+        return
+      }
+
+      const response = await fetch(
+        `${BASE_URL}/api-services/validate-nif/${trimmedInput}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+
       const result = await response.json()
       setLoading(false)
-      // console.log('ValidationResult', result.validationResult === false )
+
       if (result.validationResult === false) {
-        setError('nif', { type: 'manual', message: 'Esse NIF não é valido' })
-      }
-      else {
+        setError('nif', { type: 'manual', message: 'Esse NIF não é válido' })
+      } else {
         clearErrors('nif')
       }
     } catch (error) {
       setLoading(false)
       setError('nif', {
         type: 'manual',
-        message: 'Esse NIF não é valido',
+        message: 'Esse NIF não é válido',
       })
     }
   }
 
   const handleInputChange = useCallback(
     debounce((value) => {
-      if (!value || value.trim() === '') {
+      const trimmedValue = value.trim()
+
+      if (!trimmedValue) {
         setError('nif', {
           type: 'manual',
           message: 'O campo do NIF não pode ser vazio',
         })
       } else {
-        validateString(value)
+        validateString(trimmedValue)
       }
     }, 500),
     [nif]
-  ) 
+  )
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -103,10 +118,7 @@ function Ocorrencia2() {
         Dados de Ocorrência
       </h3>
       <div className="w-full">
-        <form
-          className="flex flex-col"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex gap-[5px]">
             <div className="w-1/2">
               <label className="flex flex-col">
@@ -142,19 +154,21 @@ function Ocorrencia2() {
               />
               {loading && <span>Validando...</span>}
               {errors.nif && (
-                <p style={{ color: 'red' }}>{errors.nif.message}</p>
+                <p style={{ color: 'red', backgroundColor: 'white' }}>
+                  {errors.nif.message}
+                </p>
               )}
             </label>
           </div>
           <div className="w-full">
-          <label className="flex flex-col">
-                <span className="text-white">Telefone</span>
-                <input
-                  className="rounded-md h-[30px]"
-                  name={'phone'}
-                  {...register('phone')}
-                />
-              </label>
+            <label className="flex flex-col">
+              <span className="text-white">Telefone</span>
+              <input
+                className="rounded-md h-[30px]"
+                name={'phone'}
+                {...register('phone')}
+              />
+            </label>
           </div>
           <div>
             <label className="flex flex-col">
